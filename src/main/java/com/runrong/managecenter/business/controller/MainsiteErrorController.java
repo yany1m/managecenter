@@ -11,7 +11,7 @@ public class MainsiteErrorController implements ErrorController {
    
  	@RequestMapping(value=ERROR_PATH)  
     public String handleError(){  
-        return "404.html";  
+        return "/managecenter/404.html";  
     }  
    
 	 @Override  

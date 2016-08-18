@@ -54,7 +54,7 @@
                       <section class="panel">
                           <header class="panel-heading">
                               管理员
-                          <a href="/addAdministrator"><button type="button" class="btn btn-info" style="float:right;">添加</button></a>
+                          <a href="/managecenter/addAdministrator"><button type="button" class="btn btn-info" style="float:right;">添加</button></a>
                           </header>
                          <table class="table table-striped border-top" id="sample_1">
                           <thead>
@@ -80,8 +80,8 @@
                               </#if>
                               </td>                         
                                <td>                                     
-                                       <a href="/updateAdministrator?id=${admin.id}&username1=${admin.username}"><button class="btn btn-primary btn-xs"><i class="icon-pencil"></i></button></a>
-                                       <a onclick='if(confirm("确认删除")){window.location.href="/deleteAdministrator?id=${admin.id}";}'><button class="btn btn-danger btn-xs"><i class="icon-trash "></i></button></a>
+                                       <a href="/managecenter/updateAdministrator?id=${admin.id}&username1=${admin.username}"><button class="btn btn-primary btn-xs"><i class="icon-pencil"></i></button></a>
+                                       <a onclick='if(confirm("确认删除")){window.location.href="/managecenter/deleteAdministrator?id=${admin.id}";}'><button class="btn btn-danger btn-xs"><i class="icon-trash "></i></button></a>
                                </td>
                           </tr>  
                           </#list>                                         

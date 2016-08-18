@@ -1,4 +1,4 @@
-					<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -41,30 +41,34 @@
               <!-- page start-->
               <div class="row">
                   <div class="col-lg-12">
-                        <section class="panel">
+                      <section class="panel">
                           <header class="panel-heading">
-                              修改用户
+                              用户
+                          <a href="/managecenter/addUser"><button type="button" class="btn btn-info" style="float:right;">添加</button></a>
                           </header>
-                          <div class="panel-body">
-                              <form role="form">
-                            
-                              <div class="form-group">
-                                      <label for="exampleInputEmail1">用户名</label>
-                                      <input type="username" name="username" class="form-control" id="exampleInputEmail1" placeholder="Enter realname" readonly="readonly" value=" ${username}">
-                                  </div>                                  
-                                  <div class="form-group">
-                                      <label for="exampleInputEmail1">真实姓名</label>
-                                      <input type="username" name="realname" class="form-control" id="exampleInputEmail1" placeholder="Enter realname" value="${realname}">
-                                  </div>
-                                  <div class="form-group">
-                                      <label for="exampleInputPassword1">密码</label>
-                                      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                  </div>
-                                   <input type="hidden" name="id" value="${id}">                            
-                                  <button type="submit" class="btn btn-info">Submit</button>
-                              </form>
-
-                          </div>
+                          <table class="table table-striped border-top" id="sample_1">
+                          <thead>
+                          <tr>                                             
+                              <th>用户名</th>
+                              <th class="hidden-phone">真实姓名</th>                       
+                              <th class="hidden-phone">加入时间</th>                           
+                              <th></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <#list list as user>  
+                          <tr class="odd gradeX">                           	                          
+                              <td>${user.username}</td>
+                              <td class="hidden-phone">${user.realname}</td>                            
+                              <td class="center hidden-phone">${user.joinTime}</td>                            
+                               <td>                                    
+                                      <a href="/managecenter/updateUser?id=${user.id}&realname1=${user.realname}&username1=${user.username}"><button class="btn btn-primary btn-xs"><i class="icon-pencil"></i></button></a>
+                                      <a onclick='if(confirm("确认删除")){window.location.href="/managecenter/deleteUser?id=${user.id}";}'><button class="btn btn-danger btn-xs"><i class="icon-trash "></i></button></a>
+                               </td>
+                          </tr>  
+                          </#list>                                         
+                          </tbody>
+                          </table>
                       </section>
                   </div>
               </div>
@@ -92,4 +96,3 @@
 
   </body>
 </html>
-					

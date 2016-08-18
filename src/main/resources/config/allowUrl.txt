@@ -1,6 +1,6 @@
-/login.html
-/css/bootstrap.min.css
-/js/jquery-3.1.0.min.js
-/js/bootstrap.min.js
-/favicon.ico
-/loginIn
+/managecenter/login.html
+/managecenter/css/bootstrap.min.css
+/managecenter/js/jquery-3.1.0.min.js
+/managecenter/js/bootstrap.min.js
+/managecenter/favicon.ico
+/managecenter/loginIn

@@ -78,10 +78,9 @@ public class AdminDao extends BaseDao{
 		}
 		if(admin.getJoinTime()!=null){
 			sql.append(" and jointime=:joinTime");
-		}
-		
+		}	
 //		sql.append(" limit :start,:pageSize");
-	
+		
 		SqlParameterSource paramSource = new BeanPropertySqlParameterSource(admin);  
 		List list=namedParameterJdbcTemplate.queryForList(sql.toString(), paramSource);
 		

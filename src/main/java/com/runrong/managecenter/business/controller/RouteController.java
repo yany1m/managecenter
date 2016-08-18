@@ -20,6 +20,7 @@ import com.runrong.managecenter.business.service.UserService;
 import com.runrong.managecenter.common.base.ResultModel;
 
 @Controller
+@RequestMapping("/managecenter")
 public class RouteController {
 	
 	@Autowired
@@ -42,7 +43,7 @@ public class RouteController {
 		List list=(List) adminService.getAdministrator(request).getBody();
 		
 		map.put("list", list);
-		return new ModelAndView("admin");
+		return new ModelAndView("/managecenter/admin");
 	}
 	
 	
@@ -61,7 +62,7 @@ public class RouteController {
 		List list=(List) userService.getUser(request).getBody();
 		
 		map.put("list", list);
-		return new ModelAndView("user");
+		return new ModelAndView("/managecenter/user");
 	}
 	
 }

@@ -23,6 +23,7 @@ import com.runrong.managecenter.common.base.ResultModel;
  *
  */
 @Controller
+@RequestMapping("/managecenter")
 public class AdminController {
 	
 	@Autowired
@@ -42,9 +43,9 @@ public class AdminController {
 		 ResultModel r=adminService.addAdministrator(request);
 		 
 		 if(r.getCode()==1){
-			 return new ModelAndView("addAdministrator");
+			 return new ModelAndView("/managecenter/addAdministrator");
 		 }
-		 return new ModelAndView("redirect:/admin");
+		 return new ModelAndView("redirect:/managecenter/admin");
 	}
 	
 	/**
@@ -64,9 +65,9 @@ public class AdminController {
 		 if(r.getCode()==1){
 			 map.put("id", request.getParameter("id"));
 			 map.put("username", request.getParameter("username1"));		
-			 return new ModelAndView("updateAdministrator");
+			 return new ModelAndView("/managecenter/updateAdministrator");
 		 }		 
-		return new ModelAndView("redirect:/admin");
+		return new ModelAndView("redirect:/managecenter/admin");
 	}
 	
 	/**
@@ -84,9 +85,9 @@ public class AdminController {
 		ResultModel r= adminService.deleteAdministrator(request);
 		 
 		 if(r.getCode()==1){
-			 return new ModelAndView("deleteAdministrator");
+			 return new ModelAndView("/managecenter/deleteAdministrator");
 		 }
-		 return new ModelAndView("redirect:/admin");
+		 return new ModelAndView("redirect:/managecenter/admin");
 	}
 	
 	/**

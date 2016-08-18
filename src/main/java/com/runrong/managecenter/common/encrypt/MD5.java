@@ -17,6 +17,9 @@ public class MD5 {
      * @throws UnsupportedEncodingException
      */
     public static String encoderByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+    	if(str==null || str.equals("")){
+    		return null;
+    	}
         //确定计算方法
         MessageDigest md5 = MessageDigest.getInstance("MD5");
        
@@ -36,11 +39,13 @@ public class MD5 {
      * @throws UnsupportedEncodingException
      */
     public static String encoderByMd5Salt(String str,String salt) throws NoSuchAlgorithmException, UnsupportedEncodingException{
-    	
+    	if(str==null || str.equals("")){
+    		return null;
+    	}
         return encoderByMd5(encoderByMd5(str)+salt);     
     }
     
 // public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-//		System.out.println(encoderByMd5Salt("123456", "admin123"));
+//		System.out.println(encoderByMd5Salt("123456", "yanyi"));
 //	}
 }

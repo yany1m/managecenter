@@ -32,7 +32,7 @@
                       </a>
                       <ul class="dropdown-menu extended logout">
                           <div class="log-arrow-up"></div>                                            
-                          <li><a href="/loginOut"><i class="icon-key"></i> 登出</a></li>
+                          <li><a href="/managecenter/loginOut"><i class="icon-key"></i> 登出</a></li>
                       </ul>
                   </li>
                   <!-- user login dropdown end -->

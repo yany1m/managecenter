@@ -41,8 +41,8 @@ public class UserDao extends BaseDao{
 	 * @param password
 	 * @return
 	 */
-	public void updateUser(User user){
-		StringBuffer sql=new StringBuffer("update managecenter.user set id=:uuid ");
+	public void updateUser(User user){	
+		StringBuffer sql=new StringBuffer("update managecenter.user set id=:uuid");
 		if(user.getPassword()!=null && !user.getPassword().equals("")){
 			sql.append(" ,password=:password");
 		}
@@ -50,9 +50,35 @@ public class UserDao extends BaseDao{
 			sql.append(" ,realname=:realname");
 		}
 		sql.append(" where id=:uuid");
-				
-		SqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);  	
+			
+		SqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);  
 		namedParameterJdbcTemplate.update(sql.toString(), paramSource);
+		
+//		StringBuffer sql=new StringBuffer("update managecenter.user set id=?");
+//		if(user.getPassword()!=null && !user.getPassword().equals("")){
+//			sql.append(" ,password=?");
+//		}
+//		if(user.getRealname()!=null && !user.getRealname().equals("")){
+//			sql.append(" ,realname=?");
+//		}
+//		sql.append(" where id=?");
+//		if(user.getPassword()!=null && !user.getPassword().equals("") && user.getRealname()!=null && !user.getRealname().equals("")){
+//			jdbcTemplate.update(sql.toString(), user.getUuid(),user.getPassword(),user.getRealname(),user.getUuid());
+//			return;
+//		}
+//		if(user.getPassword()!=null && !user.getPassword().equals("") ){
+//			jdbcTemplate.update(sql.toString(), user.getUuid(),user.getPassword(),user.getUuid());
+//			return;
+//		}
+//		if(user.getRealname()!=null && !user.getRealname().equals("")){
+//			
+//			String ss="update managecenter.user set realname=? where id=?";
+//			
+//			System.out.println(ss);
+//			System.out.println(user.getRealname());
+//			jdbcTemplate.update(ss,user.getRealname(),user.getUuid());
+//			return;
+//		}
 	}
 	
 	/**
@@ -62,6 +88,7 @@ public class UserDao extends BaseDao{
 	 * @return
 	 */
 	public List getUser(User user){
+		
 		StringBuffer sql=new StringBuffer("select id,username,realname,jointime from managecenter.user where 1=1");		
 		if(user.getUuid()!=null){
 			sql.append(" and id=:uuid");
@@ -69,7 +96,7 @@ public class UserDao extends BaseDao{
 		if(user.getUsername()!=null){
 			sql.append(" and username=:username");
 		}
-		if(user.getUsername()!=null){
+		if(user.getRealname()!=null){
 			sql.append(" and realname=:realname");
 		}
 		if(user.getJoinTime()!=null){

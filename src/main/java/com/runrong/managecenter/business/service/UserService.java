@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.runrong.managecenter.business.dao.UserDao;
 import com.runrong.managecenter.business.model.User;
 import com.runrong.managecenter.common.base.ResultModel;
@@ -78,11 +80,10 @@ public class UserService {
 		if(password==null && realname==null){
 			return ResultModel.failModel("参数为空");
 		}
-		
 		user.setUuid(id);		
 		user.setPassword(MD5.encoderByMd5Salt(password, username));
 		user.setRealname(realname);
-		
+				
 		userDao.updateUser(user);
 	
 		return ResultModel.successModel("修改成功");
@@ -147,7 +148,6 @@ public class UserService {
 		User user=new User();
 		user.setUsername(username);
 		List list=userDao.getUser(user);
-		
 		if(list==null || list.size()==0){
 			return false;
 		}

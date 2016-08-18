@@ -11,8 +11,8 @@
                           <span class="arrow"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" href="/admin">管理员</a></li>
-                          <li><a class="" href="/user">用户</a></li>
+                          <li><a class="" href="/managecenter/admin">管理员</a></li>
+                          <li><a class="" href="/managecenter/user">用户</a></li>
                       </ul>
                   </li>
                  

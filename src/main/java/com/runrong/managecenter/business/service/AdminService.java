@@ -147,8 +147,9 @@ public class AdminService {
 		
 		Administrator admin=new Administrator();
 		admin.setUsername(username);
+		admin.setType(null);
+		admin.setAdminGroupid(null);
 		List list=adminDao.getAdministrator(admin);
-		
 		if(list==null || list.size()==0){
 			return false;
 		}

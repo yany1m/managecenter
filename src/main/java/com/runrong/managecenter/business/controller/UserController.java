@@ -22,6 +22,7 @@ import com.runrong.managecenter.common.base.ResultModel;
  *
  */
 @Controller
+@RequestMapping("/managecenter")
 public class UserController {
 	@Autowired
 	UserService userService;
@@ -40,9 +41,9 @@ public class UserController {
 		 ResultModel r=userService.addUser(request);
 		 
 		 if(r.getCode()==1){
-			 return new ModelAndView("addUser");
+			 return new ModelAndView("/managecenter/addUser");
 		 }
-		 return new ModelAndView("redirect:/user");
+		 return new ModelAndView("redirect:/managecenter/user");
 	}
 	
 	/**
@@ -62,9 +63,9 @@ public class UserController {
 			 map.put("id", request.getParameter("id"));
 			 map.put("username", request.getParameter("username1"));
 			 map.put("realname", request.getParameter("realname1"));
-			 return new ModelAndView("updateUser");
+			 return new ModelAndView("/managecenter/updateUser");
 		 }		 
-		return new ModelAndView("redirect:/user");
+		return new ModelAndView("redirect:/managecenter/user");
 	}
 	
 	/**
@@ -81,7 +82,7 @@ public class UserController {
 		
 		 userService.deleteUser(request);
 		 		
-		 return new ModelAndView("redirect:/user");
+		 return new ModelAndView("redirect:/managecenter/user");
 	}
 	
 	/**

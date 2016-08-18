@@ -25,6 +25,7 @@ import com.runrong.managecenter.common.base.ResultModel;
  *
  */
 @Controller
+@RequestMapping("/managecenter")
 public class LoginController {
 	
 	@Autowired
@@ -41,7 +42,7 @@ public class LoginController {
 	public ModelAndView login(HttpServletRequest request, ModelMap map) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		//进行登录验证，成功则注册session可以进入index，否则会被转发至login.html
 		loginService.login(request);
-		return new ModelAndView("redirect:/index");
+		return new ModelAndView("redirect:/managecenter/index");
 	}
 	
 	/**
@@ -56,7 +57,7 @@ public class LoginController {
 		
 		HttpSession session= request.getSession();
 		session.invalidate();
-		return new ModelAndView("redirect:/login");
+		return new ModelAndView("redirect:/managecenter/login");
 	}
 	
 	
@@ -67,6 +68,6 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/index")
 	public ModelAndView index(HttpServletRequest request,ModelMap map){
-		return new ModelAndView("index");
+		return new ModelAndView("/managecenter/index");
 	}
 }

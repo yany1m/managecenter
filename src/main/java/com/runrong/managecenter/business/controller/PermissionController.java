@@ -13,6 +13,7 @@ import com.runrong.managecenter.common.base.ResultModel;
  *
  */
 @Controller
+@RequestMapping("/managecenter")
 public class PermissionController {
 	
 	/**

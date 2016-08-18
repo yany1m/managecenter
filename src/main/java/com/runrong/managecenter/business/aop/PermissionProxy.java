@@ -46,7 +46,7 @@ public class PermissionProxy {
     		
     		}
     		   		
-    		return new ModelAndView("index");
+    		return new ModelAndView("redirect:/managecenter/index");
         }
         
         throw new RuntimeException("the method which use @CheckPermission must has a HttpServletRequest as Parameter");
