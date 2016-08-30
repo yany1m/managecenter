@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,9 +35,9 @@ public class UserController {
 	 * @throws UnsupportedEncodingException 
 	 * @throws NoSuchAlgorithmException 
 	 */
-	@RequestMapping("/addUser")
+	@RequestMapping(value="/addUser",method=RequestMethod.GET)
 	@ResponseBody
-	public ModelAndView addUser(HttpServletRequest request) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+	public ModelAndView addUserGET(HttpServletRequest request) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		
 		 ResultModel r=userService.addUser(request);
 		 
@@ -47,15 +48,30 @@ public class UserController {
 	}
 	
 	/**
+	 * 添加用户
+	 * @param request
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 * @throws NoSuchAlgorithmException 
+	 */
+	@RequestMapping(value="/addUser",method=RequestMethod.POST)
+	@ResponseBody
+	@CheckPermission
+	public ResultModel addUserPOST(HttpServletRequest request) throws NoSuchAlgorithmException, UnsupportedEncodingException{	
+		
+		return userService.addUser(request);
+	}
+	
+	/**
 	 * 修改用户
 	 * @param request
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 * @throws NoSuchAlgorithmException 
 	 */
-	@RequestMapping("/updateUser")
+	@RequestMapping(value="/updateUser",method=RequestMethod.GET)
 	@ResponseBody
-	public ModelAndView updateUser(HttpServletRequest request,ModelMap map) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+	public ModelAndView updateUserGET(HttpServletRequest request,ModelMap map) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		
 		ResultModel r=userService.updateUser(request);
 		
@@ -69,20 +85,33 @@ public class UserController {
 	}
 	
 	/**
+	 * 修改用户
+	 * @param request
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 * @throws NoSuchAlgorithmException 
+	 */
+	@RequestMapping(value="/updateUser",method=RequestMethod.POST)
+	@ResponseBody
+	@CheckPermission
+	public ResultModel updateUserPOST(HttpServletRequest request,ModelMap map) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+	
+		return userService.updateUser(request);
+	}
+	
+	/**
 	 * 删除用户
 	 * @param request
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 * @throws NoSuchAlgorithmException 
 	 */
-	@RequestMapping("/deleteUser")
+	@RequestMapping(value="/deleteUser",method=RequestMethod.POST)
 	@ResponseBody
 	@CheckPermission
-	public ModelAndView deleteUser(HttpServletRequest request) {
-		
-		 userService.deleteUser(request);
-		 		
-		 return new ModelAndView("redirect:/managecenter/user");
+	public ResultModel deleteUserPOST(HttpServletRequest request) {
+			 		
+		 return userService.deleteUser(request);
 	}
 	
 	/**

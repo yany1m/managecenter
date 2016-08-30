@@ -39,16 +39,7 @@
       <section id="main-content">
           <section class="wrapper">
               <!-- page start-->
-              <div class="row">
-                  <div class="col-sm-6">
-                      <section class="panel">
-                          <header class="panel-heading">
-                              管理员
-                          </header>
-                        
-                      </section>
-                  </div>
-              </div>
+       
               <div class="row">
                   <div class="col-lg-12">
                       <section class="panel">
@@ -80,8 +71,8 @@
                               </#if>
                               </td>                         
                                <td>                                     
-                                       <a href="/managecenter/updateAdministrator?id=${admin.id}&username1=${admin.username}"><button class="btn btn-primary btn-xs"><i class="icon-pencil"></i></button></a>
-                                       <a onclick='if(confirm("确认删除")){window.location.href="/managecenter/deleteAdministrator?id=${admin.id}";}'><button class="btn btn-danger btn-xs"><i class="icon-trash "></i></button></a>
+                                       <a href="/managecenter/updateAdministrator?id=${admin.id}&username1=${admin.username}&adminGroupId=${admin.admin_group_id}"><button class="btn btn-primary btn-xs"><i class="icon-pencil"></i></button></a>
+                                       <button onclick='if(confirm("确认删除")){deleteAdministrator(this)}' id="id=${admin.id}" class="btn btn-danger btn-xs"><i class="icon-trash "></i></button>
                                </td>
                           </tr>  
                           </#list>                                         
@@ -110,6 +101,16 @@
 	
 	<!--script for this page only-->
     <script src="js/dynamic-table.js"></script>
-
+	<script type="text/javascript">
+	function deleteAdministrator(which){
+			
+			$.post("/managecenter/deleteAdministrator",$(which).attr("id"),function(result){
+    			alert(result.body);
+    			if(result.code=="0"){	
+    				window.location.href="/managecenter/admin";
+    			}
+ 		 });
+	}
+	</script>
   </body>
 </html>

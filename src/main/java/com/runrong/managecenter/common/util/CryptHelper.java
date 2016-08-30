@@ -112,4 +112,8 @@ public class CryptHelper {
 		if (string.length() > maxLength)
 			out.append(replace);
 	}
+	
+//	public static void main(String[] args) throws Throwable {
+//		System.out.println(encode("yym"));
+//	}
 }

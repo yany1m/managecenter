@@ -28,7 +28,7 @@ public class AdminDao extends BaseDao{
 	 * @return
 	 */
 	public int addAdministrator(Administrator admin){
-		String sql="insert managecenter.admin (id,admin_group_id,username,password,type,jointime) values (:uuid,:adminGroupid,:username,:password,:type,:joinTime)";
+		String sql="insert into managecenter.admin (id,admin_group_id,username,password,type,jointime) values (:uuid,:adminGroupid,:username,:password,:type,:joinTime)";
 		
 		KeyHolder keyholder = new GeneratedKeyHolder();
 		SqlParameterSource sps = new BeanPropertySqlParameterSource(admin);
@@ -64,7 +64,7 @@ public class AdminDao extends BaseDao{
 	 */
 	public List getAdministrator(Administrator admin){
 		StringBuffer sql=new StringBuffer("select id,admin_group_id,username,type,jointime from managecenter.admin where 1=1");		
-		if(admin.getUuid()!=null){
+		if(admin.getUuid()!=null){			
 			sql.append(" and id=:uuid");
 		}
 		if(admin.getUsername()!=null){
@@ -79,8 +79,7 @@ public class AdminDao extends BaseDao{
 		if(admin.getJoinTime()!=null){
 			sql.append(" and jointime=:joinTime");
 		}	
-//		sql.append(" limit :start,:pageSize");
-		
+//		sql.append(" limit :start,:pageSize");		
 		SqlParameterSource paramSource = new BeanPropertySqlParameterSource(admin);  
 		List list=namedParameterJdbcTemplate.queryForList(sql.toString(), paramSource);
 		

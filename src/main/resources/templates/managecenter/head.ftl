@@ -3,7 +3,7 @@
               <div data-original-title="Toggle Navigation" data-placement="right" class="icon-reorder tooltips"></div>
           </div>
           <!--logo start-->
-          <a href="#" class="logo" >管理<span>中心</span></a>
+          <a href="/managecenter/index" class="logo" >管理<span>中心</span></a>
           <!--logo end-->
           <div class="nav notify-row" id="top_menu">
             <!--  notification start -->

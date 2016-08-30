@@ -63,7 +63,7 @@
                               <td class="center hidden-phone">${user.joinTime}</td>                            
                                <td>                                    
                                       <a href="/managecenter/updateUser?id=${user.id}&realname1=${user.realname}&username1=${user.username}"><button class="btn btn-primary btn-xs"><i class="icon-pencil"></i></button></a>
-                                      <a onclick='if(confirm("确认删除")){window.location.href="/managecenter/deleteUser?id=${user.id}";}'><button class="btn btn-danger btn-xs"><i class="icon-trash "></i></button></a>
+                                      <button onclick='if(confirm("确认删除")){deleteUser(this)}' id="id=${user.id}" class="btn btn-danger btn-xs"><i class="icon-trash "></i></button>
                                </td>
                           </tr>  
                           </#list>                                         
@@ -92,7 +92,16 @@
 
     <!--script for this page only-->
     <script src="js/dynamic-table.js"></script>
-
-
+	<script type="text/javascript">
+	function deleteUser(which){
+			
+			$.post("/managecenter/deleteUser",$(which).attr("id"),function(result){
+    			alert(result.body);
+    			if(result.code=="0"){	
+    				window.location.href="/managecenter/user";
+    			}
+ 		 });
+	}
+	</script>
   </body>
 </html>

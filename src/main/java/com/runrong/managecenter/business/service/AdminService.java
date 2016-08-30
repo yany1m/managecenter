@@ -4,8 +4,10 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,10 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.runrong.managecenter.business.dao.AdminDao;
+import com.runrong.managecenter.business.dao.AdminGroupDao;
+import com.runrong.managecenter.business.model.AdminGroup;
 import com.runrong.managecenter.business.model.Administrator;
 import com.runrong.managecenter.common.base.ResultModel;
 import com.runrong.managecenter.common.dictionary.Constant;
 import com.runrong.managecenter.common.encrypt.MD5;
+import com.runrong.managecenter.common.util.JsonUtil;
 /**
  * 管理员账号处理层
  * @author yanyimin
@@ -27,6 +32,8 @@ public class AdminService {
 
 	@Autowired
 	AdminDao adminDao;
+	@Autowired
+	AdminGroupDao adminGroupDao;
 	
 	/**
 	 * 添加管理员
@@ -48,11 +55,17 @@ public class AdminService {
 		}
 		password=MD5.encoderByMd5Salt(password, username);
 		
+		String type=(String) (request.getParameter("type")==null?1:request.getParameter("type"));
+		String adminGroupid=(String) (request.getParameter("adminGroupid")==null?0:request.getParameter("adminGroupid"));
+		
 		admin.setUsername(username);
 		admin.setPassword(password);
 		admin.setJoinTime(new Date());
+		admin.setType(Integer.valueOf(type));
+		admin.setAdminGroupid(Integer.valueOf(adminGroupid));
+		
 		int id=adminDao.addAdministrator(admin);
-	
+		
 		return ResultModel.successModel("添加成功");
 	}
 	
@@ -71,15 +84,15 @@ public class AdminService {
 		}
 		
 		Integer id=Integer.valueOf(request.getParameter("id"));			
-		Integer adminGroupid=request.getParameter("adminGroupid")==null?null:Integer.valueOf(request.getParameter("adminGroupid"));
+		Integer adminGroupId=request.getParameter("adminGroupId")==null?null:Integer.valueOf(request.getParameter("adminGroupId"));
 		String password=request.getParameter("password");
 		String username=request.getParameter("username");
 		
-		if(password==null && adminGroupid==null){
+		if(password==null && adminGroupId==null){
 			return ResultModel.failModel("参数为空");
 		}
 		admin.setUuid(id);
-		admin.setAdminGroupid(adminGroupid);		
+		admin.setAdminGroupid(adminGroupId);		
 		admin.setPassword(MD5.encoderByMd5Salt(password, username));
 		
 		adminDao.updateAdministrator(admin);
@@ -154,5 +167,27 @@ public class AdminService {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * 查询管理员的权限
+	 * @param adminId
+	 * @return
+	 */
+	public List<String> getAdminPermission(int adminId){
+		Administrator admin=new Administrator();
+		admin.setUuid(adminId);	
+		List list=adminDao.getAdministrator(admin);
+		Map adminMap= (Map) list.get(0);
+		AdminGroup adminGroup=new AdminGroup();
+		adminGroup.setId(Integer.valueOf(adminMap.get("admin_group_id").toString()));
+		List<Map> permissionList=adminGroupDao.getAdminGroupPermissionById(adminGroup);
+		
+		List<String> permission=new ArrayList<String>();
+		for(Map map:permissionList){
+			//权限组合为  类名_方法名
+			permission.add(map.get("parent").toString()+"_"+map.get("permission").toString());
+		}
+		return permission;
 	}
 }

@@ -42,7 +42,7 @@ public class LoginFilter implements Filter {
 		if(id!=null || set.contains(url)){
 			chain.doFilter(request, response);	
 		}else{
-			resp.sendRedirect("/managecenter/login.html");
+			resp.sendRedirect("/managecenter/login");
 		}
 
 	}

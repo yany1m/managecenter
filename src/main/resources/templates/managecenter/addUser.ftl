@@ -46,7 +46,7 @@
                               添加用户
                           </header>
                           <div class="panel-body">
-                              <form role="form">
+                              <form role="form" id="form">
                                   <div class="form-group">
                                       <label for="exampleInputEmail1">用户名</label>
                                       <input type="username" name="username" class="form-control" id="exampleInputEmail1" placeholder="Enter username">
@@ -87,7 +87,31 @@
 
     <!--script for this page only-->
     <script src="js/dynamic-table.js"></script>
-
+    
+	<script type="text/javascript">
+	$(document).ready(function(){
+		 $("#form").submit(function(event){
+		    event.preventDefault();
+			$.ajax({
+				type:"post",
+				dataType:"json",
+				url:"/managecenter/addUser",
+				data:$("#form").serialize(),
+				error: function(result){
+					alert(result);
+				},
+				success: function(data) {	
+					alert(data.body)
+					if(data.code=="0"){
+						window.location.href="/managecenter/user";
+					}else{
+						window.location.href="/managecenter/addUser";
+					}		
+				}
+			});
+		});
+	});
+	</script>
 
   </body>
 </html>

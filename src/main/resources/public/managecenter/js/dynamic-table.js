@@ -5,10 +5,10 @@ var Script = function () {
             "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
             "sPaginationType": "bootstrap",
             "oLanguage": {
-                "sLengthMenu": "_MENU_ records per page",
+                "sLengthMenu": "每页 _MENU_ 条数据",
                 "oPaginate": {
-                    "sPrevious": "Prev",
-                    "sNext": "Next"
+                    "sPrevious": "上一页",
+                    "sNext": "下一页"
                 }
             },
             "aoColumnDefs": [{
@@ -22,12 +22,12 @@ var Script = function () {
             var checked = jQuery(this).is(":checked");
             jQuery(set).each(function () {
                 if (checked) {
-                    $(this).attr("checked", true);
+                    $(this).prop("checked", true);
                 } else {
-                    $(this).attr("checked", false);
+                    $(this).prop("checked", false);
                 }
             });
-            jQuery.uniform.update(set);
+            
         });
 
         jQuery('#sample_1_wrapper .dataTables_filter input').addClass("form-control"); // modify table search input
@@ -73,8 +73,8 @@ var Script = function () {
             "oLanguage": {
                 "sLengthMenu": "_MENU_ per page",
                 "oPaginate": {
-                    "sPrevious": "Prev",
-                    "sNext": "Next"
+                    "sPrevious": "上一页",
+                    "sNext": "下一页"
                 }
             },
             "aoColumnDefs": [{

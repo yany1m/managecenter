@@ -46,7 +46,7 @@
                               修改用户
                           </header>
                           <div class="panel-body">
-                              <form role="form">
+                              <form role="form" id="form">
                             
                               <div class="form-group">
                                       <label for="exampleInputEmail1">用户名</label>
@@ -60,7 +60,7 @@
                                       <label for="exampleInputPassword1">密码</label>
                                       <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                                   </div>
-                                   <input type="hidden" name="id" value="${id}">                            
+                                   <input type="hidden" name="id" id="userId" value="${id}">                            
                                   <button type="submit" class="btn btn-info">Submit</button>
                               </form>
 
@@ -89,7 +89,30 @@
     <!--script for this page only-->
     <script src="js/dynamic-table.js"></script>
 
-
+	<script type="text/javascript">
+	$(document).ready(function(){
+		 $("#form").submit(function(event){
+		    event.preventDefault();
+			$.ajax({
+				type:"post",
+				url:"/managecenter/updateUser",
+				data:$('#form').serialize(),
+				error: function(result){
+					alert(result);
+				},
+				success: function(data) {
+					alert(data.body);					
+					if(data.code=="0"){
+						window.location.href="/managecenter/user";						
+					}else{						
+						window.location.href="/managecenter/updateUser?id="+$("#userId").val()+"&username1="+$("#username").val();	
+					}				
+				}
+			});
+		});
+	});
+	
+	</script>
   </body>
 </html>
 					

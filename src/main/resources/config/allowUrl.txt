@@ -1,6 +1,9 @@
-/managecenter/login.html
+/managecenter/login
 /managecenter/css/bootstrap.min.css
 /managecenter/js/jquery-3.1.0.min.js
 /managecenter/js/bootstrap.min.js
 /managecenter/favicon.ico
 /managecenter/loginIn
+/managecenter/js/cookie/jquery_cookie.js
+/managecenter/getVerifyCode
+/managecenter/js/security.js

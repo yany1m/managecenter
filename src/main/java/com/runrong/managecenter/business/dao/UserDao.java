@@ -26,7 +26,7 @@ public class UserDao extends BaseDao{
 	 * @return
 	 */
 	public int addUser(User user){
-		String sql="insert managecenter.user (id,username,password,realname,jointime) values (:uuid,:username,:password,:realname,:joinTime)";
+		String sql="insert into managecenter.user (id,username,password,realname,jointime) values (:uuid,:username,:password,:realname,:joinTime)";
 		
 		KeyHolder keyholder = new GeneratedKeyHolder();
 		SqlParameterSource sps = new BeanPropertySqlParameterSource(user);

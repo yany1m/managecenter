@@ -12,14 +12,14 @@ import com.runrong.managecenter.common.base.BaseModel;
 public class Administrator extends BaseModel{
 	//自增id
 	private Integer uuid;
-	//管理组id 默认为0即无组分配
-	private Integer adminGroupid=0;
+	//管理组id
+	private Integer adminGroupid;
 	//账号
 	private String username;
 	//密码
 	private String password;
-	//类型默认为普通管理员
-	private Integer type=1;
+	//类型
+	private Integer type;
 	//加入时间
 	private Date joinTime;
 	

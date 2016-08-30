@@ -46,17 +46,29 @@
                               修改管理员
                           </header>
                           <div class="panel-body">
-                              <form role="form">
+                              <form role="form" id="form">
                             
                               <div class="form-group">
                                       <label for="exampleInputEmail1">用户名</label>
-                                      <input type="username" name="username" class="form-control" id="exampleInputEmail1"  readonly="readonly" value="${username}">
+                                      <input type="username" name="username" class="form-control" id="username"  readonly="readonly" value="${username}">
+                                  </div>                                                                   
+                              <div class="form-group">                             
+                                    <select name="adminGroupId" class="form-control m-bot15"> 
+                            		<option value="0">管理组</option>
+                                	<#list adminGroupList as list>  
+                                		<#if list.id==adminGroupId>                                        
+                                    	<option selected = "selected" value="${list.id}">${list.name}</option>  
+                                    	<#else>   
+                                    	<option value="${list.id}">${list.name}</option>                                        
+                                    	</#if>
+                                    </#list>                                            
+                                </select>
                                   </div>                                                                   
                                   <div class="form-group">
                                       <label for="exampleInputPassword1">密码</label>
-                                      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                                   </div>
-                                   <input type="hidden" name="id" value="${id}">                            
+                                   <input type="hidden" name="id" id="adminId" value="${id}">                            
                                   <button type="submit" class="btn btn-info">Submit</button>
                               </form>
 
@@ -84,7 +96,30 @@
 
     <!--script for this page only-->
     <script src="js/dynamic-table.js"></script>
-
+	<script type="text/javascript">
+	$(document).ready(function(){
+		 $("#form").submit(function(event){
+		    event.preventDefault();		    
+			$.ajax({
+				type:"post",
+				url:"/managecenter/updateAdministrator",
+				data:$('#form').serialize(),
+				error: function(result){
+					alert(result);
+				},
+				success: function(data) {
+					alert(data.body);					
+					if(data.code=="0"){
+						window.location.href="/managecenter/admin";						
+					}else{						
+						window.location.href="/managecenter/updateAdministrator?id="+$("#adminId").val()+"&username1="+$("#username").val()+"&adminGroupId="+${adminGroupId};	
+					}				
+				}
+			});
+		});
+	});
+	
+	</script>
 
   </body>
 </html>
