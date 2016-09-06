@@ -52,7 +52,7 @@
                         
                          <label class="control-label col-lg-2" for="inputSuccess"></label>
                          	<div class="col-lg-10" style="float:none">
-                            	<select class="form-control m-bot15"> 
+                            	<select id="group" class="form-control m-bot15"> 
                             		<option value="0">管理组</option>
                                 	<#list adminGroupList as list>                                          
                                     	<option value="${list.id}">${list.name}</option>                                             
@@ -111,7 +111,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-	<script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="assets/data-tables/DT_bootstrap.js"></script>
 
 
@@ -123,7 +122,7 @@
 
 	<script type="text/javascript">
 	$(function(){
-		$("select").change(function() {			
+		$("#group").click(function() {			
 			$(".checkboxes").removeAttr("checked");
 			$("#adminGroupId").val($(this).find("option:checked").attr("value"));
 			$.ajax({
@@ -160,6 +159,20 @@
 				}
 			});
 	}
+	
+	 jQuery('#sample_1 .group-checkable').change(function () {
+            var set = jQuery(this).attr("data-set");
+            var checked = jQuery(this).is(":checked");
+            jQuery(set).each(function () {
+                if (checked) {
+                    $(this).prop("checked", true);
+                } else {
+                    $(this).prop("checked", false);
+                }
+            });
+            
+        });
+	
 	</script>
   </body>
 </html>

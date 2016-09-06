@@ -10,16 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.runrong.managecenter.business.dao.DataDao;
 import com.runrong.managecenter.business.model.datacollection.BalanceStatement;
 import com.runrong.managecenter.business.model.datacollection.CashFlowStatement;
 import com.runrong.managecenter.business.model.datacollection.EnterpriseFinancialData;
 import com.runrong.managecenter.business.model.datacollection.ProfitStatement;
 import com.runrong.managecenter.common.base.ResultModel;
-import com.runrong.managecenter.common.dictionary.BalanceConstant;
-import com.runrong.managecenter.common.dictionary.CashFlowConstant;
-import com.runrong.managecenter.common.dictionary.ProfitConstant;
 import com.runrong.managecenter.common.util.FormatDateUtil;
+import com.runrong.managecenter.common.util.JsonUtil;
 
 @Service
 public class DataService {
@@ -38,12 +37,15 @@ public class DataService {
 		if(enterpriseRegistrationNumber==null || enterpriseRegistrationNumber.equals("")){
 			return ResultModel.failModel("注册号为空");
 		}
+		
 		String year=request.getParameter("year");
 		if(year==null || year.equals("")){
 			return ResultModel.failModel("年份为空");
 		}
 		//获得content
-		Map map=BalanceConstant.createMap(request);
+		String json=request.getParameter("json");
+		Map map=(Map) ( JSON.parse(json));
+		//Map map=BalanceConstant.createMap(request);
 		//生成资产负债表
 		BalanceStatement bs=new BalanceStatement();	
 		bs.setDate(FormatDateUtil.formatToMongoDate(year));
@@ -72,7 +74,8 @@ public class DataService {
 		}
 		String year=request.getParameter("year");
 		//获得content
-		Map map=CashFlowConstant.createMap(request);
+		String json=request.getParameter("json");
+		Map map=(Map) ( JSON.parse(json));
 		//生成资产负债表
 		CashFlowStatement cs=new CashFlowStatement();	
 		cs.setDate(FormatDateUtil.formatToMongoDate(year));
@@ -102,7 +105,8 @@ public class DataService {
 		}
 		String year=request.getParameter("year");
 		//获得content
-		Map map=ProfitConstant.createMap(request);
+		String json=request.getParameter("json");
+		Map map=(Map) ( JSON.parse(json));
 		//生成资产负债表
 		ProfitStatement ps=new ProfitStatement();	
 		ps.setDate(FormatDateUtil.formatToMongoDate(year));
@@ -132,7 +136,8 @@ public class DataService {
 		String year=request.getParameter("year");
 		
 		//获得content
-		Map map=BalanceConstant.createMap(request);
+		String json=request.getParameter("json");
+		Map map=(Map) ( JSON.parse(json));
 		//生成资产负债表
 		BalanceStatement bs=new BalanceStatement();	
 		bs.setDate(FormatDateUtil.formatToMongoDate(year));
@@ -165,7 +170,8 @@ public class DataService {
 		String year=request.getParameter("year");
 		
 		//获得content
-		Map map=CashFlowConstant.createMap(request);
+		String json=request.getParameter("json");
+		Map map=(Map) ( JSON.parse(json));
 		//生成资产负债表
 		CashFlowStatement cs=new CashFlowStatement();	
 		cs.setDate(FormatDateUtil.formatToMongoDate(year));
@@ -197,7 +203,8 @@ public class DataService {
 		String year=request.getParameter("year");
 		
 		//获得content
-		Map map=ProfitConstant.createMap(request);
+		String json=request.getParameter("json");
+		Map map=(Map) ( JSON.parse(json));
 		//生成资产负债表
 		ProfitStatement ps=new ProfitStatement();	
 		ps.setDate(FormatDateUtil.formatToMongoDate(year));

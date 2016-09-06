@@ -1,5 +1,8 @@
 package com.runrong.managecenter.business.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,8 @@ import com.runrong.managecenter.business.aop.CheckPermission;
 import com.runrong.managecenter.business.model.datacollection.EnterpriseFinancialData;
 import com.runrong.managecenter.business.service.DataService;
 import com.runrong.managecenter.common.base.ResultModel;
+import com.runrong.managecenter.common.util.AssignListHelper;
+import com.runrong.managecenter.config.StatementConfig;
 
 /**
  * 数据控制层
@@ -186,13 +191,19 @@ public class DataController {
 		}
 			
 		map.put("EnterpriseFinancialData", efd);
-		if(efd.getBalanceStatements()!=null){
+		if(efd.getBalanceStatements()!=null){	
+			map.put("head", (List<String>)( (Map) StatementConfig.balanceStatementMap.get("head")).get("names"));
+			map.put("balancestatementList", AssignListHelper.assignBalanceStatementList(efd));
 			return new ModelAndView("/managecenter/updatebalancestatement");
 		}
 		if(efd.getCashFlowStatements()!=null){
+			map.put("head", (List<String>)( (Map) StatementConfig.cashflowStatementMap.get("head")).get("names"));
+			map.put("cashflowStatementList", AssignListHelper.assignCashflowStatementList(efd));
 			return new ModelAndView("/managecenter/updatecashflowstatement");
 		}
 		if(efd.getProfitStatements()!=null){
+			map.put("head", (List<String>)( (Map) StatementConfig.profitStatementMap.get("head")).get("names"));
+			map.put("profitStatementList", AssignListHelper.assignProfitStatementList(efd));
 			return new ModelAndView("/managecenter/updateprofitstatement");
 		}
 				

@@ -32,7 +32,11 @@
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
-
+  <style>
+  .table tbody>tr>td{
+  		vertical-align:middle;
+  }
+  </style>
 
   </head>
 
@@ -57,9 +61,8 @@
                           </header>
                           <div class="panel-body">
                               <form class="form-horizontal tasi-form" id="form">
-                              	 <div class="form-group">
-                                      <label class="control-label col-lg-2" ></label>                                                                                                             	                                   
-                                      <div class="col-lg-10">                                         	                                                                       	 
+                              	 <div class="form-group">                                                                                                            	                                   
+                                      <div class="col-lg-10" style="float:none">                                         	                                                                       	 
                                           <div class="input-group m-bot15">
                                               <span class="input-group-addon">企业注册号</span>
                                               <input type="text" class="form-control" placeholder="企业注册号" name="enterpriseRegistrationNumber" id="enterpriseRegistrationNumber" >                                             
@@ -76,132 +79,39 @@
                                                                                                     
                             </div>
                               
-                              
-                                  <div class="form-group">
-                                      <label class="control-label col-lg-2" >营业内：</label>
-                                      <div class="col-lg-10">
-                                       	  <div class="input-group m-bot15">                                            
-                                              <label class="control-label">流入：</label>                                            
-                                          </div> 
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">营业收入</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYN_YYSR_LR_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYN_YYSR_LR_SN" >
-                                          </div>
-
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">公允介值变动收益</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYN_GYJZBDSY_LR_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYN_GYJZBDSY_LR_SN" >
-                                          </div>
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">投资收益</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYN_TZSY_LR_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYN_TZSY_LR_SN" >
-                                          </div>
-                                          
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">对联营企业和合营企业的投资收益</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYN_DLYQYHHYQYDTZSY_LR_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYN_DLYQYHHYQYDTZSY_LR_SN" >
-                                          </div>
-                                          <div class="input-group m-bot15">                                            
-                                              <label class="control-label">流出：</label>                                            
-                                          </div> 
-                                           <div class="input-group m-bot15">
-                                              <span class="input-group-addon">营业成本</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYN_YYCB_LC_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYN_YYCB_LC_SN" >
-                                          </div>
-                                          
-                                           <div class="input-group m-bot15">
-                                              <span class="input-group-addon">营业税金及附加</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYN_YYSJJFJ_LC_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYN_YYSJJFJ_LC_SN" >
-                                          </div>
-                                          
-                                           <div class="input-group m-bot15">
-                                              <span class="input-group-addon">销售费用</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYN_SSFY_LC_LC_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYN_SSFY_LC_LC_SN" >
-                                          </div>
-                                          
-                                           <div class="input-group m-bot15">
-                                              <span class="input-group-addon">管理费用</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYN_GLFY_LC_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYN_GLFY_LC_SN" >
-                                          </div>
-                                           <div class="input-group m-bot15">
-                                              <span class="input-group-addon">财务费用</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYN_CWFY_LC_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYN_CWFY_LC_SN" >
-                                          </div>
-                                           <div class="input-group m-bot15">
-                                              <span class="input-group-addon">资产减值损失</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYN_CCJZSS_LC_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYN_CCJZSS_LC_SN" >
-                                          </div>
-                                                                      
-                                      </div>
-                                  </div>
+                              <table class="table" id="table">
+                              <thead>
+                              <tr >                                 
+                                  <th id=${head[3]} pid=${head[4]}>${head[0]}</th>
+                                  <th><input type="text" class="form-control"  style="display:none">${head[1]}</th>
+                                  <th><input type="text" class="form-control"  style="display:none">${head[2]}</th>                               
+                              </tr>
+                              </thead>
+                              <#list profitStatementList as list>
+                            
+                              <tbody>
+                              <tr>                   
                                   
-                                  
-                                  <div class="form-group">
-                                      <label class="control-label col-lg-2" >营业外：</label>
-                                      <div class="col-lg-10">
-                                        <div class="input-group m-bot15">                                            
-                                              <label class="control-label">流入：</label>                                            
-                                          </div> 
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">营业外收入</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYW_YYWSR_LR_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYW_YYWSR_LR_SN" >
-                                          </div>
-                                          <div class="input-group m-bot15">                                      
-                                              <label class="control-label">流出：</label>                                            
-                                          </div> 
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">营业外支出</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="YYW_YYWZC_LC_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="YYW_YYWZC_LC_SN" >
-                                          </div>
-                                          
-                                         
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <label class="control-label col-lg-2" >税费：</label>
-                                      <div class="col-lg-10">
-                                      
-                                            <div class="input-group m-bot15">                                            
-                                              <label class="control-label">流出：</label>                                            
-                                          </div> 
-                                         <div class="input-group m-bot15">
-                                              <span class="input-group-addon">所得税费用</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="SF_SDSFY_LC_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="SF_SDSFY_LC_SN" >
-                                          </div>
-                                        
-                                  
-                                  </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <label class="control-label col-lg-2" >每股收益：</label>
-                                      <div class="col-lg-10">
-                                     
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">基本每股收益</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="MGSY_JBMGSY_BN" >
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="MGSY_JBMGSY_SN" >
-                                          </div>
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">稀释每股收益</span>
-                                              <input type="text" class="form-control" placeholder="本年累计数" name="MGSY_XSMGSY_BN">
-                                              <input type="text" class="form-control" placeholder="上年累计数" name="MGSY_XSMGSY_SN" >
-                                          </div>
-                                                  
-                                      </div>
-                                  </div>
+                                  <#if list.data[5]=="title">
+                                  <td id=${list.data[3]} pid=${list.data[4]} role=${list.data[5]} style="font-weight: bold;">${list.data[0]}</td>
+                                  <td><input type="text" class="form-control"  style="display:none"></td>
+                                  <td><input type="text" class="form-control"  style="display:none"></td>
+                                  <#elseif list.data[5]=="item">
+                                  <td id=${list.data[3]} pid=${list.data[4]} role=${list.data[5]}>${list.data[0]}</td>
+                                  <td><input type="text" class="form-control"  ></td>
+                                  <td><input type="text" class="form-control"  ></td>
+                                  <#elseif list.data[5]=="titleitem">
+                                  <td id=${list.data[3]} pid=${list.data[4]} role=${list.data[5]} style="font-weight: bold;">${list.data[0]}</td>
+                                  <td><input type="text" class="form-control"  ></td>
+                                  <td><input type="text" class="form-control"  ></td>
+                                  <#else>
+                                  <td></td>
+                                  <td></td>
+                                  </#if>                         
+ 	                          </tr>
+                              </tbody>                            
+                              </#list>
+                          </table>
                                                 
                                   <div class="col-lg-offset-2 col-lg-10">           
                                        <button type="button" class="btn btn-info" id="submit">提交</button>                                    
@@ -245,14 +155,18 @@
 
   <!--script for this page-->
   <script src="js/form-component.js"></script>
+  <script src="js/json2.js"></script>
+  <script src="js/json.tree.js"></script>
 	<script type="text/javascript">
 
 	
 	$("#submit").click(function(){
+		var jsondata=profitStatementToJson();
+		jsondata=JSON.stringify(jsondata) ;
 		$.ajax({             
                 type: "POST",
                 url:"/managecenter/saveProfitStatement",
-                data:$('#form').serialize(),// 你的formid
+                data:"enterpriseRegistrationNumber="+$("#enterpriseRegistrationNumber").val()+"&year="+$("#year").val()+"&json="+jsondata,// 你的formid
                 async: false,
                 error: function(request) {
                     alert("Connection error");

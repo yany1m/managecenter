@@ -1,5 +1,7 @@
 package com.runrong.managecenter.business.dao;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
@@ -92,12 +94,8 @@ public class DataDao {
 	 * @param efd
 	 */
 	public void updateBalanceStatement(EnterpriseFinancialData efd){	
-		BalanceStatement bs=(BalanceStatement) efd.getBalanceStatements().get(0);
-		Query query = Query.query(Criteria.where("enterpriseRegistrationNumber").is(efd.getEnterpriseRegistrationNumber())
-                .and("balanceStatements.date").is(bs.getDate()));
-        Update update = new Update();
-        update.set("balanceStatements", efd.getBalanceStatements());
-        mongoTemplate.updateFirst(query, update, EnterpriseFinancialData.class);
+		deleteBalanceStatement(efd);
+		saveBalanceStatement(efd);
 	}
 	
 	
@@ -106,12 +104,8 @@ public class DataDao {
 	 * @param efd
 	 */
 	public void updateCashFlowStatement(EnterpriseFinancialData efd){	
-		CashFlowStatement cs=(CashFlowStatement) efd.getCashFlowStatements().get(0);
-		Query query = Query.query(Criteria.where("enterpriseRegistrationNumber").is(efd.getEnterpriseRegistrationNumber())
-                .and("cashFlowStatements.date").is(cs.getDate()));
-        Update update = new Update();
-        update.set("cashFlowStatements", efd.getCashFlowStatements());
-        mongoTemplate.updateFirst(query, update, EnterpriseFinancialData.class);
+		deleteCashFlowStatement(efd);
+		saveCashFlowStatement(efd);
 	}
 	
 	
@@ -120,12 +114,21 @@ public class DataDao {
 	 * @param efd
 	 */
 	public void updateProfitStatement(EnterpriseFinancialData efd){	
-		ProfitStatement ps=(ProfitStatement) efd.getProfitStatements().get(0);
-		Query query = Query.query(Criteria.where("enterpriseRegistrationNumber").is(efd.getEnterpriseRegistrationNumber())
-                .and("profitStatements.date").is(ps.getDate()));
-        Update update = new Update();
-        update.set("profitStatements", efd.getCashFlowStatements());
-        mongoTemplate.updateFirst(query, update, EnterpriseFinancialData.class);
+//		ProfitStatement ps=(ProfitStatement) efd.getProfitStatements().get(0);
+//		Query query = Query.query(Criteria.where("enterpriseRegistrationNumber").is(efd.getEnterpriseRegistrationNumber())
+//                .and("profitStatements.date").is(ps.getDate()));
+//        Update update = new Update();
+//        update.set("profitStatements", efd.getProfitStatements());
+//        mongoTemplate.updateFirst(query, update, EnterpriseFinancialData.class);
+		
+		//spring的mongodbTemplate真是不好用
+		//update.setOnInsert("profitStatements", efd.getProfitStatements());这样在更新的时候会把其它的覆盖掉
+		//插入数组的元素efd.getProfitStatements()。get(0)时一直报java.lang.IllegalArgumentException的错误
+		//运用(profitStatements.$)也没有反应
+		//只能用先删除，再插入的方法暂时代替实现更新-_-///
+				
+		deleteProfitStatement(efd);
+		saveProfitStatement(efd);
 	}
 	
 	/**

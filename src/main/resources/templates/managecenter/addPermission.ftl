@@ -64,7 +64,7 @@
                                       <input name="parent" class="form-control" id="parent" placeholder="parent">
                                   </div>
                                                                
-                                  <button class="btn btn-info" type="submit" >Submit</button>
+                                  <button class="btn btn-info" type="submit" >提交</button>
                             	</form>
 
                           </div>

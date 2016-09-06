@@ -51,7 +51,7 @@
                                       <label for="exampleInputEmail1">名称</label>
                                       <input type="name" name="name" class="form-control" id="name" placeholder="Enter name">
                                   </div>                                                                                                                             
-                                  <button class="btn btn-info" type="submit" >Submit</button>
+                                  <button class="btn btn-info" type="submit" >提交</button>
                             	</form>
 
                           </div>

@@ -66,7 +66,7 @@
                                       <input name="parent" class="form-control" id="parent" placeholder="parent" value="${parent}">
                                   </div>
                                    <input type="hidden" name="id" id="userId" value="${id}">                            
-                                  <button type="submit" class="btn btn-info">Submit</button>
+                                  <button type="submit" class="btn btn-info">提交</button>
                               </form>
 
                           </div>

@@ -2,6 +2,7 @@ package com.runrong.managecenter.common.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -17,8 +18,12 @@ public class FormatDateUtil {
 		
 		
 			Date time = null;
+			//mongodb自带的时区问题
 			try {
-				time = sdf.parse(sdf.format(sdf2.parse(date)));
+				 Calendar ca = Calendar.getInstance();
+			     ca.setTime(sdf2.parse(date));
+			     ca.add(Calendar.HOUR_OF_DAY, 8);
+				time = sdf.parse(sdf.format(ca.getTime()));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

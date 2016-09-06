@@ -16,7 +16,7 @@ import com.runrong.managecenter.config.DbConfig;
 import com.runrong.managecenter.config.RSAConfig;
 import com.runrong.managecenter.config.SecurityConfig;
 import com.runrong.managecenter.config.ServerPortConfig;
-import com.runrong.managecenter.config.SpringMongoConfig;
+import com.runrong.managecenter.config.StatementConfig;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
@@ -29,8 +29,8 @@ public class ManageCenterApp extends SpringBootServletInitializer implements Emb
     	ServerPortConfig.init();
         DbConfig.init();
         SecurityConfig.init();
-        SpringMongoConfig.init();
         RSAConfig.init();
+        StatementConfig.init();
         logger.info("Config加载完毕~");
         SpringApplication.run(ManageCenterApp.class, args);
     }

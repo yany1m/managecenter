@@ -32,7 +32,11 @@
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
-
+  <style>
+  .table tbody>tr>td{
+  		vertical-align:middle;
+  }
+  </style>
 
   </head>
 
@@ -57,9 +61,8 @@
                           </header>
                           <div class="panel-body">
                               <form class="form-horizontal tasi-form" id="form">
-                              	 <div class="form-group">
-                                      <label class="control-label col-lg-2" ></label>                                                                                                             	                                   
-                                      <div class="col-lg-10">                                         	                                                                       	 
+                              	 <div class="form-group">                                                                                                             	                                   
+                                      <div class="col-lg-10" style="float:none">                                         	                                                                       	 
                                           <div class="input-group m-bot15">
                                               <span class="input-group-addon">企业注册号</span>
                                               <input type="text" class="form-control" placeholder="企业注册号" name="enterpriseRegistrationNumber" id="enterpriseRegistrationNumber" value=${EnterpriseFinancialData.enterpriseRegistrationNumber}>                                             
@@ -74,181 +77,39 @@
                                           </div>
                                        </div>
                                                                                                     
-                            </div>
+                           			 </div>
+                              		 </#list>
                               
-                              
-                                  <div class="form-group">
-                                      <label class="control-label col-lg-2" >经营活动产生的现金流量：</label>
-                                      <div class="col-lg-10">
-                                       	  <div class="input-group m-bot15">                                            
-                                              <label class="control-label">流入：</label>                                            
-                                          </div> 
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">销售商品、提供劳务收到的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="JYHDCSDXJLL_SSSPTGLWSDDXJ_LR_BN" value=${cashFlowStatement.content.经营活动产生的现金流量.流入['销售商品、提供劳务收到的现金'].本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="JYHDCSDXJLL_SSSPTGLWSDDXJ_LR_SN" value=${cashFlowStatement.content.经营活动产生的现金流量.流入['销售商品、提供劳务收到的现金'].上年累计金额}>
-                                          </div>
-
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">收到的税费返还</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="JYHDCSDXJLL_SDDSFFH_LR_BN" value=${cashFlowStatement.content.经营活动产生的现金流量.流入.收到的税费返还.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="JYHDCSDXJLL_SDDSFFH_LR_SN" value=${cashFlowStatement.content.经营活动产生的现金流量.流入.收到的税费返还.上年累计金额}>
-                                          </div>
-                                          
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">收到其他与经营活动有关的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="JYHDCSDXJLL_SDQTYJYHDYGDXJ_LR_BN" value=${cashFlowStatement.content.经营活动产生的现金流量.流入.收到其他与经营活动有关的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="JYHDCSDXJLL_SDQTYJYHDYGDXJ_LR_SN" value=${cashFlowStatement.content.经营活动产生的现金流量.流入.收到其他与经营活动有关的现金.上年累计金额}>
-                                          </div>
-                                          <div class="input-group m-bot15">                                            
-                                              <label class="control-label">流出：</label>                                            
-                                          </div> 
-                                           <div class="input-group m-bot15">
-                                              <span class="input-group-addon">购买商品、接受劳务支付的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="JYHDCSDXJLL_GMSPJSLWZFDXJ_LC_BN" value=${cashFlowStatement.content.经营活动产生的现金流量.流出['购买商品、接受劳务支付的现金'].本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="JYHDCSDXJLL_GMSPJSLWZFDXJ_LC_SN" value=${cashFlowStatement.content.经营活动产生的现金流量.流出['购买商品、接受劳务支付的现金'].上年累计金额}>
-                                          </div>
-                                          
-                                           <div class="input-group m-bot15">
-                                              <span class="input-group-addon">支付给职工以及为职工支付的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="JYHDCSDXJLL_ZFGZGYJWZGZFDXJ_LC_BN" value=${cashFlowStatement.content.经营活动产生的现金流量.流出.支付给职工以及为职工支付的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="JYHDCSDXJLL_ZFGZGYJWZGZFDXJ_LC_SN" value=${cashFlowStatement.content.经营活动产生的现金流量.流出.支付给职工以及为职工支付的现金.上年累计金额}>
-                                          </div>
-                                          
-                                           <div class="input-group m-bot15">
-                                              <span class="input-group-addon">支付的各项税费</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="JYHDCSDXJLL_ZFDGXSF_LC_BN" value=${cashFlowStatement.content.经营活动产生的现金流量.流出.支付的各项税费.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="JYHDCSDXJLL_ZFDGXSF_LC_SN" value=${cashFlowStatement.content.经营活动产生的现金流量.流出.支付的各项税费.上年累计金额}>
-                                          </div>
-                                          
-                                           <div class="input-group m-bot15">
-                                              <span class="input-group-addon">支付其他与经营活动有关的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="JYHDCSDXJLL_ZFQTYJYHDYGDXJ_LC_BN" value=${cashFlowStatement.content.经营活动产生的现金流量.流出.支付其他与经营活动有关的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="JYHDCSDXJLL_ZFQTYJYHDYGDXJ_LC_SN" value=${cashFlowStatement.content.经营活动产生的现金流量.流出.支付其他与经营活动有关的现金.上年累计金额}>
-                                          </div>
-                                                                      
-                                      </div>
-                                  </div>
+                                  <table class="table" id="table">
+                              <thead>
+                              <tr >                             
+                                  <th id=${head[3]} pid=${head[4]}>${head[0]}</th>
+                                  <th><input type="text" class="form-control"  style="display:none">${head[1]}</th>
+                                  <th><input type="text" class="form-control"  style="display:none">${head[2]}</th>                            
+                              </tr>
+                              </thead>
+                              <#list cashflowStatementList as list>
+                            
+                              <tbody>
+                              <tr>                   
                                   
+                                  <#if list.data[5]=="title">
+                                  <td id=${list.data[3]} pid=${list.data[4]} style="font-weight: bold;">${list.data[0]}</td>
+                                  <td><input type="text" class="form-control"  style="display:none"></td>
+                                  <td><input type="text" class="form-control"  style="display:none"></td>
+                                  <#elseif list.data[5]=="item">
+                                  <td id=${list.data[3]} pid=${list.data[4]} >${list.data[0]}</td>
+                                  <td><input type="text" class="form-control"  value=${list.data[1]}></td>
+                                  <td><input type="text" class="form-control"  value=${list.data[2]}></td>
+                                  <#else>
+                                  <td></td>
+                                  <td></td>
+                                  </#if>       
+                              </tr>
+                              </tbody>                            
+                              </#list>
+                          </table>
                                   
-                                  <div class="form-group">
-                                      <label class="control-label col-lg-2" >投资活动产生的现金流量：</label>
-                                      <div class="col-lg-10">
-                                        <div class="input-group m-bot15">                                            
-                                              <label class="control-label">流入：</label>                                            
-                                          </div> 
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">收回投资收到的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="TZHDCSDXJLL_SHTZSDDXJ_LR_BN" value=${cashFlowStatement.content.投资活动产生的现金流量.流入.收回投资收到的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="TZHDCSDXJLL_SHTZSDDXJ_LR_SN" value=${cashFlowStatement.content.投资活动产生的现金流量.流入.收回投资收到的现金.上年累计金额}>
-                                          </div>
-                                          
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">取得投资收益收到的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="TZHDCSDXJLL_QDTZSYSDDXJ_LR_BN" value=${cashFlowStatement.content.投资活动产生的现金流量.流入.取得投资收益收到的现金.本年累计金额}> 
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="TZHDCSDXJLL_QDTZSYSDDXJ_LR_SN" value=${cashFlowStatement.content.投资活动产生的现金流量.流入.取得投资收益收到的现金.上年累计金额}>
-                                          </div>
-                                          
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">处置固定资产、无形资产和其他长期资产收回的现金净额</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="TZHDCSDXJLL_CZGDZCWXZCHQTCQZCSHDXJJE_LR_BN" value=${cashFlowStatement.content.投资活动产生的现金流量.流入['处置固定资产、无形资产和其他长期资产收回的现金净额'].本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="TZHDCSDXJLL_CZGDZCWXZCHQTCQZCSHDXJJE_LR_SN" value=${cashFlowStatement.content.投资活动产生的现金流量.流入['处置固定资产、无形资产和其他长期资产收回的现金净额'].上年累计金额}>
-                                          </div>
-                                          
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">处置子公司及其他营业单位收到的现金净额</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="TZHDCSDXJLL_CZZGSJQTYYDWSDDXJJE_LR_BN" value=${cashFlowStatement.content.投资活动产生的现金流量.流入.处置子公司及其他营业单位收到的现金净额.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="TZHDCSDXJLL_CZZGSJQTYYDWSDDXJJE_LR_SN" value=${cashFlowStatement.content.投资活动产生的现金流量.流入.处置子公司及其他营业单位收到的现金净额.上年累计金额}>
-                                          </div>
-                                          
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">收到其他与投资活动有关的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="TZHDCSDXJLL_SDQTYTZHDYGDXJ_LR_BN" value=${cashFlowStatement.content.投资活动产生的现金流量.流入.收到其他与投资活动有关的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="TZHDCSDXJLL_SDQTYTZHDYGDXJ_LR_SN" value=${cashFlowStatement.content.投资活动产生的现金流量.流入.收到其他与投资活动有关的现金.上年累计金额}>
-                                          </div>
-                                            <div class="input-group m-bot15">                                            
-                                              <label class="control-label">流出：</label>                                            
-                                          </div> 
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">购建固定资产、无形资产和其他长期资产支付的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="TZHDCSDXJLL_GJGDZCWXZCHQTCQZCZFDXJ_LC_BN" value=${cashFlowStatement.content.投资活动产生的现金流量.流出['购建固定资产、无形资产和其他长期资产支付的现金'].本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="TZHDCSDXJLL_GJGDZCWXZCHQTCQZCZFDXJ_LC_SN" value=${cashFlowStatement.content.投资活动产生的现金流量.流出['购建固定资产、无形资产和其他长期资产支付的现金'].上年累计金额}>
-                                          </div>
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">投资支付的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="TZHDCSDXJLL_TZZFDXJ_LC_BN" value=${cashFlowStatement.content.投资活动产生的现金流量.流出.投资支付的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="TZHDCSDXJLL_TZZFDXJ_LC_SN" value=${cashFlowStatement.content.投资活动产生的现金流量.流出.投资支付的现金.上年累计金额}>
-                                          </div>
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">取得子公司及其他营业单位支付的现金净额</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="TZHDCSDXJLL_QDZGSJQTYYDWZFDXJJE_LC_BN" value=${cashFlowStatement.content.投资活动产生的现金流量.流出.取得子公司及其他营业单位支付的现金净额.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="TZHDCSDXJLL_QDZGSJQTYYDWZFDXJJE_LC_SN" value=${cashFlowStatement.content.投资活动产生的现金流量.流出.取得子公司及其他营业单位支付的现金净额.上年累计金额}>
-                                          </div>
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">支付其他与投资活动有关的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="TZHDCSDXJLL_ZFQTYTZHDYGDXJ_LC_BN" value=${cashFlowStatement.content.投资活动产生的现金流量.流出.支付其他与投资活动有关的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="TZHDCSDXJLL_ZFQTYTZHDYGDXJ_LC_SN" value=${cashFlowStatement.content.投资活动产生的现金流量.流出.支付其他与投资活动有关的现金.上年累计金额}>
-                                          </div>
-                                         
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <label class="control-label col-lg-2" >筹资活动产生的现金流量：</label>
-                                      <div class="col-lg-10">
-                                        <div class="input-group m-bot15">                                            
-                                              <label class="control-label">流入：</label>                                            
-                                          </div> 
-                                         <div class="input-group m-bot15">
-                                              <span class="input-group-addon">吸收投资收到的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="CZHDCSDXJLL_XSTZSDDXJ_LR_BN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流入.吸收投资收到的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="CZHDCSDXJLL_XSTZSDDXJ_LR_SN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流入.吸收投资收到的现金.上年累计金额}>
-                                          </div>
-                                         <div class="input-group m-bot15">
-                                              <span class="input-group-addon">取得借款收到的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="CZHDCSDXJLL_QDJKSDDXJ_LR_BN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流入.取得借款收到的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="CZHDCSDXJLL_QDJKSDDXJ_LR_SN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流入.取得借款收到的现金.上年累计金额}>
-                                          </div>
-                                         <div class="input-group m-bot15">
-                                              <span class="input-group-addon">收到其他与筹资活动有关的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="CZHDCSDXJLL_SDQTYCZHDYGDXJ_LR_BN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流入.收到其他与筹资活动有关的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="CZHDCSDXJLL_SDQTYCZHDYGDXJ_LR_SN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流入.收到其他与筹资活动有关的现金.上年累计金额}>
-                                          </div>
-                                            <div class="input-group m-bot15">                                            
-                                              <label class="control-label">流出：</label>                                            
-                                          </div> 
-                                         <div class="input-group m-bot15">
-                                              <span class="input-group-addon">偿还债务支付的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="CZHDCSDXJLL_CHZWZFDXJ_LC_BN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流出.偿还债务支付的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="CZHDCSDXJLL_CHZWZFDXJ_LC_SN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流出.偿还债务支付的现金.上年累计金额}>
-                                          </div>
-                                         <div class="input-group m-bot15">
-                                              <span class="input-group-addon">分配股利、利润或偿付利息支付的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="CZHDCSDXJLL_FPGLLRHCHLXZFDXJ_LC_BN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流出['分配股利、利润或偿付利息支付的现金'].本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="CZHDCSDXJLL_FPGLLRHCHLXZFDXJ_LC_SN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流出['分配股利、利润或偿付利息支付的现金'].上年累计金额}>
-                                          </div>
-                                         <div class="input-group m-bot15">
-                                              <span class="input-group-addon">支付其他与筹资活动有关的现金</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="CZHDCSDXJLL_ZFQTYCZHDYGDXJ_LC_BN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流出.支付其他与筹资活动有关的现金.本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="CZHDCSDXJLL_ZFQTYCZHDYGDXJ_LC_SN" value=${cashFlowStatement.content.筹资活动产生的现金流量.流出.支付其他与筹资活动有关的现金.上年累计金额}>
-                                          </div>
-                                        </div> 
-                                  </div>
-                                  <div class="form-group">
-                                      <label class="control-label col-lg-2" >汇率变动对现金及现金等价物的影响：</label>
-                                      <div class="col-lg-10">
-                                        <div class="input-group m-bot15">                                            
-                                              <label class="control-label">流入：</label>                                            
-                                          </div> 
-                                         
-                                          <div class="input-group m-bot15">
-                                              <span class="input-group-addon">加：期初现金及现金等价物余额</span>
-                                              <input type="text" class="form-control" placeholder="本年累计金额" name="HLBDDXJJXJDJWDYX_QCXJJXJDJWYE_LR_BN" value=${cashFlowStatement.content.汇率变动对现金及现金等价物的影响.流入['加：期初现金及现金等价物余额'].本年累计金额}>
-                                              <input type="text" class="form-control" placeholder="上年累计金额" name="HLBDDXJJXJDJWDYX_QCXJJXJDJWYE_LR_SN" value=${cashFlowStatement.content.汇率变动对现金及现金等价物的影响.流入['加：期初现金及现金等价物余额'].上年累计金额}>
-                                          </div>
-                                                  
-                                      </div>
-                                  </div>
-                                  </#list>                      
                                   <div class="col-lg-offset-2 col-lg-10">
                                        <button type="button" class="btn btn-info" id="update">修改</button>
                                        <button type="button" class="btn btn-info" id="submit">提交</button>                                       
@@ -293,43 +154,41 @@
 
   <!--script for this page-->
   <script src="js/form-component.js"></script>
+  <script src="js/json.tree.js"></script>
 	<script type="text/javascript">
 	
 	$("#update").click(function(){
+		var jsondata=cashflowStatementToJson();
+		jsondata=JSON.stringify(jsondata) ;
 		$.ajax({             
                 type: "POST",
                 url:"/managecenter/updateCashFlowStatement",
-                data:$('#form').serialize(),// 你的formid
+                data:"enterpriseRegistrationNumber="+$("#enterpriseRegistrationNumber").val()+"&year="+$("#year").val()+"&json="+jsondata,// 你的formid
                 async: false,
                 error: function(request) {
                     alert("Connection error");
                 },
                 success: function(data) {
-                   $.each(data, function(key, value) {
-    				if(key=="body"){
-    					alert(value);    					
-    				}
-    			});
+                    alert(data.body);  
+   					window.location.reload();
                 }
             });
 	});
 	
 	$("#submit").click(function(){
+		var jsondata=cashflowStatementToJson();
+		jsondata=JSON.stringify(jsondata) ;
 		$.ajax({             
                 type: "POST",
                 url:"/managecenter/saveCashFlowStatement",
-                data:$('#form').serialize(),// 你的formid
+                data:"enterpriseRegistrationNumber="+$("#enterpriseRegistrationNumber").val()+"&year="+$("#year").val()+"&json="+jsondata,// 你的formid
                 async: false,
                 error: function(request) {
                     alert("Connection error");
                 },
                 success: function(data) {
-                   $.each(data, function(key, value) {
-    				if(key=="body"){
-    					alert(value);
-    					window.location.href="/managecenter/cashflowstatement";
-    				}
-    			});
+                   		alert(data.body);
+    					window.location.href="/managecenter/cashflowstatement";   			
                 }
             });
 	});

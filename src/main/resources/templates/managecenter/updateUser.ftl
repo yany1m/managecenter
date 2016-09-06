@@ -61,7 +61,7 @@
                                       <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                                   </div>
                                    <input type="hidden" name="id" id="userId" value="${id}">                            
-                                  <button type="submit" class="btn btn-info">Submit</button>
+                                  <button type="submit" class="btn btn-info">提交</button>
                               </form>
 
                           </div>

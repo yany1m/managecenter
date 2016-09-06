@@ -56,7 +56,7 @@
                                       <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                                   </div>
                                                                
-                                  <button class="btn btn-info" type="submit" >Submit</button>
+                                  <button class="btn btn-info" type="submit" >提交</button>
                             	</form>
 
                           </div>

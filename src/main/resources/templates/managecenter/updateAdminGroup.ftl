@@ -53,7 +53,7 @@
                                       <input type="name" name="name" class="form-control" id="name" placeholder="Enter name" value="${name}">
                                   </div>                                                                                                  
                                    <input type="hidden" name="id" id="adminId" value="${id}">                            
-                                  <button type="submit" class="btn btn-info">Submit</button>
+                                  <button type="submit" class="btn btn-info">提交</button>
                               </form>
 
                           </div>

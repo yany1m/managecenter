@@ -11,11 +11,18 @@ import javax.sql.DataSource;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
+import com.mongodb.Mongo;
 import com.runrong.managecenter.common.util.CryptHelper;
 
 @Configuration
@@ -26,6 +33,9 @@ public class DbConfig {
     public static String password;
     public static String driverClass;
     public static int maxActive = 50;
+    
+    public static String mongodbUrl;
+	public static String collection;
 
     public static void init() throws Throwable {
         InputStream in;
@@ -50,7 +60,8 @@ public class DbConfig {
             maxActive = Integer.parseInt( properties.getProperty("maxActive") );
         }
 
-
+        mongodbUrl = properties.getProperty("mongodbUrl");
+        collection = properties.getProperty("collection");
 
 //        jdbcUrl2 = properties.getProperty("url2");
 //        userName2 = properties.getProperty("username2");
@@ -93,5 +104,24 @@ public class DbConfig {
         //registration.addInitParameter("allow","192.168.0.1/16");
         return registration;
     }
+    
+    public @Bean  
+	  MongoDbFactory mongoDbFactory() throws Exception {  
+	    return new SimpleMongoDbFactory(new Mongo(mongodbUrl), collection);  
+	  }  
+	   
+	  public @Bean  
+	  MongoTemplate mongoTemplate() throws Exception {  
+	   
+	    //remove _class  
+	    MappingMongoConverter converter =   
+	        new MappingMongoConverter(mongoDbFactory(), new MongoMappingContext());  
+	    converter.setTypeMapper(new DefaultMongoTypeMapper(null));  
+	   
+	    MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory(), converter);  
+	   
+	    return mongoTemplate;  
+	   
+	  }  
 
 }

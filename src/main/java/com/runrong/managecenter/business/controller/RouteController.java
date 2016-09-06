@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -27,6 +28,7 @@ import com.runrong.managecenter.business.service.AdminGroupService;
 import com.runrong.managecenter.business.service.AdminService;
 import com.runrong.managecenter.business.service.PermissionService;
 import com.runrong.managecenter.business.service.UserService;
+import com.runrong.managecenter.config.StatementConfig;
 import com.runrong.managecenter.config.RSAConfig;
 /**
  * 界面控制层
@@ -174,7 +176,8 @@ public class RouteController {
 	@RequestMapping("/balancestatement")
 	@ResponseBody
 	public ModelAndView balancestatement(HttpServletRequest request,ModelMap map) throws ParseException{
-					
+		map.put("head", (List<String>)( (Map) StatementConfig.balanceStatementMap.get("head")).get("names"));
+		map.put("balancestatementList", StatementConfig.balanceStatementList);			
 		return new ModelAndView("/managecenter/balancestatement");
 	}
 
@@ -188,7 +191,8 @@ public class RouteController {
 	@RequestMapping("/cashflowstatement")
 	@ResponseBody
 	public ModelAndView cashflowstatement(HttpServletRequest request,ModelMap map) throws ParseException{
-					
+		map.put("head", (List<String>)( (Map) StatementConfig.cashflowStatementMap.get("head")).get("names"));
+		map.put("cashflowStatementList", StatementConfig.cashflowStatementList);				
 		return new ModelAndView("/managecenter/cashflowstatement");
 	}
 	
@@ -202,7 +206,8 @@ public class RouteController {
 	@RequestMapping("/profitstatement")
 	@ResponseBody
 	public ModelAndView profitstatement(HttpServletRequest request,ModelMap map) throws ParseException{
-					
+		map.put("head", (List<String>)( (Map) StatementConfig.profitStatementMap.get("head")).get("names"));
+		map.put("profitStatementList", StatementConfig.profitStatementList);			
 		return new ModelAndView("/managecenter/profitstatement");
 	}
 	
