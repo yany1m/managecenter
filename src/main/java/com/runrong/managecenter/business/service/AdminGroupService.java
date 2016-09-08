@@ -111,6 +111,7 @@ public class AdminGroupService {
 			return ResultModel.failModel("参数有误");
 		}
 		adminGroup.setId(Integer.valueOf(id));
+		adminGroup.setType(1);
 		List list=adminGroupDao.getAdminGroupPermissionById(adminGroup);
 		
 		return ResultModel.successModel(list);
@@ -124,7 +125,12 @@ public class AdminGroupService {
 	public ResultModel updateAdminGroupPermission(HttpServletRequest request){
 		AdminGroup adminGroup=new AdminGroup();
 		List<Object[]> batch=new ArrayList<Object[]>();			
+		//存储该组type=1的权限
 		HashSet<String> set=new HashSet<String>();
+		//存储该组type=0的权限
+		HashSet<String> set1=new HashSet<String>();
+		//存储对比过后，需要将type=0更新为1的权限
+		HashSet<String> set2=new HashSet<String>();
 		
 		String id=request.getParameter("id");
 		if(id==null || id.equals("")){
@@ -132,11 +138,18 @@ public class AdminGroupService {
 		}
 		
 		adminGroup.setId(Integer.valueOf(id));
+		adminGroup.setType(1);
 		List<Map> list=adminGroupDao.getAdminGroupPermissionById(adminGroup);
 		for(Map map:list){
 			set.add((String) map.get("permissionsId"));
 		}
-				
+		
+		adminGroup.setType(0);
+		list=adminGroupDao.getAdminGroupPermissionById(adminGroup);
+		for(Map map:list){
+			set1.add((String) map.get("permissionsId"));
+		}
+		
 		String[] permissionIds=request.getParameterValues("checkboxes");
 		if(permissionIds!=null && permissionIds.length>0){
 			for(String permissionId:permissionIds){	
@@ -145,16 +158,23 @@ public class AdminGroupService {
 					set.remove(permissionId);					
 					continue;
 				}
+				if(set1.contains(permissionId)){
+					set2.add(permissionId);					
+					continue;
+				}
+				
 				Object[] values = new Object[] {
 							id,
-							permissionId};
-//							id,
+							permissionId,
+							1};
 //							permissionId};				
 				      batch.add(values);
 			}
 		}
 		
-		adminGroupDao.removeAdminGroupPermission(set,id);
+		adminGroupDao.updateAdminGroupPermission(set,id,"0");
+		adminGroupDao.updateAdminGroupPermission(set2,id,"1");
+		
 		int[] updateCounts=adminGroupDao.addPermissionToAdminGroup(batch);
 		
 		//每次更新后都需要存入缓存中	

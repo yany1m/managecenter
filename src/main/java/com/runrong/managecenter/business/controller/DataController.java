@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.runrong.managecenter.business.aop.CheckPermission;
 import com.runrong.managecenter.business.model.datacollection.EnterpriseFinancialData;
 import com.runrong.managecenter.business.service.DataService;
+import com.runrong.managecenter.business.service.StatementTemplateService;
 import com.runrong.managecenter.common.base.ResultModel;
 import com.runrong.managecenter.common.util.AssignListHelper;
 import com.runrong.managecenter.config.StatementConfig;
@@ -31,6 +32,9 @@ public class DataController {
 	
 	@Autowired
 	DataService dataService;
+	
+	@Autowired
+	StatementTemplateService statementTemplateService;
 	
 	/**
 	 * 插入资产负债表
@@ -192,19 +196,16 @@ public class DataController {
 			
 		map.put("EnterpriseFinancialData", efd);
 		if(efd.getBalanceStatements()!=null){	
-			map.put("head", (List<String>)( (Map) StatementConfig.balanceStatementMap.get("head")).get("names"));
-			map.put("balancestatementList", AssignListHelper.assignBalanceStatementList(efd));
-			return new ModelAndView("/managecenter/updatebalancestatement");
+			return (ModelAndView)statementTemplateService.getBalanceStatementTemplateSelected(request, map, "/managecenter/updatebalancestatement", 
+					AssignListHelper.assignBalanceStatementList(efd,StatementConfig.balanceStatementList)).getBody();	 
 		}
 		if(efd.getCashFlowStatements()!=null){
-			map.put("head", (List<String>)( (Map) StatementConfig.cashflowStatementMap.get("head")).get("names"));
-			map.put("cashflowStatementList", AssignListHelper.assignCashflowStatementList(efd));
-			return new ModelAndView("/managecenter/updatecashflowstatement");
+			return (ModelAndView)statementTemplateService.getCashflowStatementTemplateSelected(request, map, "/managecenter/updatecashflowstatement", 
+					AssignListHelper.assignCashflowStatementList(efd,StatementConfig.cashflowStatementList)).getBody();
 		}
 		if(efd.getProfitStatements()!=null){
-			map.put("head", (List<String>)( (Map) StatementConfig.profitStatementMap.get("head")).get("names"));
-			map.put("profitStatementList", AssignListHelper.assignProfitStatementList(efd));
-			return new ModelAndView("/managecenter/updateprofitstatement");
+			return (ModelAndView)statementTemplateService.getProfitStatementTemplateSelected(request, map, "/managecenter/updateprofitstatement", 
+					AssignListHelper.assignProfitStatementList(efd,StatementConfig.profitStatementList)).getBody();
 		}
 				
 		return new ModelAndView("/managecenter/findstatement");

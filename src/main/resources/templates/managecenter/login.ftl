@@ -24,15 +24,10 @@
                 <div >
 				<input type="verifycode" id="verifycode" name="verifycode" class="form-control" placeholder="验证码" style="width:84%;float:left" required> 
 				<img id="imageCode" src="/managecenter/getVerifyCode" style="padding-left:5px;padding-right:5px;cursor: pointer;" align="absmiddle" onclick="changeCode()"/>
-				</div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="rememberMe" value="remember-me">记住我
-                    </label>
-                </div>
+				</div>              
                 <input type="hidden" id="username1">  
                 <input type="hidden" id="password1">  
-                <button class="btn btn-lg btn-primary btn-block"  type="submit">登陆</button>
+                <button class="btn btn-lg btn-primary btn-block"  style="margin-top:20px" type="submit">登陆</button>
             </form>
         </div>
     </div>
@@ -48,14 +43,7 @@
 $(document).ready(function(){
 	 $("#form").submit(function(event){
 	    event.preventDefault();
-	    if($('#rememberMe:checked').length>0){//设置cookie  
-            $.cookie('username', $('#username').val());  
-            $.cookie('password', $('#password').val());  
-        }else{//清除cookie  
-            $.removeCookie('username');  
-            $.removeCookie('password');  
-        }  
-        
+	          
         //使用RSA进行加密
         var key = RSAUtils.getKeyPair('${exponent}', '', '${modulus}'); 
         $("#username1").val(RSAUtils.encryptedString(key, $("#username").val()));

@@ -26,11 +26,11 @@ import com.runrong.managecenter.config.StatementConfig;
 public class AssignListHelper {
 	private static Logger logger = LoggerFactory.getLogger(AssignListHelper.class);
 	
-	public static List assignBalanceStatementList(EnterpriseFinancialData efd){		
+	public static List assignBalanceStatementList(EnterpriseFinancialData efd,List statementList){		
 
 		List<Map> list = null;
 		try {
-			list = deepCopy(StatementConfig.balanceStatementList);
+			list = deepCopy(statementList);
 			for(Map map:list){
 				List<String> data=(List) map.get("data");
 				data.set(1,getBalanceStatementData(efd,data.get(1)));
@@ -47,10 +47,10 @@ public class AssignListHelper {
 		return list;
 	}
 	
-	public static List assignCashflowStatementList(EnterpriseFinancialData efd){				
+	public static List assignCashflowStatementList(EnterpriseFinancialData efd,List statementList){				
 		List<Map> list = null;
 		try {
-			list = deepCopy(StatementConfig.cashflowStatementList);
+			list = deepCopy(statementList);
 			for(Map map:list){
 				List<String> data=(List) map.get("data");
 				data.set(1,getCashflowStatementData(efd,data.get(1)));
@@ -65,10 +65,10 @@ public class AssignListHelper {
 		return list;
 	}
 	
-	public static List assignProfitStatementList(EnterpriseFinancialData efd){				
+	public static List assignProfitStatementList(EnterpriseFinancialData efd,List statementList){				
 		List<Map> list = null;
 		try {
-			list = deepCopy(StatementConfig.profitStatementList);
+			list = deepCopy(statementList);
 			for(Map map:list){
 				List<String> data=(List) map.get("data");
 				data.set(1,getProfitStatementData(efd,data.get(1)));

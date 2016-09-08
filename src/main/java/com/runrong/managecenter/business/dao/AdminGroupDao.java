@@ -2,6 +2,7 @@ package com.runrong.managecenter.business.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +33,7 @@ public class AdminGroupDao extends BaseDao{
 	public int[] addPermissionToAdminGroup(List<Object[]> batch){
 //		String sql="insert into managecenter.admin_group_permissions (admin_group_id,permissions_id) select ?,? from "
 //				+ "dual where not exists (select admin_group_id from managecenter.admin_group_permissions where admin_group_id=? and permissions_id=?) limit 1";
-		String sql="insert into managecenter.admin_group_permissions (admin_group_id,permissions_id) values (?,?)";
+		String sql="insert into managecenter.admin_group_permissions (admin_group_id,permissions_id,type) values (?,?,?)";
 		
 		int[] updateCounts=jdbcTemplate.batchUpdate(sql,batch);
 		return updateCounts;
@@ -45,7 +46,7 @@ public class AdminGroupDao extends BaseDao{
 	 */
 	public List<Map> getAdminGroupPermissionById(AdminGroup adminGroup){
 		String sql="select managecenter.admin_group_permissions.id ,admin_group_id,permissions_id,permission,permission_name,parent,"
-				+ "parent_name from managecenter.admin_group_permissions inner join managecenter.permissions on admin_group_permissions.permissions_id=permissions.id where admin_group_id=?";
+				+ "parent_name ,type from managecenter.admin_group_permissions inner join managecenter.permissions on admin_group_permissions.permissions_id=permissions.id where admin_group_id=? and type=?";
 		List<Map> list=jdbcTemplate.query(sql, new RowMapper<Map>(){
 
 			@Override
@@ -58,10 +59,11 @@ public class AdminGroupDao extends BaseDao{
 				map.put("permissionName", rs.getString("permission_name"));
 				map.put("parent", rs.getString("parent"));
 				map.put("parentName", rs.getString("parent_name"));
+				map.put("type",rs.getInt("type"));
 				return map;
 			}
 			
-		}, adminGroup.getId());		
+		}, adminGroup.getId(),adminGroup.getType());		
 		return list;
 	}
 	
@@ -88,6 +90,35 @@ public class AdminGroupDao extends BaseDao{
 //		String sql="update managecenter.admin_group_permissions set type=1 where admin_group_id=? and permissions_id=?";
 //		int[] updateCounts=jdbcTemplate.batchUpdate(sql,batch);
 //		return updateCounts;
+	}
+	
+	/**
+	 * 更新管理组的权限
+	 * @param params
+	 */
+	public int[] updateAdminGroupPermission(HashSet<String> params,String id,String type){
+		
+		//频繁进行删除操作并不可取
+		//应该将type设置为1来取代删除操作
+		List<Object[]> batch=new ArrayList<Object[]>();
+		for(String param:params){
+			Object[] values = new Object[] {
+					id,
+					param};
+//					id,
+//					permissionId};				
+		      batch.add(values);
+			
+		}
+		
+		String sql="";
+		if(type=="1"){
+			sql="update managecenter.admin_group_permissions set type=1 where admin_group_id=? and permissions_id=?";
+		}else if(type=="0"){
+			sql="update managecenter.admin_group_permissions set type=0 where admin_group_id=? and permissions_id=?";
+		}		
+		int[] updateCounts=jdbcTemplate.batchUpdate(sql,batch);
+		return updateCounts;
 	}
 	
 	/**

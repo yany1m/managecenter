@@ -181,6 +181,7 @@ public class AdminService {
 		Map adminMap= (Map) list.get(0);
 		AdminGroup adminGroup=new AdminGroup();
 		adminGroup.setId(Integer.valueOf(adminMap.get("admin_group_id").toString()));
+		adminGroup.setType(1);
 		List<Map> permissionList=adminGroupDao.getAdminGroupPermissionById(adminGroup);
 		
 		List<String> permission=new ArrayList<String>();

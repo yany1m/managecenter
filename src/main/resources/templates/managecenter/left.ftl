@@ -23,7 +23,8 @@
                           <span class="arrow"></span>
                       </a>
                       <ul class="sub">
-                      	  <li><a class="" href="/managecenter/findstatement">查询</a></li>
+                      	  <li><a class="" href="/managecenter/findstatement">报表查询</a></li>
+                      	  <li><a class="" href="/managecenter/statementTemplate">报表模板</a></li>
                           <li><a class="" href="/managecenter/balancestatement">资产负债表</a></li>
                           <li><a class="" href="/managecenter/cashflowstatement">现金流量表</a></li>
                           <li><a class="" href="/managecenter/profitstatement">利润表</a></li>
@@ -32,13 +33,13 @@
                    <li class="sub-menu active">
                       <a href="javascript:;" class="">
                           <i class="icon-tasks"></i>
-                          <span>权限</span>
+                          <span>权限管理</span>
                           <span class="arrow"></span>
                       </a>
                       <ul class="sub">
-                      	  <li><a class="" href="/managecenter/getPermission">权限</a></li>
-                      	  <li><a class="" href="/managecenter/getAdminGroup">管理组</a></li>
-                      	  <li><a class="" href="/managecenter/adminGroupPermission">管理组权限</a></li>
+                      	  <li class=""><a class="" href="/managecenter/getPermission">权限</a></li>
+                      	  <li class=""><a class="" href="/managecenter/getAdminGroup">管理组</a></li>
+                      	  <li class=""><a class="" href="/managecenter/adminGroupPermission">管理组权限</a></li>
                       </ul>
                   </li>
               </ul>

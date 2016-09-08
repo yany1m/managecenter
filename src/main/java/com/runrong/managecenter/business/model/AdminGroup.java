@@ -22,4 +22,13 @@ public class AdminGroup {
 		this.name = name;
 	}
 	
+	//权限是否被选中
+	private int type;
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	
 }
