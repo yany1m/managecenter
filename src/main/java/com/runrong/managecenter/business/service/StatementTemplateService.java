@@ -281,19 +281,32 @@ public class StatementTemplateService {
 	 * @return
 	 */
 	public ResultModel updateStatementTemplateSelected(HttpServletRequest request){
-		String id=request.getParameter("id");
+		String id=request.getParameter("id");		
 		String type=request.getParameter("type");
 		String adminId=(int)request.getSession().getAttribute("admin_id")+type;
+		
+		if(id.equals("0")){
+			selectdStatementTemplateCache.put(adminId,0);
+			return ResultModel.successModel();
+		}
 		//先找到此模板
 		StatementTemplate statementTemplate=new StatementTemplate();
 		statementTemplate.setId(Integer.valueOf(id));
 		statementTemplate.setType(type);
 		
 		List list=statementTemplateDao.getStatementTemplate(statementTemplate);
-		
 		//将被选中的模板放入缓存中
 		selectdStatementTemplateCache.put(adminId, (Integer)((Map) list.get(0)).get("id"));;
 		return ResultModel.successModel();
 	}
 	
+	/**
+	 * 转换报表模板
+	 * @param request
+	 * @return
+	 */
+	public ResultModel transformStatementTemplate(HttpServletRequest request){
+		
+		return ResultModel.successModel();
+	}
 }

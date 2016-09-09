@@ -38,7 +38,7 @@ public class DataService {
 			return ResultModel.failModel("注册号为空");
 		}
 		
-		BaseFinancialModel bs=new BaseFinancialModel();
+		BalanceStatement bs=new BalanceStatement();
 		ResultModel r=createFinancialModel(request,bs);
 		List list=null;
 		if(r.Fail()){

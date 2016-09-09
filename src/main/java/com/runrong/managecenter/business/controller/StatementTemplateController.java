@@ -144,4 +144,16 @@ public class StatementTemplateController {
 		map.put("list", list);
 		return new ModelAndView("/managecenter/statementTemplate");
 	}	
+	
+	/**
+	 * 转换报表模板给风控系统
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/transformStatementTemplate")
+	@ResponseBody
+	public ResultModel TransformStatementTemplate(HttpServletRequest request){
+		
+		return ResultModel.successModel();
+	}
 }
