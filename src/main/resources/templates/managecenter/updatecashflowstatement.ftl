@@ -61,7 +61,7 @@
                           </header>
                           <#include "updateStatementHead.ftl"/>
                                           <#list EnterpriseFinancialData.cashFlowStatements as cashFlowStatement>
-                                            <div class="input-group m-bot15">
+                                            <div class="col-sm-6 m-bot15" style="padding-left:0px">
                                               <div class="input-append date" id="dpYears" data-date="12-02-2012"
                                                        data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                                       <input class="form-control" size="16" type="text" value=${cashFlowStatement.date?string("dd-MM-yyyy")} readonly name="year" id="year">
@@ -174,7 +174,7 @@
 		$.ajax({             
                 type: "POST",
                 url:"/managecenter/saveCashFlowStatement",
-                data:"enterpriseRegistrationNumber="+$("#enterpriseRegistrationNumber").val()+"&year="+$("#year").val()+"&json="+jsondata,// 你的formid
+                data:"enterpriseRegistrationNumber="+$("#enterpriseRegistrationNumber").val()+"&year="+$("#year").val()+"&json="+jsondata+"&templateId="+${id},// 你的formid
                 async: false,
                 error: function(request) {
                     alert("Connection error");

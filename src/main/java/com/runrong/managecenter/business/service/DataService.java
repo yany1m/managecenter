@@ -16,9 +16,9 @@ import com.runrong.managecenter.business.model.datacollection.BalanceStatement;
 import com.runrong.managecenter.business.model.datacollection.CashFlowStatement;
 import com.runrong.managecenter.business.model.datacollection.EnterpriseFinancialData;
 import com.runrong.managecenter.business.model.datacollection.ProfitStatement;
+import com.runrong.managecenter.common.base.BaseFinancialModel;
 import com.runrong.managecenter.common.base.ResultModel;
 import com.runrong.managecenter.common.util.FormatDateUtil;
-import com.runrong.managecenter.common.util.JsonUtil;
 
 @Service
 public class DataService {
@@ -38,21 +38,15 @@ public class DataService {
 			return ResultModel.failModel("注册号为空");
 		}
 		
-		String year=request.getParameter("year");
-		if(year==null || year.equals("")){
-			return ResultModel.failModel("年份为空");
+		BaseFinancialModel bs=new BaseFinancialModel();
+		ResultModel r=createFinancialModel(request,bs);
+		List list=null;
+		if(r.Fail()){
+			return r; 
+		}else{
+			list=(List) r.getBody();
 		}
-		//获得content
-		String json=request.getParameter("json");
-		Map map=(Map) ( JSON.parse(json));
-		//Map map=BalanceConstant.createMap(request);
-		//生成资产负债表
-		BalanceStatement bs=new BalanceStatement();	
-		bs.setDate(FormatDateUtil.formatToMongoDate(year));
-		bs.setContent(map);
-		//加入list
-		List<BalanceStatement> list=new ArrayList<BalanceStatement>();		
-		list.add(bs);
+		
 		//完成企业财务数据录入
 		EnterpriseFinancialData efd=new EnterpriseFinancialData();
 		efd.setEnterpriseRegistrationNumber(enterpriseRegistrationNumber);
@@ -72,17 +66,16 @@ public class DataService {
 		if(enterpriseRegistrationNumber==null || enterpriseRegistrationNumber.equals("")){
 			return ResultModel.failModel("注册号为空");
 		}
-		String year=request.getParameter("year");
-		//获得content
-		String json=request.getParameter("json");
-		Map map=(Map) ( JSON.parse(json));
-		//生成资产负债表
-		CashFlowStatement cs=new CashFlowStatement();	
-		cs.setDate(FormatDateUtil.formatToMongoDate(year));
-		cs.setContent(map);
-		//加入list
-		List<CashFlowStatement> list=new ArrayList<CashFlowStatement>();		
-		list.add(cs);
+		
+		CashFlowStatement cs=new CashFlowStatement();
+		ResultModel r=createFinancialModel(request,cs);
+		List list=null;
+		if(r.Fail()){
+			return r; 
+		}else{
+			list=(List) r.getBody();
+		}	
+		
 		//完成企业财务数据录入
 		EnterpriseFinancialData efd=new EnterpriseFinancialData();
 		efd.setEnterpriseRegistrationNumber(enterpriseRegistrationNumber);
@@ -103,17 +96,16 @@ public class DataService {
 		if(enterpriseRegistrationNumber==null || enterpriseRegistrationNumber.equals("")){
 			return ResultModel.failModel("注册号为空");
 		}
-		String year=request.getParameter("year");
-		//获得content
-		String json=request.getParameter("json");
-		Map map=(Map) ( JSON.parse(json));
-		//生成资产负债表
-		ProfitStatement ps=new ProfitStatement();	
-		ps.setDate(FormatDateUtil.formatToMongoDate(year));
-		ps.setContent(map);
-		//加入list
-		List<ProfitStatement> list=new ArrayList<ProfitStatement>();		
-		list.add(ps);
+		
+		ProfitStatement ps=new ProfitStatement();
+		ResultModel r=createFinancialModel(request,ps);
+		List list=null;
+		if(r.Fail()){
+			return r; 
+		}else{
+			list=(List) r.getBody();
+		}
+		
 		//完成企业财务数据录入
 		EnterpriseFinancialData efd=new EnterpriseFinancialData();
 		efd.setEnterpriseRegistrationNumber(enterpriseRegistrationNumber);
@@ -133,18 +125,16 @@ public class DataService {
 		if(enterpriseRegistrationNumber==null || enterpriseRegistrationNumber.equals("")){
 			return ResultModel.failModel("注册号为空");
 		}
-		String year=request.getParameter("year");
 		
-		//获得content
-		String json=request.getParameter("json");
-		Map map=(Map) ( JSON.parse(json));
-		//生成资产负债表
 		BalanceStatement bs=new BalanceStatement();	
-		bs.setDate(FormatDateUtil.formatToMongoDate(year));
-		bs.setContent(map);
-		//加入list
-		List<BalanceStatement> list=new ArrayList<BalanceStatement>();		
-		list.add(bs);
+		ResultModel r=createFinancialModel(request,bs);
+		List list=null;
+		if(r.Fail()){
+			return r; 
+		}else{
+			list=(List) r.getBody();
+		}
+		
 		//完成企业财务数据录入
 		EnterpriseFinancialData efd=new EnterpriseFinancialData();
 		efd.setEnterpriseRegistrationNumber(enterpriseRegistrationNumber);
@@ -167,18 +157,16 @@ public class DataService {
 		if(enterpriseRegistrationNumber==null || enterpriseRegistrationNumber.equals("")){
 			return ResultModel.failModel("注册号为空");
 		}
-		String year=request.getParameter("year");
 		
-		//获得content
-		String json=request.getParameter("json");
-		Map map=(Map) ( JSON.parse(json));
-		//生成资产负债表
 		CashFlowStatement cs=new CashFlowStatement();	
-		cs.setDate(FormatDateUtil.formatToMongoDate(year));
-		cs.setContent(map);
-		//加入list
-		List<CashFlowStatement> list=new ArrayList<CashFlowStatement>();		
-		list.add(cs);
+		ResultModel r=createFinancialModel(request,cs);
+		List list=null;
+		if(r.Fail()){
+			return r; 
+		}else{
+			list=(List) r.getBody();
+		}
+		
 		//完成企业财务数据录入
 		EnterpriseFinancialData efd=new EnterpriseFinancialData();
 		efd.setEnterpriseRegistrationNumber(enterpriseRegistrationNumber);
@@ -200,18 +188,16 @@ public class DataService {
 		if(enterpriseRegistrationNumber==null || enterpriseRegistrationNumber.equals("")){
 			return ResultModel.failModel("注册号为空");
 		}
-		String year=request.getParameter("year");
 		
-		//获得content
-		String json=request.getParameter("json");
-		Map map=(Map) ( JSON.parse(json));
-		//生成资产负债表
 		ProfitStatement ps=new ProfitStatement();	
-		ps.setDate(FormatDateUtil.formatToMongoDate(year));
-		ps.setContent(map);
-		//加入list
-		List<ProfitStatement> list=new ArrayList<ProfitStatement>();		
-		list.add(ps);
+		ResultModel r=createFinancialModel(request,ps);
+		List list=null;
+		if(r.Fail()){
+			return r; 
+		}else{
+			list=(List) r.getBody();
+		}
+		
 		//完成企业财务数据录入
 		EnterpriseFinancialData efd=new EnterpriseFinancialData();
 		efd.setEnterpriseRegistrationNumber(enterpriseRegistrationNumber);
@@ -422,6 +408,37 @@ public class DataService {
 	
 		
 		return efd;
+	}
+	
+	/**
+	 * 创建报表模型
+	 * @param request
+	 * @param t
+	 * @return
+	 */
+	public <T extends BaseFinancialModel> ResultModel createFinancialModel(HttpServletRequest request,T t){
+		
+		String year=request.getParameter("year");
+		if(year==null || year.equals("")){
+			return ResultModel.failModel("年份为空");
+		}
+		
+		//获取模板id
+		String templateId=request.getParameter("templateId");
+		//获得content
+		String json=request.getParameter("json");
+		Map map=(Map) ( JSON.parse(json));
+		//Map map=BalanceConstant.createMap(request);
+		//生成资产负债表
+		
+		t.setTemplateId(Integer.valueOf(templateId));
+		t.setDate(FormatDateUtil.formatToMongoDate(year));
+		t.setContent(map);
+		//加入list
+		List<T> list=new ArrayList<T>();	
+		list.add(t);
+		
+		return ResultModel.successModel(list);
 	}
 	
 }

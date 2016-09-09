@@ -26,18 +26,16 @@ public class StatementTemplateDao extends BaseDao{
 	 * @return
 	 */
 	public List getStatementTemplate(StatementTemplate statementTemplate){
-		StringBuffer sql=new StringBuffer("select id,admin_id,template,type,name,selected from managecenter.statement_template where 1=1");	
+		StringBuffer sql=new StringBuffer("select managecenter.statement_template.id,admin_id,template,managecenter.statement_template.type,name,editor,managecenter.admin.username,a.username as editor_name from managecenter.statement_template join "
+				+ "managecenter.admin on managecenter.statement_template.admin_id=managecenter.admin.id join managecenter.admin as a on managecenter.statement_template.editor=a.id where 1=1");	
 		if(statementTemplate.getId()!=0){			
-			sql.append(" and id=:id");
+			sql.append(" and managecenter.statement_template.id=:id");
 		}
 		if(statementTemplate.getAdminId()!=0){
 			sql.append(" and admin_id=:adminId");
 		}
 		if(statementTemplate.getType()!=null && !statementTemplate.getType().equals("")){
-			sql.append(" and type=:type");
-		}
-		if(statementTemplate.getSelected()!=0){
-			sql.append(" and selected=:selected");
+			sql.append(" and managecenter.statement_template.type=:type");
 		}
 		if(statementTemplate.getName()!=null && !statementTemplate.getName().equals("")){
 			sql.append(" and name=:name");
@@ -54,7 +52,7 @@ public class StatementTemplateDao extends BaseDao{
 	 * @return
 	 */
 	public int addStatementTemplate(StatementTemplate statementTemplate){
-		String sql="insert into managecenter.statement_template (id,admin_id,template,type,name,selected) values (:id,:adminId,:template,:type,:name,:selected)";
+		String sql="insert into managecenter.statement_template (id,admin_id,template,type,name,editor) values (:id,:adminId,:template,:type,:name,:editor)";
 		
 		KeyHolder keyholder = new GeneratedKeyHolder();
 		SqlParameterSource sps = new BeanPropertySqlParameterSource(statementTemplate);
@@ -69,13 +67,10 @@ public class StatementTemplateDao extends BaseDao{
 	 * @return
 	 */
 	public void updateStatementTemplate(StatementTemplate statementTemplate){
-		StringBuffer sql=new StringBuffer("update managecenter.statement_template set id=:id ");
+		StringBuffer sql=new StringBuffer("update managecenter.statement_template set id=:id,editor=:editor");
 		if(statementTemplate.getTemplate()!=null && !statementTemplate.getTemplate().equals("")){
 			sql.append(",template=:template");
-		}
-		if(statementTemplate.getSelected()!=0){
-			sql.append(",selected=:selected");
-		}
+		}	
 		if(statementTemplate.getName()!=null && !statementTemplate.getName().equals("")){
 			sql.append(",name=:name");
 		}
@@ -84,17 +79,17 @@ public class StatementTemplateDao extends BaseDao{
 		namedParameterJdbcTemplate.update(sql.toString(), paramSource);
 	}
 	
-	/**
-	 * 修改被选中的模板
-	 * @param statementTemplate
-	 * @return
-	 */
-	public void updateStatementTemplateSelected(StatementTemplate statementTemplate){
-		StringBuffer sql=new StringBuffer("update managecenter.statement_template set selected=0 where admin_id=:adminId and type=:type and selected=1");
-	
-		SqlParameterSource paramSource = new BeanPropertySqlParameterSource(statementTemplate);  	
-		namedParameterJdbcTemplate.update(sql.toString(), paramSource);
-	}
+//	/**
+//	 * 修改被选中的模板
+//	 * @param statementTemplate
+//	 * @return
+//	 */
+//	public void updateStatementTemplateSelected(StatementTemplate statementTemplate){
+//		StringBuffer sql=new StringBuffer("update managecenter.statement_template set selected=0 where admin_id=:adminId and type=:type and selected=1");
+//	
+//		SqlParameterSource paramSource = new BeanPropertySqlParameterSource(statementTemplate);  	
+//		namedParameterJdbcTemplate.update(sql.toString(), paramSource);
+//	}
 	
 	/**
 	 * 删除模板

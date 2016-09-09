@@ -86,6 +86,8 @@
                           <tr>                                             
                               <th>名称</th>
                               <th class="hidden-phone">类型</th>                                                                                                   
+                              <th class="hidden-phone">创建人</th>                                                                                                   
+                              <th class="hidden-phone">最新修改人</th>                                                                                                   
                               <th></th>
                           </tr>
                           </thead>
@@ -94,6 +96,8 @@
                           <tr class="odd gradeX">                           	                          
                               <td>${st.name}</td>
                               <td class="hidden-phone">${st.type}</td>                                                                                                         
+                              <td class="hidden-phone">${st.username}</td>                                                                                                         
+                              <td class="hidden-phone">${st.editor_name}</td>                                                                                                         
                                <td>                                    
                                       <a href="/managecenter/updateStatementTemplate?id=${st.id}"><button class="btn btn-primary btn-xs"><i class="icon-pencil"></i></button></a>
                                       <button onclick='if(confirm("确认删除")){deleteStatementTemplate(this)}' id="id=${st.id}" class="btn btn-danger btn-xs"><i class="icon-trash "></i></button>

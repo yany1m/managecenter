@@ -197,15 +197,15 @@ public class DataController {
 		map.put("EnterpriseFinancialData", efd);
 		if(efd.getBalanceStatements()!=null){	
 			return (ModelAndView)statementTemplateService.getBalanceStatementTemplateSelected(request, map, "/managecenter/updatebalancestatement", 
-					AssignListHelper.assignBalanceStatementList(efd,StatementConfig.balanceStatementList)).getBody();	 
+					AssignListHelper.assignBalanceStatementList(efd,StatementConfig.balanceStatementList),"资产负债表").getBody();	 
 		}
 		if(efd.getCashFlowStatements()!=null){
 			return (ModelAndView)statementTemplateService.getCashflowStatementTemplateSelected(request, map, "/managecenter/updatecashflowstatement", 
-					AssignListHelper.assignCashflowStatementList(efd,StatementConfig.cashflowStatementList)).getBody();
+					AssignListHelper.assignCashflowStatementList(efd,StatementConfig.cashflowStatementList),"现金流量表").getBody();
 		}
 		if(efd.getProfitStatements()!=null){
 			return (ModelAndView)statementTemplateService.getProfitStatementTemplateSelected(request, map, "/managecenter/updateprofitstatement", 
-					AssignListHelper.assignProfitStatementList(efd,StatementConfig.profitStatementList)).getBody();
+					AssignListHelper.assignProfitStatementList(efd,StatementConfig.profitStatementList),"利润表").getBody();
 		}
 				
 		return new ModelAndView("/managecenter/findstatement");

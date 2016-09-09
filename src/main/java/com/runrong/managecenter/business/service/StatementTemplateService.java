@@ -1,5 +1,6 @@
 package com.runrong.managecenter.business.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.runrong.managecenter.business.cache.SelectdStatementTemplateCache;
 import com.runrong.managecenter.business.dao.StatementTemplateDao;
 import com.runrong.managecenter.business.model.StatementTemplate;
 import com.runrong.managecenter.business.model.datacollection.EnterpriseFinancialData;
@@ -28,6 +30,9 @@ public class StatementTemplateService {
 	@Autowired
 	StatementTemplateDao statementTemplateDao;
 	
+	@Autowired
+	SelectdStatementTemplateCache selectdStatementTemplateCache;
+	
 	/**
 	 * 获取模板
 	 * @param request
@@ -36,16 +41,12 @@ public class StatementTemplateService {
 	public ResultModel getStatementTemplate(HttpServletRequest request){
 		String id=request.getParameter("id")==null?"0":request.getParameter("id");
 		String type=request.getParameter("type");		
-		int adminId=(int) request.getSession().getAttribute("admin_id");
-		String name=request.getParameter("name");
-		String selected=request.getParameter("selected")==null?"0":request.getParameter("selected");
+		String name=request.getParameter("name");	
 		
 		StatementTemplate statementTemplate=new StatementTemplate();
 		statementTemplate.setId(Integer.valueOf(id));
-		statementTemplate.setAdminId(adminId);
 		statementTemplate.setType(type);
 		statementTemplate.setName(name);
-		statementTemplate.setSelected(Integer.valueOf(selected));
 		
 		List list=statementTemplateDao.getStatementTemplate(statementTemplate);
 		return ResultModel.successModel(list);
@@ -65,13 +66,12 @@ public class StatementTemplateService {
 		
 		String template=request.getParameter("template");
 		String name=request.getParameter("name");
-		String selected=request.getParameter("selected")==null?"0":request.getParameter("selected");
 		
 		StatementTemplate statementTemplate=new StatementTemplate();
 		statementTemplate.setId(Integer.valueOf(id));
 		statementTemplate.setTemplate(template);
 		statementTemplate.setName(name);
-		statementTemplate.setSelected(Integer.valueOf(selected));
+		statementTemplate.setEditor((int)request.getSession().getAttribute("admin_id"));
 		
 		statementTemplateDao.updateStatementTemplate(statementTemplate);
 		return ResultModel.successModel("修改成功");
@@ -93,14 +93,13 @@ public class StatementTemplateService {
 		String template=request.getParameter("template");
 		String type=request.getParameter("type");
 		String name=request.getParameter("name");
-		String selected=request.getParameter("selected")==null?"0":request.getParameter("selected"); 
 		
 		StatementTemplate statementTemplate=new StatementTemplate();
 		statementTemplate.setAdminId(adminId);
 		statementTemplate.setTemplate(template);
 		statementTemplate.setType(type);
 		statementTemplate.setName(name);
-		statementTemplate.setSelected(Integer.valueOf(selected));
+		statementTemplate.setEditor((int)request.getSession().getAttribute("admin_id"));
 		
 		statementTemplateDao.addStatementTemplate(statementTemplate);
 		return ResultModel.successModel("添加成功");
@@ -132,35 +131,50 @@ public class StatementTemplateService {
 	 * @param map
 	 * @return
 	 */
-	public ResultModel getBalanceStatementTemplateSelected(HttpServletRequest request,ModelMap map,String url,List statementlist){
+	public ResultModel getBalanceStatementTemplateSelected(HttpServletRequest request,ModelMap map,String url,List statementlist,String type){
+		EnterpriseFinancialData efd=(EnterpriseFinancialData) map.get("EnterpriseFinancialData");
+		Integer id=0;
+		if(efd==null){
+			String adminId=(int)request.getSession().getAttribute("admin_id")+type;
+			if(selectdStatementTemplateCache.get(adminId)!=null){
+				id=selectdStatementTemplateCache.get(adminId);
+			}
+		}else{
+			try{
+				id=efd.getBalanceStatements().get(0).getTemplateId();
+			}catch(NullPointerException e){
+				id=0;
+			}
+		}
+		
 		StatementTemplate st=new StatementTemplate();
-		st.setType("资产负债表");
-		st.setAdminId((int) request.getSession().getAttribute("admin_id"));
+		st.setType(type);
 		List list=(List) statementTemplateDao.getStatementTemplate(st);
+		
+		map.put("id", id);
+		map.put("type", type);
+		map.put("statementTemplate", list);
 		
 		for(Object o:list){
 			Map maps=(Map) o;	
-			if((int)maps.get("selected")==1){
-				map.put("type", "资产负债表");
-				map.put("statementTemplate", list);
-				map.put("head", ( (Map) JSON.parseObject((String) maps.get("template")).get("head")).get("names"));
-
-				EnterpriseFinancialData efd=(EnterpriseFinancialData) map.get("EnterpriseFinancialData");
-				statementlist=(List<Map>) ((Map) JSON.parseObject((String) maps.get("template")).get("body")).get("rows");
+			if((int)maps.get("id")==id){
+				
+				map.put("head", ( (Map) JSON.parseObject((String) maps.get("template")).get("head")).get("names"));			
+				statementlist=(List<Map>) ((Map) JSON.parseObject((String) maps.get("template")).get("body")).get("rows");											
 				if(efd!=null){
-					map.put("balancestatementList",AssignListHelper.assignBalanceStatementList(efd,statementlist));
+					map.put("balancestatementList",AssignListHelper.assignCashflowStatementList(efd,statementlist));
 				}else{
 					map.put("balancestatementList", statementlist);			
-				}			
+				}
 				return ResultModel.successModel(new ModelAndView(url));
 			}
 		}
-		map.put("type", "资产负债表");
-		map.put("statementTemplate", list);
+				
 		map.put("head", (List<String>)( (Map) StatementConfig.balanceStatementMap.get("head")).get("names"));
 		map.put("balancestatementList", statementlist);			
 		return ResultModel.successModel(new ModelAndView(url));
 	}
+	
 	
 	/**
 	 * 获得现金流量表被选中的模板
@@ -168,20 +182,34 @@ public class StatementTemplateService {
 	 * @param map
 	 * @return
 	 */
-	public ResultModel getCashflowStatementTemplateSelected(HttpServletRequest request,ModelMap map,String url,List statementlist){
+	public ResultModel getCashflowStatementTemplateSelected(HttpServletRequest request,ModelMap map,String url,List statementlist,String type){
+		EnterpriseFinancialData efd=(EnterpriseFinancialData) map.get("EnterpriseFinancialData");
+		Integer id=0;
+		if(efd==null){
+			String adminId=(int)request.getSession().getAttribute("admin_id")+type;
+			if(selectdStatementTemplateCache.get(adminId)!=null){
+				id=selectdStatementTemplateCache.get(adminId);
+			}
+		}else{
+			try{
+				id=efd.getCashFlowStatements().get(0).getTemplateId();
+			}catch(NullPointerException e){
+				id=0;
+			}
+		}
 		StatementTemplate st=new StatementTemplate();
-		st.setType("现金流量表");
-		st.setAdminId((int) request.getSession().getAttribute("admin_id"));
+		st.setType(type);
 		List list=(List) statementTemplateDao.getStatementTemplate(st);
+		
+		map.put("id", id);
+		map.put("type", type);
+		map.put("statementTemplate", list);
 		
 		for(Object o:list){
 			Map maps=(Map) o;	
-			if((int)maps.get("selected")==1){
-				map.put("type", "现金流量表");
-				map.put("statementTemplate", list);
-				map.put("head", ( (Map) JSON.parseObject((String) maps.get("template")).get("head")).get("names"));
-
-				EnterpriseFinancialData efd=(EnterpriseFinancialData) map.get("EnterpriseFinancialData");
+			if((int)maps.get("id")==id){
+				
+				map.put("head", ( (Map) JSON.parseObject((String) maps.get("template")).get("head")).get("names"));				
 				statementlist=(List<Map>) ((Map) JSON.parseObject((String) maps.get("template")).get("body")).get("rows");
 				if(efd!=null){
 					map.put("cashflowStatementList",AssignListHelper.assignCashflowStatementList(efd,statementlist));
@@ -191,8 +219,7 @@ public class StatementTemplateService {
 				return ResultModel.successModel(new ModelAndView(url));
 			}
 		}
-		map.put("type", "现金流量表");
-		map.put("statementTemplate", list);
+
 		map.put("head", (List<String>)( (Map) StatementConfig.cashflowStatementMap.get("head")).get("names"));
 		map.put("cashflowStatementList", statementlist);				
 		return ResultModel.successModel(new ModelAndView(url));
@@ -204,20 +231,35 @@ public class StatementTemplateService {
 	 * @param map
 	 * @return
 	 */
-	public ResultModel getProfitStatementTemplateSelected(HttpServletRequest request,ModelMap map,String url,List statementlist){
+	public ResultModel getProfitStatementTemplateSelected(HttpServletRequest request,ModelMap map,String url,List statementlist,String type){
+		EnterpriseFinancialData efd=(EnterpriseFinancialData) map.get("EnterpriseFinancialData");
+		Integer id=0;
+		if(efd==null){	
+			String adminId=(int)request.getSession().getAttribute("admin_id")+type;
+			if(selectdStatementTemplateCache.get(adminId)!=null){
+				id=selectdStatementTemplateCache.get(adminId);
+			}
+		}else{
+			try{
+				id=efd.getProfitStatements().get(0).getTemplateId();
+			}catch(NullPointerException e){
+				id=0;
+			}
+		}
+		
 		StatementTemplate st=new StatementTemplate();
-		st.setType("利润表");
-		st.setAdminId((int) request.getSession().getAttribute("admin_id"));
+		st.setType(type);
 		List list=(List) statementTemplateDao.getStatementTemplate(st);
+		
+		map.put("id", id);
+		map.put("type", type);
+		map.put("statementTemplate", list);
 		
 		for(Object o:list){
 			Map maps=(Map) o;	
-			if((int)maps.get("selected")==1){
-				map.put("type", "利润表");
-				map.put("statementTemplate", list);
-				map.put("head", ( (Map) JSON.parseObject((String) maps.get("template")).get("head")).get("names"));
+			if((int)maps.get("id")==id){
 				
-				EnterpriseFinancialData efd=(EnterpriseFinancialData) map.get("EnterpriseFinancialData");
+				map.put("head", ( (Map) JSON.parseObject((String) maps.get("template")).get("head")).get("names"));				
 				statementlist=(List<Map>) ((Map) JSON.parseObject((String) maps.get("template")).get("body")).get("rows");
 				if(efd!=null){
 					map.put("profitStatementList",AssignListHelper.assignProfitStatementList(efd,statementlist));
@@ -227,8 +269,7 @@ public class StatementTemplateService {
 				return ResultModel.successModel(new ModelAndView(url));
 			}
 		}
-		map.put("type", "利润表");
-		map.put("statementTemplate", list);
+
 		map.put("head", (List<String>)( (Map) StatementConfig.profitStatementMap.get("head")).get("names"));
 		map.put("profitStatementList", statementlist);			
 		return ResultModel.successModel(new ModelAndView(url));
@@ -242,19 +283,16 @@ public class StatementTemplateService {
 	public ResultModel updateStatementTemplateSelected(HttpServletRequest request){
 		String id=request.getParameter("id");
 		String type=request.getParameter("type");
-		
-		//先将该type中被选中的模板selected更新为0
+		String adminId=(int)request.getSession().getAttribute("admin_id")+type;
+		//先找到此模板
 		StatementTemplate statementTemplate=new StatementTemplate();
-		statementTemplate.setAdminId((int)request.getSession().getAttribute("admin_id"));
+		statementTemplate.setId(Integer.valueOf(id));
 		statementTemplate.setType(type);
 		
-		statementTemplateDao.updateStatementTemplateSelected(statementTemplate);
+		List list=statementTemplateDao.getStatementTemplate(statementTemplate);
 		
-		//更新被选中的模板
-		statementTemplate=new StatementTemplate();
-		statementTemplate.setSelected(1);
-		statementTemplate.setId(Integer.valueOf(id));
-		statementTemplateDao.updateStatementTemplate(statementTemplate);
+		//将被选中的模板放入缓存中
+		selectdStatementTemplateCache.put(adminId, (Integer)((Map) list.get(0)).get("id"));;
 		return ResultModel.successModel();
 	}
 	

@@ -14,6 +14,15 @@ public class BaseFinancialModel {
 		private Date date;
 		//内容
 		private Map content;
+		//模板Id
+		private int templateId;
+		
+		public int getTemplateId() {
+			return templateId;
+		}
+		public void setTemplateId(int templateId) {
+			this.templateId = templateId;
+		}
 		public Date getDate() {
 			return date;
 		}

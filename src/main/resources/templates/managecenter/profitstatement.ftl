@@ -147,7 +147,7 @@
 		$.ajax({             
                 type: "POST",
                 url:"/managecenter/saveProfitStatement",
-                data:"enterpriseRegistrationNumber="+$("#enterpriseRegistrationNumber").val()+"&year="+$("#year").val()+"&json="+jsondata,// 你的formid
+                data:"enterpriseRegistrationNumber="+$("#enterpriseRegistrationNumber").val()+"&year="+$("#year").val()+"&json="+jsondata+"&templateId="+${id},// 你的formid
                 async: false,
                 error: function(request) {
                     alert("Connection error");

@@ -182,7 +182,7 @@ public class RouteController {
 	@ResponseBody
 	public ModelAndView balancestatement(HttpServletRequest request,ModelMap map) throws ParseException{
 		
-		return (ModelAndView) statementTemplateService.getBalanceStatementTemplateSelected(request, map,"/managecenter/balancestatement",StatementConfig.balanceStatementList).getBody();
+		return (ModelAndView) statementTemplateService.getBalanceStatementTemplateSelected(request, map,"/managecenter/balancestatement",StatementConfig.balanceStatementList,"资产负债表").getBody();
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class RouteController {
 	@ResponseBody
 	public ModelAndView cashflowstatement(HttpServletRequest request,ModelMap map) throws ParseException{
 		
-		return (ModelAndView) statementTemplateService.getCashflowStatementTemplateSelected(request, map,"/managecenter/cashflowstatement",StatementConfig.cashflowStatementList).getBody();
+		return (ModelAndView) statementTemplateService.getCashflowStatementTemplateSelected(request, map,"/managecenter/cashflowstatement",StatementConfig.cashflowStatementList,"现金流量表").getBody();
 	}
 	
 	/**
@@ -210,7 +210,7 @@ public class RouteController {
 	@ResponseBody
 	public ModelAndView profitstatement(HttpServletRequest request,ModelMap map) throws ParseException{
 		
-		return (ModelAndView) statementTemplateService.getProfitStatementTemplateSelected(request, map,"/managecenter/profitstatement",StatementConfig.profitStatementList).getBody();
+		return (ModelAndView) statementTemplateService.getProfitStatementTemplateSelected(request, map,"/managecenter/profitstatement",StatementConfig.profitStatementList,"利润表").getBody();
 	}
 	
 	/**

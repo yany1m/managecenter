@@ -16,20 +16,20 @@ public class StatementTemplate {
 	private String type;
 	//名字
 	private String name;
-	//是否被选中
-	private int selected;
+	//编辑者
+	private int editor;
 	
+	public int getEditor() {
+		return editor;
+	}
+	public void setEditor(int editor) {
+		this.editor = editor;
+	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public int getSelected() {
-		return selected;
-	}
-	public void setSelected(int selected) {
-		this.selected = selected;
 	}
 	public int getId() {
 		return id;
