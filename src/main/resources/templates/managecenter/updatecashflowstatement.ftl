@@ -86,17 +86,22 @@
                               <tbody>
                               <tr>                   
                                   
-                                  <#if list.data[5]=="title">
-                                  <td id=${list.data[3]} pid=${list.data[4]} style="font-weight: bold;">${list.data[0]}</td>
+                                  <#if list.data[5]=="title" >
+                                  <td id=${list.data[3]} pid=${list.data[4]} role=${list.data[5]} style="font-weight: bold;">${list.data[0]}</td>
                                   <td><input type="text" class="form-control"  style="display:none"></td>
                                   <td><input type="text" class="form-control"  style="display:none"></td>
-                                  <#elseif list.data[5]=="item">
-                                  <td id=${list.data[3]} pid=${list.data[4]} >${list.data[0]}</td>
+                                  <#elseif list.data[5]=="item" >
+                                  <td id=${list.data[3]} pid=${list.data[4]} role=${list.data[5]}>${list.data[0]}</td>
                                   <td><input type="text" class="form-control"  value=${list.data[1]}></td>
-                                  <td><input type="text" class="form-control"  value=${list.data[2]}></td>
-                                  <#else>
-                                  <td></td>
-                                  <td></td>
+                                  <td><input type="text" class="form-control"  value=${list.data[2]}></td> 
+                                  <#elseif list.data[5]=="titleitem">
+                                  <td id=${list.data[3]} pid=${list.data[4]} role=${list.data[5]} style="font-weight: bold;">${list.data[0]}</td>
+                                  <td><input type="text" class="form-control"  value=${list.data[1]}></td>
+                                  <td><input type="text" class="form-control"  value=${list.data[2]}></td> 
+                                  <#elseif list.data[5]=="titlecount">
+                                  <td id=${list.data[3]} pid=${list.data[4]} role=${list.data[5]} style="font-weight: bold;">${list.data[0]}</td>
+                                  <td><input type="text" class="form-control"  style="display:none"></td>
+                                  <td><input type="text" class="form-control"  style="display:none"></td>                                
                                   </#if>       
                               </tr>
                               </tbody>                            

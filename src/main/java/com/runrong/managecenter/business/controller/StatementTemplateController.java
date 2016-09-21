@@ -1,5 +1,7 @@
 package com.runrong.managecenter.business.controller;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.runrong.managecenter.business.adapter.StatementTemplateAdapter;
 import com.runrong.managecenter.business.service.StatementTemplateService;
 import com.runrong.managecenter.common.base.ResultModel;
 import com.runrong.managecenter.common.util.JsonUtil;
@@ -29,6 +32,7 @@ public class StatementTemplateController {
 	
 	@Autowired
 	StatementTemplateService statementTemplateService;
+	
 	
 	/**
 	 * 查询报表模板
@@ -152,8 +156,9 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping("/transformStatementTemplate")
 	@ResponseBody
-	public ResultModel TransformStatementTemplate(HttpServletRequest request){
-		
-		return ResultModel.successModel();
+	public String TransformStatementTemplate(HttpServletRequest request){
+		String callback=request.getParameter("callback");
+		String template=callback+"("+JsonUtil.getJsonFromObject(statementTemplateService.transformStatementTemplate(request)).toJSONString()+")";
+		return template;
 	}
 }

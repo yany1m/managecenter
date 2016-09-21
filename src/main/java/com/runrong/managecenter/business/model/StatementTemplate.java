@@ -7,7 +7,7 @@ package com.runrong.managecenter.business.model;
 public class StatementTemplate {
 
 	//自增id
-	private int id;
+	private Integer id;
 	//管理员id
 	private int adminId;
 	//模板
@@ -31,10 +31,10 @@ public class StatementTemplate {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public int getAdminId() {

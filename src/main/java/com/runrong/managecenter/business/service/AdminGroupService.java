@@ -152,6 +152,7 @@ public class AdminGroupService {
 		
 		String[] permissionIds=request.getParameterValues("checkboxes");
 		if(permissionIds!=null && permissionIds.length>0){
+			//分出需要更新，添加的权限
 			for(String permissionId:permissionIds){	
 			
 				if(set.contains(permissionId)){

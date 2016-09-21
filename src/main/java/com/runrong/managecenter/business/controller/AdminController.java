@@ -78,7 +78,7 @@ public class AdminController {
 	public ModelAndView updateAdministratorGET(HttpServletRequest request,ModelMap map) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		
 		
-		List adminGroupList =(List)adminGroupService.getAdminGroup(request).getBody();
+		List<?> adminGroupList =(List<?>)adminGroupService.getAdminGroup(request).getBody();
 		map.put("adminGroupList",adminGroupList);
 		
 		map.put("id", request.getParameter("id"));

@@ -28,7 +28,7 @@ public class StatementTemplateDao extends BaseDao{
 	public List getStatementTemplate(StatementTemplate statementTemplate){
 		StringBuffer sql=new StringBuffer("select managecenter.statement_template.id,admin_id,template,managecenter.statement_template.type,name,editor,managecenter.admin.username,a.username as editor_name from managecenter.statement_template join "
 				+ "managecenter.admin on managecenter.statement_template.admin_id=managecenter.admin.id join managecenter.admin as a on managecenter.statement_template.editor=a.id where 1=1");	
-		if(statementTemplate.getId()!=0){			
+		if(statementTemplate.getId()!=null && !statementTemplate.getId().equals("")){			
 			sql.append(" and managecenter.statement_template.id=:id");
 		}
 		if(statementTemplate.getAdminId()!=0){

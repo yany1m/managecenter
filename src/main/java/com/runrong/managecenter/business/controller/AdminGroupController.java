@@ -86,7 +86,7 @@ public class AdminGroupController {
 	@RequestMapping(value="/getAdminGroup",method=RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView getAdminGroupGET(HttpServletRequest request,ModelMap map){
-		List list=(List) adminGroupService.getAdminGroup(request).getBody();
+		List<?> list=(List<?>) adminGroupService.getAdminGroup(request).getBody();
 		map.put("list", list);
 		return new ModelAndView("/managecenter/getAdminGroup");
 	}

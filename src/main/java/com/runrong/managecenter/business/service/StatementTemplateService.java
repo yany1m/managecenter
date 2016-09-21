@@ -1,5 +1,6 @@
 package com.runrong.managecenter.business.service;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.runrong.managecenter.business.adapter.StatementTemplateAdapter;
 import com.runrong.managecenter.business.cache.SelectdStatementTemplateCache;
 import com.runrong.managecenter.business.dao.StatementTemplateDao;
 import com.runrong.managecenter.business.model.StatementTemplate;
@@ -33,18 +35,26 @@ public class StatementTemplateService {
 	@Autowired
 	SelectdStatementTemplateCache selectdStatementTemplateCache;
 	
+	@Autowired
+	StatementTemplateAdapter statementTemplateAdapter;
+	
 	/**
 	 * 获取模板
 	 * @param request
 	 * @return
 	 */
 	public ResultModel getStatementTemplate(HttpServletRequest request){
-		String id=request.getParameter("id")==null?"0":request.getParameter("id");
+		String id=request.getParameter("id");
 		String type=request.getParameter("type");		
 		String name=request.getParameter("name");	
 		
 		StatementTemplate statementTemplate=new StatementTemplate();
-		statementTemplate.setId(Integer.valueOf(id));
+		if(id!=null && id.equals("undefined")){
+			return ResultModel.failModel("参数错误");
+		}
+		if(id!=null){
+			statementTemplate.setId(Integer.valueOf(id));
+		}
 		statementTemplate.setType(type);
 		statementTemplate.setName(name);
 		
@@ -131,6 +141,7 @@ public class StatementTemplateService {
 	 * @param map
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public ResultModel getBalanceStatementTemplateSelected(HttpServletRequest request,ModelMap map,String url,List statementlist,String type){
 		EnterpriseFinancialData efd=(EnterpriseFinancialData) map.get("EnterpriseFinancialData");
 		Integer id=0;
@@ -162,7 +173,7 @@ public class StatementTemplateService {
 				map.put("head", ( (Map) JSON.parseObject((String) maps.get("template")).get("head")).get("names"));			
 				statementlist=(List<Map>) ((Map) JSON.parseObject((String) maps.get("template")).get("body")).get("rows");											
 				if(efd!=null){
-					map.put("balancestatementList",AssignListHelper.assignCashflowStatementList(efd,statementlist));
+					map.put("balancestatementList",AssignListHelper.assignBalanceStatementList(efd,statementlist));
 				}else{
 					map.put("balancestatementList", statementlist);			
 				}
@@ -182,6 +193,7 @@ public class StatementTemplateService {
 	 * @param map
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public ResultModel getCashflowStatementTemplateSelected(HttpServletRequest request,ModelMap map,String url,List statementlist,String type){
 		EnterpriseFinancialData efd=(EnterpriseFinancialData) map.get("EnterpriseFinancialData");
 		Integer id=0;
@@ -231,6 +243,7 @@ public class StatementTemplateService {
 	 * @param map
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public ResultModel getProfitStatementTemplateSelected(HttpServletRequest request,ModelMap map,String url,List statementlist,String type){
 		EnterpriseFinancialData efd=(EnterpriseFinancialData) map.get("EnterpriseFinancialData");
 		Integer id=0;
@@ -306,7 +319,28 @@ public class StatementTemplateService {
 	 * @return
 	 */
 	public ResultModel transformStatementTemplate(HttpServletRequest request){
+		ResultModel r=getStatementTemplate(request);
+		if(r.Fail()){
+			return r;
+		}
+		List list=(List)r .getBody();
+		if(list.size()<=0){
+			return ResultModel.failModel("找不到此模板");
+		}
+		String template=(String)((Map) list.get(0)).get("template");
+		Map map=new HashMap();
+		switch ((String)((Map) list.get(0)).get("type")){
+		case "资产负债表":
+			map=statementTemplateAdapter.transformBalanceStatementTemplate(template);
+			break;
+		case "现金流量表":
+			map=statementTemplateAdapter.transformCashflowStatementTemplate(template);
+			break;
+		case "利润表":
+			map=statementTemplateAdapter.transformProfitStatementTemplate(template);
+			break;
 		
-		return ResultModel.successModel();
+	}
+		return ResultModel.successModel(map);
 	}
 }
