@@ -18,6 +18,7 @@ import com.runrong.managecenter.business.model.datacollection.EnterpriseFinancia
 import com.runrong.managecenter.business.service.DataService;
 import com.runrong.managecenter.business.service.StatementTemplateService;
 import com.runrong.managecenter.common.base.ResultModel;
+import com.runrong.managecenter.common.dictionary.Constant;
 import com.runrong.managecenter.common.util.AssignListHelper;
 import com.runrong.managecenter.config.StatementConfig;
 
@@ -197,15 +198,15 @@ public class DataController {
 		map.put("EnterpriseFinancialData", efd);
 		if(efd.getBalanceStatements()!=null){	
 			return (ModelAndView)statementTemplateService.getBalanceStatementTemplateSelected(request, map, "/managecenter/updatebalancestatement", 
-					AssignListHelper.assignBalanceStatementList(efd,StatementConfig.balanceStatementList),"资产负债表").getBody();	 
+					AssignListHelper.assignBalanceStatementList(efd,StatementConfig.balanceStatementList),Constant.BALANCE_STATEMENT).getBody();	 
 		}
 		if(efd.getCashFlowStatements()!=null){
 			return (ModelAndView)statementTemplateService.getCashflowStatementTemplateSelected(request, map, "/managecenter/updatecashflowstatement", 
-					AssignListHelper.assignCashflowStatementList(efd,StatementConfig.cashflowStatementList),"现金流量表").getBody();
+					AssignListHelper.assignCashflowStatementList(efd,StatementConfig.cashflowStatementList),Constant.CASHFLOW_STATEMENT).getBody();
 		}
 		if(efd.getProfitStatements()!=null){
 			return (ModelAndView)statementTemplateService.getProfitStatementTemplateSelected(request, map, "/managecenter/updateprofitstatement", 
-					AssignListHelper.assignProfitStatementList(efd,StatementConfig.profitStatementList),"利润表").getBody();
+					AssignListHelper.assignProfitStatementList(efd,StatementConfig.profitStatementList),Constant.PROFIT_STATEMENT).getBody();
 		}
 				
 		return new ModelAndView("/managecenter/findstatement");

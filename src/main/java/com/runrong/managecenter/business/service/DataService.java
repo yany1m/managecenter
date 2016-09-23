@@ -18,6 +18,7 @@ import com.runrong.managecenter.business.model.datacollection.EnterpriseFinancia
 import com.runrong.managecenter.business.model.datacollection.ProfitStatement;
 import com.runrong.managecenter.common.base.BaseFinancialModel;
 import com.runrong.managecenter.common.base.ResultModel;
+import com.runrong.managecenter.common.dictionary.Constant;
 import com.runrong.managecenter.common.util.FormatDateUtil;
 
 @Service
@@ -347,34 +348,34 @@ public class DataService {
 		
 		EnterpriseFinancialData efd=new EnterpriseFinancialData();
 		efd.setEnterpriseRegistrationNumber(enterpriseRegistrationNumber);
-		if(statement.equals("资产负债表")){
+		if(statement.equals(Constant.BALANCE_STATEMENT)){
 			BalanceStatement bs=new BalanceStatement();	
 			bs.setDate(FormatDateUtil.formatToMongoDate(year));			
 			//加入list
 			List<BalanceStatement> list=new ArrayList<BalanceStatement>();		
 			list.add(bs);
 			efd.setBalanceStatements(list);
-			efd=dataDao.findByYearAndNum(efd,"资产负债表");
+			efd=dataDao.findByYearAndNum(efd,Constant.BALANCE_STATEMENT);
 			return ResultModel.successModel(efd);
 		} 
-		if(statement.equals("现金流量表")){
+		if(statement.equals(Constant.CASHFLOW_STATEMENT)){
 			CashFlowStatement cs=new CashFlowStatement();	
 			cs.setDate(FormatDateUtil.formatToMongoDate(year));
 			//加入list
 			List<CashFlowStatement> list=new ArrayList<CashFlowStatement>();		
 			list.add(cs);
 			efd.setCashFlowStatements(list);
-			efd=dataDao.findByYearAndNum(efd,"现金流量表");
+			efd=dataDao.findByYearAndNum(efd,Constant.CASHFLOW_STATEMENT);
 			return ResultModel.successModel(efd);
 		}
-		if(statement.equals("利润表")){
+		if(statement.equals(Constant.PROFIT_STATEMENT)){
 			ProfitStatement ps=new ProfitStatement();	
 			ps.setDate(FormatDateUtil.formatToMongoDate(year));
 			//加入list
 			List<ProfitStatement> list=new ArrayList<ProfitStatement>();		
 			list.add(ps);
 			efd.setProfitStatements(list);
-			efd=dataDao.findByYearAndNum(efd,"利润表");
+			efd=dataDao.findByYearAndNum(efd,Constant.PROFIT_STATEMENT);
 			return ResultModel.successModel(efd);
 		}
 			

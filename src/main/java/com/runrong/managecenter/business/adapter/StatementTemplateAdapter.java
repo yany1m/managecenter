@@ -324,8 +324,12 @@ public class StatementTemplateAdapter {
 	
 		}
 		
-		contents.add(content.substring(1, content.length()));
-		contents.add(content1.substring(1, content1.length()));
+		//如果包含负数作为第一个的话，可能会出错。会将第一个"-"去掉
+		//contents.add(content.substring(1, content.length()));
+		//contents.add(content1.substring(1, content1.length()));
+		
+		contents.add("("+content+")");
+		contents.add("("+content1+")");
 		
 		return contents;
 	}

@@ -28,6 +28,8 @@ import com.runrong.managecenter.business.service.AdminService;
 import com.runrong.managecenter.business.service.PermissionService;
 import com.runrong.managecenter.business.service.StatementTemplateService;
 import com.runrong.managecenter.business.service.UserService;
+import com.runrong.managecenter.common.dictionary.Constant;
+import com.runrong.managecenter.common.dictionary.DefineType;
 import com.runrong.managecenter.common.util.JsonUtil;
 import com.runrong.managecenter.config.RSAConfig;
 import com.runrong.managecenter.config.StatementConfig;
@@ -182,7 +184,7 @@ public class RouteController {
 	@ResponseBody
 	public ModelAndView balancestatement(HttpServletRequest request,ModelMap map) throws ParseException{
 		
-		return (ModelAndView) statementTemplateService.getBalanceStatementTemplateSelected(request, map,"/managecenter/balancestatement",StatementConfig.balanceStatementList,"资产负债表").getBody();
+		return (ModelAndView) statementTemplateService.getBalanceStatementTemplateSelected(request, map,"/managecenter/balancestatement",StatementConfig.balanceStatementList,Constant.BALANCE_STATEMENT).getBody();
 	}
 
 	/**
@@ -196,7 +198,7 @@ public class RouteController {
 	@ResponseBody
 	public ModelAndView cashflowstatement(HttpServletRequest request,ModelMap map) throws ParseException{
 		
-		return (ModelAndView) statementTemplateService.getCashflowStatementTemplateSelected(request, map,"/managecenter/cashflowstatement",StatementConfig.cashflowStatementList,"现金流量表").getBody();
+		return (ModelAndView) statementTemplateService.getCashflowStatementTemplateSelected(request, map,"/managecenter/cashflowstatement",StatementConfig.cashflowStatementList,Constant.CASHFLOW_STATEMENT).getBody();
 	}
 	
 	/**
@@ -210,7 +212,7 @@ public class RouteController {
 	@ResponseBody
 	public ModelAndView profitstatement(HttpServletRequest request,ModelMap map) throws ParseException{
 		
-		return (ModelAndView) statementTemplateService.getProfitStatementTemplateSelected(request, map,"/managecenter/profitstatement",StatementConfig.profitStatementList,"利润表").getBody();
+		return (ModelAndView) statementTemplateService.getProfitStatementTemplateSelected(request, map,"/managecenter/profitstatement",StatementConfig.profitStatementList,Constant.PROFIT_STATEMENT).getBody();
 	}
 	
 	/**

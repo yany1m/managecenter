@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.runrong.managecenter.business.adapter.StatementTemplateAdapter;
 import com.runrong.managecenter.business.service.StatementTemplateService;
 import com.runrong.managecenter.common.base.ResultModel;
+import com.runrong.managecenter.common.dictionary.Constant;
 import com.runrong.managecenter.common.util.JsonUtil;
 import com.runrong.managecenter.config.StatementConfig;
 
@@ -72,13 +73,13 @@ public class StatementTemplateController {
 		
 		Map statementMap = null;
 		switch (request.getParameter("type")){
-			case "资产负债表":
+			case Constant.BALANCE_STATEMENT:
 				statementMap=StatementConfig.balanceStatementMap;
 				break;
-			case "现金流量表":
+			case Constant.CASHFLOW_STATEMENT:
 				statementMap=StatementConfig.cashflowStatementMap;
 				break;
-			case "利润表":
+			case Constant.PROFIT_STATEMENT:
 				statementMap=StatementConfig.profitStatementMap;
 				break;
 			
