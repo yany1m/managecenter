@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.runrong.managecenter.business.adapter.StatementTemplateAdapter;
+import com.runrong.managecenter.business.aop.CheckPermission;
 import com.runrong.managecenter.business.service.StatementTemplateService;
 import com.runrong.managecenter.common.base.ResultModel;
 import com.runrong.managecenter.common.dictionary.Constant;
@@ -41,7 +42,7 @@ public class StatementTemplateController {
 	 * @return
 	 */
 	@RequestMapping(value="/getStatementTemplate",method=RequestMethod.POST)
-	@ResponseBody
+	@CheckPermission
 	public ResultModel getStatementTemplatePOST(HttpServletRequest request){
 		
 		return statementTemplateService.getStatementTemplate(request);
@@ -56,6 +57,7 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/addStatementTemplate",method=RequestMethod.POST)
 	@ResponseBody
+	@CheckPermission
 	public ResultModel addStatementTemplatePOST(HttpServletRequest request){
 		
 		return statementTemplateService.addStatementTemplate(request);
@@ -68,6 +70,7 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/addStatementTemplate",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView addStatementTemplateGET(HttpServletRequest request,ModelMap map){
 		map.put("type", request.getParameter("type"));
 		
@@ -95,6 +98,7 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/updateStatementTemplate",method=RequestMethod.POST)
 	@ResponseBody
+	@CheckPermission
 	public ResultModel updateStatementTemplatePOST(HttpServletRequest request){
 		
 		return statementTemplateService.updateStatementTemplate(request);
@@ -107,6 +111,7 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/updateStatementTemplate",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView updateStatementTemplateGET(HttpServletRequest request,ModelMap map){
 		List list=(List) statementTemplateService.getStatementTemplate(request).getBody();
 		map.put("statementTemplate",list.get(0));
@@ -120,6 +125,7 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/deleteStatementTemplate",method=RequestMethod.POST)
 	@ResponseBody
+	@CheckPermission
 	public ResultModel deleteStatementTemplatePOST(HttpServletRequest request){
 		
 		return statementTemplateService.deleteStatementTemplate(request);
@@ -144,6 +150,7 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/statementTemplate")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView statementTemplate(HttpServletRequest request,ModelMap map){
 		List list=(List) statementTemplateService.getStatementTemplate(request).getBody();
 		map.put("list", list);

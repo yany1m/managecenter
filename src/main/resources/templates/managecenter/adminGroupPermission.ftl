@@ -7,7 +7,7 @@
     <meta name="author" content="Mosaddek">
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina"> 
 
-    <title>managecenter</title>
+    <title>管理组权限</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -53,9 +53,13 @@
                          <label class="control-label col-lg-2" for="inputSuccess"></label>
                          	<div class="col-lg-10" style="float:none">
                             	<select id="group" class="form-control m-bot15"> 
-                            		<option value="0">管理组</option>
-                                	<#list adminGroupList as list>                                          
+               
+                                	<#list adminGroupList as list>
+                                		<#if Session.admin_group_id=list.id>
+                                		<option value="${list.id}" selected="selected">${list.name}</option>
+                                		<#else>                                          
                                     	<option value="${list.id}">${list.name}</option>                                             
+                                    	</#if>
                                     </#list>                                            
                                 </select>
                             </div>
@@ -143,6 +147,26 @@
 			});
 		});
 	});
+	
+	$(document).ready(function(){
+		$.ajax({
+				type:"post",
+				dataType:"json",
+				url:"/managecenter/getAdminGroupPermissionById",
+				data:"id="+${Session.admin_group_id},
+				error: function(result){
+					alert(result);
+				},
+				success: function(data) {	
+					if(data.code=="0"){
+						$.each(data.body,function(key,value){
+							$("#"+value.permissionsId).prop("checked",'true');
+						});
+					}
+				}
+			});
+	});
+
 	
 	function updateAdminGroupPermission(){	
 		$.ajax({

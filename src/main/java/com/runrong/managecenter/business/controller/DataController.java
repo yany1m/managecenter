@@ -169,6 +169,7 @@ public class DataController {
 	 */
 	@RequestMapping("/findByEnterpriseFinancialData")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView findByEnterpriseFinancialData(HttpServletRequest request,ModelMap map){
 		ResultModel r=dataService.findByEnterpriseFinancialData(request);
 		if( r.getCode()==0 ){
@@ -185,6 +186,7 @@ public class DataController {
 	 */
 	@RequestMapping(value="/findFinancialStatement")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView findFinancialStatement(HttpServletRequest request,ModelMap map){
 		ResultModel rm=dataService.findFinancialStatement(request);
 		if(rm.Fail()){						

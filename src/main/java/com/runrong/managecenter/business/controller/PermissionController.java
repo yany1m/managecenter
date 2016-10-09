@@ -34,6 +34,7 @@ public class PermissionController {
 	 */
 	@RequestMapping("/getPermission")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView getPermission(HttpServletRequest request,ModelMap map){
 		
 		List list=(List) permissionService.getPermission(request).getBody();		
@@ -48,6 +49,7 @@ public class PermissionController {
 	 */
 	@RequestMapping(value="/addPermission",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView addPermissionGET(HttpServletRequest request){
 		
 		return new ModelAndView("/managecenter/addPermission");
@@ -73,6 +75,7 @@ public class PermissionController {
 	 */
 	@RequestMapping(value="/updatePermission",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView updatePermissionGET(HttpServletRequest request,ModelMap map){
 		
 		Integer id=Integer.valueOf(request.getParameter("id"));			

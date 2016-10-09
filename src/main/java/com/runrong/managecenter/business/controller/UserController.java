@@ -37,6 +37,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/addUser",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView addUserGET(HttpServletRequest request) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		
 		 ResultModel r=userService.addUser(request);
@@ -71,6 +72,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/updateUser",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView updateUserGET(HttpServletRequest request,ModelMap map) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		
 		ResultModel r=userService.updateUser(request);

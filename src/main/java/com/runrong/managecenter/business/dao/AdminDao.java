@@ -63,9 +63,9 @@ public class AdminDao extends BaseDao{
 	 * @return
 	 */
 	public List getAdministrator(Administrator admin){
-		StringBuffer sql=new StringBuffer("select id,admin_group_id,username,type,jointime from managecenter.admin where 1=1");		
+		StringBuffer sql=new StringBuffer("select managecenter.admin.id,admin_group_id,username,type,jointime,name from managecenter.admin left join managecenter.admin_group on managecenter.admin.admin_group_id=managecenter.admin_group.id where 1=1");		
 		if(admin.getUuid()!=null){			
-			sql.append(" and id=:uuid");
+			sql.append(" and managecenter.admin.id=:uuid");
 		}
 		if(admin.getUsername()!=null){
 			sql.append(" and username=:username");

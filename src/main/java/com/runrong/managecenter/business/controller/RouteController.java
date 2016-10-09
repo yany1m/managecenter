@@ -29,8 +29,6 @@ import com.runrong.managecenter.business.service.PermissionService;
 import com.runrong.managecenter.business.service.StatementTemplateService;
 import com.runrong.managecenter.business.service.UserService;
 import com.runrong.managecenter.common.dictionary.Constant;
-import com.runrong.managecenter.common.dictionary.DefineType;
-import com.runrong.managecenter.common.util.JsonUtil;
 import com.runrong.managecenter.config.RSAConfig;
 import com.runrong.managecenter.config.StatementConfig;
 /**
@@ -182,6 +180,7 @@ public class RouteController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/balancestatement")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView balancestatement(HttpServletRequest request,ModelMap map) throws ParseException{
 		
 		return (ModelAndView) statementTemplateService.getBalanceStatementTemplateSelected(request, map,"/managecenter/balancestatement",StatementConfig.balanceStatementList,Constant.BALANCE_STATEMENT).getBody();
@@ -196,6 +195,7 @@ public class RouteController {
 	 */
 	@RequestMapping("/cashflowstatement")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView cashflowstatement(HttpServletRequest request,ModelMap map) throws ParseException{
 		
 		return (ModelAndView) statementTemplateService.getCashflowStatementTemplateSelected(request, map,"/managecenter/cashflowstatement",StatementConfig.cashflowStatementList,Constant.CASHFLOW_STATEMENT).getBody();
@@ -210,6 +210,7 @@ public class RouteController {
 	 */
 	@RequestMapping("/profitstatement")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView profitstatement(HttpServletRequest request,ModelMap map) throws ParseException{
 		
 		return (ModelAndView) statementTemplateService.getProfitStatementTemplateSelected(request, map,"/managecenter/profitstatement",StatementConfig.profitStatementList,Constant.PROFIT_STATEMENT).getBody();
@@ -224,6 +225,7 @@ public class RouteController {
 	 */
 	@RequestMapping("/findstatement")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView findstatement(HttpServletRequest request,ModelMap map) throws ParseException{
 					
 		return new ModelAndView("/managecenter/findstatement");
@@ -236,6 +238,7 @@ public class RouteController {
 	 */
 	@RequestMapping("/adminGroupPermission")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView adminGroupPermission(HttpServletRequest request,ModelMap map){
 		List adminGroupList =(List)adminGroupService.getAdminGroup(request).getBody();
 		List list=(List) permissionService.getPermission(request).getBody();

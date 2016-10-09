@@ -60,6 +60,7 @@ public class AdminGroupController {
 	 */
 	@RequestMapping(value="/addAdminGroup",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView addAdminGroupGET(HttpServletRequest request){
 	
 		return new ModelAndView("/managecenter/addAdminGroup");
@@ -85,6 +86,7 @@ public class AdminGroupController {
 	 */
 	@RequestMapping(value="/getAdminGroup",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView getAdminGroupGET(HttpServletRequest request,ModelMap map){
 		List<?> list=(List<?>) adminGroupService.getAdminGroup(request).getBody();
 		map.put("list", list);
@@ -123,6 +125,7 @@ public class AdminGroupController {
 	 */
 	@RequestMapping(value="/updateAdminGroup",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView updateAdminGroupGET(HttpServletRequest request,ModelMap map){
 		map.put("id", request.getParameter("id"));
 		map.put("name", request.getParameter("name"));
