@@ -42,6 +42,17 @@
                       	  <li class=""><a class="" href="/managecenter/adminGroupPermission">管理组权限</a></li>
                       </ul>
                   </li>
+                  
+                  <li class="sub-menu active">
+                      <a href="javascript:;" class="">
+                          <i class="icon-tasks"></i>
+                          <span>企业评分模板</span>
+                          <span class="arrow"></span>
+                      </a>
+                      <ul class="sub">
+                      	  <li class=""><a class="" href="/managecenter/getAllQyCreditConfig">配置模板</a></li>
+                      </ul>
+                  </li>
               </ul>
               <!-- sidebar menu end-->
           </div>

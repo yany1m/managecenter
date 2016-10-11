@@ -60,7 +60,7 @@
                               	 <div class="form-group">
                               
                                       <label class="control-label col-lg-2" for="inputSuccess"></label>
-                                      <div class="col-lg-10">
+                                      <div class="col-lg-10" style="float:none">
                                           <select name="statement" class="form-control m-bot15">
                                           	  <option>全部</option>
                                               <option>资产负债表</option>
@@ -68,7 +68,7 @@
                                               <option>利润表</option>                                             
                                           </select>
                               	 	  </div>
-                                      <label class="control-label col-lg-2" ></label>
+      
                                       <div class="col-lg-10">
                                           <div class="input-group m-bot15">
                                               <span class="input-group-addon">企业注册号</span>
@@ -76,7 +76,7 @@
                                           </div>
                                                                                       
                                        </div>
-                                        <div class="col-lg-offset-2 col-lg-10">
+                          
                                        <button type="submit" class="btn btn-info">查询</button>
                                   		</div>
                                                                                                     

@@ -128,12 +128,12 @@
 	$(function(){
 		$("#group").click(function() {			
 			$(".checkboxes").removeAttr("checked");
-			$("#adminGroupId").val($(this).find("option:checked").attr("value"));
+			$("#adminGroupId").val($(this).find("option:selected").attr("value"));
 			$.ajax({
 				type:"post",
 				dataType:"json",
 				url:"/managecenter/getAdminGroupPermissionById",
-				data:"id="+$(this).find("option:checked").attr("value"),
+				data:"id="+$(this).find("option:selected").attr("value"),
 				error: function(result){
 					alert(result);
 				},
@@ -149,6 +149,7 @@
 	});
 	
 	$(document).ready(function(){
+	
 		$.ajax({
 				type:"post",
 				dataType:"json",
@@ -162,6 +163,7 @@
 						$.each(data.body,function(key,value){
 							$("#"+value.permissionsId).prop("checked",'true');
 						});
+						$("#adminGroupId").val($("#group").find("option:selected").attr("value"));
 					}
 				}
 			});
