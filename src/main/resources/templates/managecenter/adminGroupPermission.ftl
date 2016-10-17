@@ -26,7 +26,6 @@
       <script src="js/respond.min.js"></script>
     <![endif]-->
   </head>
-
   <body>
 
   <section id="container" class="">
@@ -115,6 +114,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="assets/data-tables/DT_bootstrap.js"></script>
 
 
@@ -149,7 +149,12 @@
 	});
 	
 	$(document).ready(function(){
-	
+		//取消分页
+		$('#sample_1').DataTable( {   
+    		bPaginate: false,
+    		bDestroy: true
+    	} );
+		
 		$.ajax({
 				type:"post",
 				dataType:"json",
@@ -169,7 +174,6 @@
 			});
 	});
 
-	
 	function updateAdminGroupPermission(){	
 		$.ajax({
 				type:"post",

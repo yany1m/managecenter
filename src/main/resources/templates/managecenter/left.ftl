@@ -4,7 +4,7 @@
               <ul class="sidebar-menu">
                  
                  
-                  <li class="sub-menu active">
+                  <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i class="icon-th"></i>
                           <span>管理用户</span>
@@ -16,7 +16,7 @@
                       </ul>
                   </li>
                  
-                  <li class="sub-menu active">
+                  <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i class="icon-tasks"></i>
                           <span>财务数据</span>
@@ -30,7 +30,7 @@
                           <li><a class="" href="/managecenter/profitstatement">利润表</a></li>
                       </ul>
                   </li>
-                   <li class="sub-menu active">
+                   <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i class="icon-tasks"></i>
                           <span>权限管理</span>
@@ -43,7 +43,7 @@
                       </ul>
                   </li>
                   
-                  <li class="sub-menu active">
+                  <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i class="icon-tasks"></i>
                           <span>企业评分模板</span>
@@ -57,3 +57,24 @@
               <!-- sidebar menu end-->
           </div>
       </aside>
+      <script src="js/jquery-1.8.3.min.js"></script>
+      <script src="js/cookie/jquery_cookie.js" ></script>
+      <script>
+  $(document).ready(function(){
+	  var tDiv = $(".sub"),
+          links = tDiv.find("a"),
+          index = -1,//默认全不选 
+	      url = window.location.href.split('?')[0].split('/').pop();
+	  
+	      for (var i=links.length; i--;) {//遍历 menu 的中连接地址
+            if(links[i].href.split('/').pop() == url){
+                index = i;
+                break;
+            }
+          }
+          if(index!=-1){  
+          	links[index].parentNode.className='active';
+          	links[index].parentNode.parentNode.parentNode.className='active';
+          }
+  });
+  </script>
