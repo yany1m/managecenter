@@ -40,7 +40,7 @@ public class RSAUtils {
 	    /** 算法名称 */
 	    private static final String ALGORITHOM = "RSA";
 	    /**保存生成的密钥对的文件名称。 */
-	    private static final String RSA_PAIR_FILENAME = "/__RSA_PAIR.txt";
+	    private static final String RSA_PAIR_FILENAME = "./__RSA_PAIR.txt";
 	    /** 密钥大小 */
 	    private static final int KEY_SIZE = 1024;
 	    /** 默认的安全服务提供者 */
@@ -88,8 +88,7 @@ public class RSAUtils {
 	     * 返回生成/读取的密钥对文件的路径。
 	     */
 	    private static String getRSAPairFilePath() {
-	        String urlPath = RSAUtils.class.getResource("/").getPath();
-	        return (new File(urlPath).getParent() + RSA_PAIR_FILENAME);
+	        return RSA_PAIR_FILENAME;
 	    }
 	 
 	    /**
