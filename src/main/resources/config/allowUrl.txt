@@ -7,3 +7,4 @@
 /managecenter/js/cookie/jquery_cookie.js
 /managecenter/getVerifyCode
 /managecenter/js/security.js
+/managecenter/transformStatementTemplate

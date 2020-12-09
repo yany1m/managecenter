@@ -8,7 +8,7 @@
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.html">
 
-    <title>500</title>
+    <title>权限</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -34,10 +34,27 @@
           <i class="icon-500"></i>        
           <h2>权限错误</h2>
           <p class="page-500">您不具备权限查看此页面. <a href="index.html">返回主页</a></p>
+          <p class="page-500">将在<span id="time">3</span>秒之后自动跳转到原页面.</p>
       </section>
 
     </div>
 
 
   </body>
+  <script src="js/jquery-1.8.3.min.js"></script>
+  
+  <script>
+  $(document).ready(function(){
+	  var countdown=3;
+	  var prevLink = document.referrer;
+	  
+	  setInterval(function() {
+		  	countdown--;
+			$("#time").html(countdown);
+			if(countdown==0){
+				location.href=prevLink;
+			}
+			},1000)
+  });
+  </script>
 </html>

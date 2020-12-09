@@ -19,6 +19,7 @@ import com.runrong.managecenter.business.model.datacollection.CashFlowStatement;
 import com.runrong.managecenter.business.model.datacollection.EnterpriseFinancialData;
 import com.runrong.managecenter.business.model.datacollection.ProfitStatement;
 import com.runrong.managecenter.common.base.ResultModel;
+import com.runrong.managecenter.common.dictionary.Constant;
 import com.runrong.managecenter.common.util.JsonUtil;
 
 /**
@@ -38,7 +39,7 @@ public class DataDao {
 	 */
 	public ResultModel saveBalanceStatement(EnterpriseFinancialData efd){  
 		if(find(efd)!=null ){
-			if(findByYearAndNum(efd,"资产负债表").getBalanceStatements()==null){
+			if(findByYearAndNum(efd,Constant.BALANCE_STATEMENT).getBalanceStatements()==null){
 				Query query = Query.query(Criteria.where("enterpriseRegistrationNumber").is(efd.getEnterpriseRegistrationNumber()));	
 				Update update = new Update();						
 				update.pushAll("balanceStatements", efd.getBalanceStatements().toArray());
@@ -57,7 +58,7 @@ public class DataDao {
 	 */
 	public ResultModel saveCashFlowStatement(EnterpriseFinancialData efd){  
 		if(find(efd)!=null ){
-			if(findByYearAndNum(efd,"现金流量表").getCashFlowStatements()==null){
+			if(findByYearAndNum(efd,Constant.CASHFLOW_STATEMENT).getCashFlowStatements()==null){
 				Query query = Query.query(Criteria.where("enterpriseRegistrationNumber").is(efd.getEnterpriseRegistrationNumber()));	
 				Update update = new Update();						
 				update.pushAll("cashFlowStatements", efd.getCashFlowStatements().toArray());
@@ -76,7 +77,7 @@ public class DataDao {
 	 */
 	public ResultModel saveProfitStatement(EnterpriseFinancialData efd){  
 		if(find(efd)!=null ){
-			if(findByYearAndNum(efd,"利润表").getProfitStatements()==null){				
+			if(findByYearAndNum(efd,Constant.PROFIT_STATEMENT).getProfitStatements()==null){				
 				Query query = Query.query(Criteria.where("enterpriseRegistrationNumber").is(efd.getEnterpriseRegistrationNumber()));	
 				Update update = new Update();						
 				update.pushAll("profitStatements", efd.getProfitStatements().toArray());
@@ -202,13 +203,13 @@ public class DataDao {
 			ps=(ProfitStatement)efd.getProfitStatements().get(0);
 		}		
 		
-		if(type.equals("资产负债表")){			
+		if(type.equals(Constant.BALANCE_STATEMENT)){			
 			fieldsObject.put("balanceStatements",1); 
 		}
-		if(type.equals("现金流量表")){
+		if(type.equals(Constant.CASHFLOW_STATEMENT)){
 			fieldsObject.put("cashFlowStatements",1); 
 		}
-		if(type.equals("利润表")){
+		if(type.equals(Constant.PROFIT_STATEMENT)){
 			fieldsObject.put("profitStatements",1); 
 		}
 		
@@ -241,13 +242,13 @@ public class DataDao {
 			ps=(ProfitStatement)efd.getProfitStatements().get(0);
 		}		
 		
-		if(type.equals("资产负债表")){			
+		if(type.equals(Constant.BALANCE_STATEMENT)){			
 			efd=mongoTemplate.findOne(new Query(Criteria.where("balanceStatements.date").is(bs.getDate())), EnterpriseFinancialData.class);  
 		}
-		if(type.equals("现金流量表")){
+		if(type.equals(Constant.CASHFLOW_STATEMENT)){
 			efd=mongoTemplate.findOne(new Query(Criteria.where("cashFlowStatements.date").is(cs.getDate())), EnterpriseFinancialData.class);  
 		}
-		if(type.equals("利润表")){
+		if(type.equals(Constant.PROFIT_STATEMENT)){
 			efd=mongoTemplate.findOne(new Query(Criteria.where("profitStatements.date").is(ps.getDate())), EnterpriseFinancialData.class);  
 		}
 		
@@ -272,13 +273,13 @@ public class DataDao {
 			ps=(ProfitStatement)efd.getProfitStatements().get(0);
 		}		
 		
-		if(type.equals("资产负债表")){			
+		if(type.equals(Constant.BALANCE_STATEMENT)){			
 			fieldsObject.put("balanceStatements",new BasicDBObject("$elemMatch",new BasicDBObject("date",bs.getDate()))); 
 		}
-		if(type.equals("现金流量表")){
+		if(type.equals(Constant.CASHFLOW_STATEMENT)){
 			fieldsObject.put("cashFlowStatements",new BasicDBObject("$elemMatch",new BasicDBObject("date",cs.getDate()))); 
 		}
-		if(type.equals("利润表")){
+		if(type.equals(Constant.PROFIT_STATEMENT)){
 			fieldsObject.put("profitStatements",new BasicDBObject("$elemMatch",new BasicDBObject("date",ps.getDate()))); 
 		}
 		

@@ -33,13 +33,16 @@ public class AssignListHelper {
 			list = deepCopy(statementList);
 			for(Map map:list){
 				List<String> data=(List) map.get("data");
-				data.set(1,getBalanceStatementData(efd,data.get(1)));
-				data.set(2,getBalanceStatementData(efd,data.get(2)));
-				data.set(7,getBalanceStatementData(efd,data.get(7)));
-				data.set(8,getBalanceStatementData(efd,data.get(8)));
+				if(!data.get(5).toString().endsWith("count")){
+					data.set(1,getBalanceStatementData(efd,data.get(1)));
+					data.set(2,getBalanceStatementData(efd,data.get(2)));
+				}
+				if(!data.get(11).toString().endsWith("count")){
+					data.set(7,getBalanceStatementData(efd,data.get(7)));
+					data.set(8,getBalanceStatementData(efd,data.get(8)));
+				}
 			}
 		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -53,11 +56,12 @@ public class AssignListHelper {
 			list = deepCopy(statementList);
 			for(Map map:list){
 				List<String> data=(List) map.get("data");
-				data.set(1,getCashflowStatementData(efd,data.get(1)));
-				data.set(2,getCashflowStatementData(efd,data.get(2)));
+				if(!data.get(5).toString().endsWith("count")){
+					data.set(1,getCashflowStatementData(efd,data.get(1)));
+					data.set(2,getCashflowStatementData(efd,data.get(2)));
+				}
 			}
 		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -71,11 +75,12 @@ public class AssignListHelper {
 			list = deepCopy(statementList);
 			for(Map map:list){
 				List<String> data=(List) map.get("data");
-				data.set(1,getProfitStatementData(efd,data.get(1)));
-				data.set(2,getProfitStatementData(efd,data.get(2)));
+				if(!data.get(5).toString().endsWith("count")){
+					data.set(1,getProfitStatementData(efd,data.get(1)));
+					data.set(2,getProfitStatementData(efd,data.get(2)));
+				}
 			}
 		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

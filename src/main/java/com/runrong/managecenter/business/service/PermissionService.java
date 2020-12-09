@@ -2,18 +2,20 @@ package com.runrong.managecenter.business.service;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.runrong.managecenter.business.cache.PermissionCache;
 import com.runrong.managecenter.business.dao.PermissionDao;
-import com.runrong.managecenter.business.model.Administrator;
 import com.runrong.managecenter.business.model.Permission;
 import com.runrong.managecenter.common.base.ResultModel;
-import com.runrong.managecenter.common.encrypt.MD5;
+import com.runrong.managecenter.common.util.JsonUtil;
 
 /**
  * 权限处理层
@@ -25,6 +27,10 @@ public class PermissionService {
 
 	@Autowired
 	PermissionDao permissionDao;
+	@Autowired
+	PermissionCache permissionCache;
+	@Autowired
+	AdminService adminService;
 	
 	/**
 	 * 查询权限 
@@ -75,6 +81,9 @@ public class PermissionService {
 		int id=permissionDao.addPermission(permissions);
 		
 		if(id>0){
+			//更新缓存
+			updatePermissionCache();
+			
 			return ResultModel.successModel("添加成功");
 		}
 		return ResultModel.failModel("添加失败");
@@ -97,7 +106,12 @@ public class PermissionService {
 		permissions.setId(id);
 		
 		permissionDao.deletePermission(permissions);
-	
+		
+		//每次删除后都需要存入缓存中	
+		permissionCache.put(String.valueOf(request.getSession().getAttribute("admin_id")), adminService.getAdminPermission((int) request.getSession().getAttribute("admin_id")));
+		//更新缓存
+		updatePermissionCache();
+		
 		return ResultModel.successModel("删除成功");
 	}
 	
@@ -130,5 +144,21 @@ public class PermissionService {
 		permissionDao.updatePermission(p);
 		
 		return ResultModel.successModel("修改成功");
+	}
+	
+	/**
+	 * 更新权限缓存
+	 * @return
+	 */
+	public List updatePermissionCache(){
+		List<String> permission = new ArrayList<String>();;
+        List<Map> maps;
+        //查询数据库中添加的权限
+        maps=permissionDao.getPermission(new Permission());
+        for(Map map:maps){
+        	permission.add(map.get("parent")+"_"+map.get("permission"));
+        }
+        permissionCache.put("permission", permission);
+		return permission;
 	}
 }

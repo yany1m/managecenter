@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.runrong.managecenter.business.adapter.StatementTemplateAdapter;
 import com.runrong.managecenter.common.util.ReadFileUtil;
 
 /**
@@ -17,14 +19,15 @@ import com.runrong.managecenter.common.util.ReadFileUtil;
  *
  */
 public class StatementConfig {
+	
 	public static List<Map> balanceStatementList;
 	public static List<Map> cashflowStatementList;
 	public static List<Map> profitStatementList;
 	
-	public static Map balanceStatementMap;
-	public static Map cashflowStatementMap;
-	public static Map profitStatementMap;
-	
+	public static LinkedHashMap balanceStatementMap;
+	public static LinkedHashMap cashflowStatementMap;
+	public static LinkedHashMap profitStatementMap;
+		
 	public static void init() throws IOException{
 		fetchBalanceStatement();
 		fetchCashflowStatement();
@@ -47,7 +50,8 @@ public class StatementConfig {
 		
 		String JsonContext=ReadFileUtil.ReadFile(in);
 		//将Json转化为Map
-		balanceStatementMap = JSON.parseObject(JsonContext);
+		balanceStatementMap = JSON.parseObject(JsonContext,new TypeReference<LinkedHashMap<String, Map>>() {
+        });
 		//解析Map
 		balanceStatementList= (List<Map>) ((Map) balanceStatementMap.get("body")).get("rows");  			
 		in.close();
@@ -69,7 +73,8 @@ public class StatementConfig {
 		
 		String JsonContext=ReadFileUtil.ReadFile(in);
 		//将Json转化为Map
-		cashflowStatementMap = JSON.parseObject(JsonContext);
+		cashflowStatementMap = JSON.parseObject(JsonContext,new TypeReference<LinkedHashMap<String, Map>>() {
+        });
 		//解析Map
 		cashflowStatementList= (List<Map>) ((Map) cashflowStatementMap.get("body")).get("rows");  			
 		in.close();
@@ -91,7 +96,8 @@ public class StatementConfig {
 		
 		String JsonContext=ReadFileUtil.ReadFile(in);
 		//将Json转化为Map
-		profitStatementMap = JSON.parseObject(JsonContext);
+		profitStatementMap = JSON.parseObject(JsonContext,new TypeReference<LinkedHashMap<String, Map>>() {
+        });
 		//解析Map
 		profitStatementList = (List<Map>) ((Map) profitStatementMap.get("body")).get("rows");  			
 		in.close();

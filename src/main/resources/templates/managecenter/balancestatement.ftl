@@ -77,30 +77,33 @@
                             
                               <tbody>
                               <tr>                   
-                                  
-                                  <#if list.data[5]=="title">
+                                  <#if list.data[5]=="title" || list.data[5]=="titleitem" || list.data[5]=="item" || list.data[11]=="title" || list.data[5]=="titleitem" || list.data[11]=="item">
+                                  <#if list.data[5]=="title" >
                                   <td id=${list.data[3]} pid=${list.data[4]} style="font-weight: bold;">${list.data[0]}</td>
                                   <td><input type="text" class="form-control"  style="display:none"></td>
                                   <td><input type="text" class="form-control"  style="display:none"></td>
-                                  <#elseif list.data[5]=="item">
+                                  <#elseif list.data[5]=="item" || list.data[5]=="titleitem">
                                   <td id=${list.data[3]} pid=${list.data[4]} >${list.data[0]}</td>
                                   <td><input type="text" class="form-control"  ></td>
                                   <td><input type="text" class="form-control"  ></td>
                                   <#else>
                                   <td></td>
                                   <td></td>
+                                  <td></td>
                                   </#if>                               
-                                  <#if list.data[11]=="title">
+                                  <#if list.data[11]=="title" >
                                    <td id=${list.data[9]} pid=${list.data[10]} style="font-weight: bold;">${list.data[6]}</td>
                                   <td><input type="text" class="form-control"  style="display:none"></td>
                                   <td><input type="text" class="form-control"  style="display:none"></td>
-                                  <#elseif list.data[11]=="item">
+                                  <#elseif list.data[11]=="item" || list.data[5]=="titleitem">
                                    <td id=${list.data[9]} pid=${list.data[10]}>${list.data[6]}</td>
                                   <td><input type="text" class="form-control"  ></td>
                                   <td><input type="text" class="form-control"  ></td>
                                   <#else>
                                   <td></td>
                                   <td></td>
+                                  <td></td>
+                                  </#if>
                                   </#if>
                               </tr>
                               </tbody>                            
@@ -157,7 +160,7 @@
 		$.ajax({             
                 type: "POST",
                 url:"/managecenter/saveBalance",
-                data:"enterpriseRegistrationNumber="+$("#enterpriseRegistrationNumber").val()+"&year="+$("#year").val()+"&json="+jsondata,// 你的formid
+                data:"enterpriseRegistrationNumber="+$("#enterpriseRegistrationNumber").val()+"&year="+$("#year").val()+"&json="+jsondata+"&templateId="+${id},// 你的formid
                 async: false,
                 error: function(request) {
                     alert("Connection error");

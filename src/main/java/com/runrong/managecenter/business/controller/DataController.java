@@ -18,6 +18,7 @@ import com.runrong.managecenter.business.model.datacollection.EnterpriseFinancia
 import com.runrong.managecenter.business.service.DataService;
 import com.runrong.managecenter.business.service.StatementTemplateService;
 import com.runrong.managecenter.common.base.ResultModel;
+import com.runrong.managecenter.common.dictionary.Constant;
 import com.runrong.managecenter.common.util.AssignListHelper;
 import com.runrong.managecenter.config.StatementConfig;
 
@@ -168,6 +169,7 @@ public class DataController {
 	 */
 	@RequestMapping("/findByEnterpriseFinancialData")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView findByEnterpriseFinancialData(HttpServletRequest request,ModelMap map){
 		ResultModel r=dataService.findByEnterpriseFinancialData(request);
 		if( r.getCode()==0 ){
@@ -184,6 +186,7 @@ public class DataController {
 	 */
 	@RequestMapping(value="/findFinancialStatement")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView findFinancialStatement(HttpServletRequest request,ModelMap map){
 		ResultModel rm=dataService.findFinancialStatement(request);
 		if(rm.Fail()){						
@@ -197,15 +200,15 @@ public class DataController {
 		map.put("EnterpriseFinancialData", efd);
 		if(efd.getBalanceStatements()!=null){	
 			return (ModelAndView)statementTemplateService.getBalanceStatementTemplateSelected(request, map, "/managecenter/updatebalancestatement", 
-					AssignListHelper.assignBalanceStatementList(efd,StatementConfig.balanceStatementList)).getBody();	 
+					AssignListHelper.assignBalanceStatementList(efd,StatementConfig.balanceStatementList),Constant.BALANCE_STATEMENT).getBody();	 
 		}
 		if(efd.getCashFlowStatements()!=null){
 			return (ModelAndView)statementTemplateService.getCashflowStatementTemplateSelected(request, map, "/managecenter/updatecashflowstatement", 
-					AssignListHelper.assignCashflowStatementList(efd,StatementConfig.cashflowStatementList)).getBody();
+					AssignListHelper.assignCashflowStatementList(efd,StatementConfig.cashflowStatementList),Constant.CASHFLOW_STATEMENT).getBody();
 		}
 		if(efd.getProfitStatements()!=null){
 			return (ModelAndView)statementTemplateService.getProfitStatementTemplateSelected(request, map, "/managecenter/updateprofitstatement", 
-					AssignListHelper.assignProfitStatementList(efd,StatementConfig.profitStatementList)).getBody();
+					AssignListHelper.assignProfitStatementList(efd,StatementConfig.profitStatementList),Constant.PROFIT_STATEMENT).getBody();
 		}
 				
 		return new ModelAndView("/managecenter/findstatement");

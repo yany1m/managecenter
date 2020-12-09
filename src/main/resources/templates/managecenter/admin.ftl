@@ -62,7 +62,7 @@
                           <tr class="odd gradeX">                          
                               <td>${admin.username}</td>                                                        
                               <td class="center hidden-phone">${admin.joinTime}</td> 
-                              <td class="hidden-phone">${admin.admin_group_id}</td>  
+                              <td class="hidden-phone">${(admin.name)!}</td>  
                               <td>
                               <#if admin.type == 0>
                               超级

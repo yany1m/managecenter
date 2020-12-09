@@ -43,6 +43,7 @@ public class AdminController {
 	 */
 	@RequestMapping(value="/addAdministrator" ,method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView addAdministratorGET(HttpServletRequest request) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 //		System.out.println("get");
 		return new ModelAndView("/managecenter/addAdministrator");
@@ -75,10 +76,11 @@ public class AdminController {
 	 */
 	@RequestMapping(value="/updateAdministrator",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView updateAdministratorGET(HttpServletRequest request,ModelMap map) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		
 		
-		List adminGroupList =(List)adminGroupService.getAdminGroup(request).getBody();
+		List<?> adminGroupList =(List<?>)adminGroupService.getAdminGroup(request).getBody();
 		map.put("adminGroupList",adminGroupList);
 		
 		map.put("id", request.getParameter("id"));

@@ -7,7 +7,7 @@
                                               <select id="group" class="form-control m-bot15"> 
                             						<option value="0">默认</option>
                                 					<#list statementTemplate as list>
-                                					<#if list.selected==1>                                        
+                                					<#if list.id==id>                                        
                                     				<option selected = "selected" value="${list.id}" templateType=${list.type}>${list.name}</option>  
                                     				<#else>                                           
                                     				<option value="${list.id}">${list.name}</option>                                             
@@ -20,7 +20,7 @@
                                               <input type="text" class="form-control" placeholder="企业注册号" name="enterpriseRegistrationNumber" id="enterpriseRegistrationNumber">                                             
                                           </div>
                                                                                                                        
-                                          	<div class="input-group m-bot15">
+                                          	<div class="col-sm-6 m-bot15" style="padding-left:0px">
                                                                                           
                                                <div class="input-append date" id="dpYears" data-date="12-02-2012"
                                                        data-date-format="dd-mm-yyyy" data-date-viewmode="years">
@@ -43,7 +43,7 @@
 										url:"/managecenter/updateStatementTemplateSelected",
 										data:"id="+id+"&type="+"${type}",
 										error: function(result){
-											alert(result);
+											alert("connect false");
 										},
 										success: function(data) {	
 											window.location.reload();

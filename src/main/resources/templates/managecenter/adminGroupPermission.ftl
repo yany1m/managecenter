@@ -7,7 +7,7 @@
     <meta name="author" content="Mosaddek">
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina"> 
 
-    <title>managecenter</title>
+    <title>管理组权限</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -26,7 +26,6 @@
       <script src="js/respond.min.js"></script>
     <![endif]-->
   </head>
-
   <body>
 
   <section id="container" class="">
@@ -53,9 +52,13 @@
                          <label class="control-label col-lg-2" for="inputSuccess"></label>
                          	<div class="col-lg-10" style="float:none">
                             	<select id="group" class="form-control m-bot15"> 
-                            		<option value="0">管理组</option>
-                                	<#list adminGroupList as list>                                          
+               
+                                	<#list adminGroupList as list>
+                                		<#if Session.admin_group_id=list.id>
+                                		<option value="${list.id}" selected="selected">${list.name}</option>
+                                		<#else>                                          
                                     	<option value="${list.id}">${list.name}</option>                                             
+                                    	</#if>
                                     </#list>                                            
                                 </select>
                             </div>
@@ -111,6 +114,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="assets/data-tables/DT_bootstrap.js"></script>
 
 
@@ -124,12 +128,12 @@
 	$(function(){
 		$("#group").click(function() {			
 			$(".checkboxes").removeAttr("checked");
-			$("#adminGroupId").val($(this).find("option:checked").attr("value"));
+			$("#adminGroupId").val($(this).find("option:selected").attr("value"));
 			$.ajax({
 				type:"post",
 				dataType:"json",
 				url:"/managecenter/getAdminGroupPermissionById",
-				data:"id="+$(this).find("option:checked").attr("value"),
+				data:"id="+$(this).find("option:selected").attr("value"),
 				error: function(result){
 					alert(result);
 				},
@@ -144,6 +148,32 @@
 		});
 	});
 	
+	$(document).ready(function(){
+		//取消分页
+		$('#sample_1').DataTable( {   
+    		bPaginate: false,
+    		bDestroy: true
+    	} );
+		
+		$.ajax({
+				type:"post",
+				dataType:"json",
+				url:"/managecenter/getAdminGroupPermissionById",
+				data:"id="+${Session.admin_group_id},
+				error: function(result){
+					alert(result);
+				},
+				success: function(data) {	
+					if(data.code=="0"){
+						$.each(data.body,function(key,value){
+							$("#"+value.permissionsId).prop("checked",'true');
+						});
+						$("#adminGroupId").val($("#group").find("option:selected").attr("value"));
+					}
+				}
+			});
+	});
+
 	function updateAdminGroupPermission(){	
 		$.ajax({
 				type:"post",

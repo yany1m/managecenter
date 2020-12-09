@@ -7,7 +7,7 @@ package com.runrong.managecenter.business.model;
 public class StatementTemplate {
 
 	//自增id
-	private int id;
+	private Integer id;
 	//管理员id
 	private int adminId;
 	//模板
@@ -16,25 +16,25 @@ public class StatementTemplate {
 	private String type;
 	//名字
 	private String name;
-	//是否被选中
-	private int selected;
+	//编辑者
+	private int editor;
 	
+	public int getEditor() {
+		return editor;
+	}
+	public void setEditor(int editor) {
+		this.editor = editor;
+	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getSelected() {
-		return selected;
-	}
-	public void setSelected(int selected) {
-		this.selected = selected;
-	}
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public int getAdminId() {

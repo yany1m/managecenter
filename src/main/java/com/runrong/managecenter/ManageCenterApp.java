@@ -13,6 +13,7 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.runrong.managecenter.config.DbConfig;
+import com.runrong.managecenter.config.QyCreditConfig;
 import com.runrong.managecenter.config.RSAConfig;
 import com.runrong.managecenter.config.SecurityConfig;
 import com.runrong.managecenter.config.ServerPortConfig;
@@ -31,6 +32,7 @@ public class ManageCenterApp extends SpringBootServletInitializer implements Emb
         SecurityConfig.init();
         RSAConfig.init();
         StatementConfig.init();
+        QyCreditConfig.init();
         logger.info("Config加载完毕~");
         SpringApplication.run(ManageCenterApp.class, args);
     }

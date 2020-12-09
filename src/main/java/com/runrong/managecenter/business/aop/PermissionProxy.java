@@ -1,6 +1,7 @@
 package com.runrong.managecenter.business.aop;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.runrong.managecenter.business.cache.PermissionCache;
+import com.runrong.managecenter.business.dao.PermissionDao;
 import com.runrong.managecenter.business.service.AdminService;
+import com.runrong.managecenter.business.service.PermissionService;
 import com.runrong.managecenter.common.base.BaseLogger;
 import com.runrong.managecenter.common.base.ResultModel;
 
@@ -26,6 +29,10 @@ public class PermissionProxy extends BaseLogger{
 	AdminService adminService;
 	@Autowired
 	PermissionCache permissionCache;
+	@Autowired
+	PermissionService permissionService;
+	@Autowired
+	PermissionDao permissionDao;
 	
 	@Around("@annotation(com.runrong.managecenter.business.aop.CheckPermission)")
 	public Object check(ProceedingJoinPoint point) throws Throwable {
@@ -44,7 +51,20 @@ public class PermissionProxy extends BaseLogger{
             int type=(int) session.getAttribute("admin_type");
             
             //每次都需要查询数据库  权限验证较为频繁可以引入缓存
-            List<String> permission;
+            List<String> permission = new ArrayList<String>();;
+            //查询数据库中添加的权限
+            if(permissionCache.get("permission") == null){
+            	permission=permissionService.updatePermissionCache();
+            }else{            	
+            	permission=permissionCache.get("permission");
+            }
+            //如果未添加此权限，则通过此请求
+            
+            if(!permission.contains(className+"_"+methodName)){
+            	return point.proceed();
+            }
+            
+            //如果数据库中添加了此权限，再查看该管理员是否具有此权限
             if(permissionCache.get(String.valueOf(id)) == null){
             	permission=adminService.getAdminPermission(id);
             	//写入缓存中
@@ -59,7 +79,7 @@ public class PermissionProxy extends BaseLogger{
             }
             
             //如果用户权限中包含此方法名                   
-    		if(permission.contains(className+"_"+methodName)){
+    		if(permission.contains(className+"_"+methodName)){    			
     			return point.proceed();   		
     		}
     		 

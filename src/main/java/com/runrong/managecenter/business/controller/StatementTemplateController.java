@@ -1,5 +1,7 @@
 package com.runrong.managecenter.business.controller;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.runrong.managecenter.business.adapter.StatementTemplateAdapter;
+import com.runrong.managecenter.business.aop.CheckPermission;
 import com.runrong.managecenter.business.service.StatementTemplateService;
 import com.runrong.managecenter.common.base.ResultModel;
+import com.runrong.managecenter.common.dictionary.Constant;
 import com.runrong.managecenter.common.util.JsonUtil;
 import com.runrong.managecenter.config.StatementConfig;
 
@@ -30,13 +35,14 @@ public class StatementTemplateController {
 	@Autowired
 	StatementTemplateService statementTemplateService;
 	
+	
 	/**
 	 * 查询报表模板
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value="/getStatementTemplate",method=RequestMethod.POST)
-	@ResponseBody
+	@CheckPermission
 	public ResultModel getStatementTemplatePOST(HttpServletRequest request){
 		
 		return statementTemplateService.getStatementTemplate(request);
@@ -51,6 +57,7 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/addStatementTemplate",method=RequestMethod.POST)
 	@ResponseBody
+	@CheckPermission
 	public ResultModel addStatementTemplatePOST(HttpServletRequest request){
 		
 		return statementTemplateService.addStatementTemplate(request);
@@ -63,18 +70,19 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/addStatementTemplate",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView addStatementTemplateGET(HttpServletRequest request,ModelMap map){
 		map.put("type", request.getParameter("type"));
 		
 		Map statementMap = null;
 		switch (request.getParameter("type")){
-			case "资产负债表":
+			case Constant.BALANCE_STATEMENT:
 				statementMap=StatementConfig.balanceStatementMap;
 				break;
-			case "现金流量表":
+			case Constant.CASHFLOW_STATEMENT:
 				statementMap=StatementConfig.cashflowStatementMap;
 				break;
-			case "利润表":
+			case Constant.PROFIT_STATEMENT:
 				statementMap=StatementConfig.profitStatementMap;
 				break;
 			
@@ -90,6 +98,7 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/updateStatementTemplate",method=RequestMethod.POST)
 	@ResponseBody
+	@CheckPermission
 	public ResultModel updateStatementTemplatePOST(HttpServletRequest request){
 		
 		return statementTemplateService.updateStatementTemplate(request);
@@ -102,6 +111,7 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/updateStatementTemplate",method=RequestMethod.GET)
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView updateStatementTemplateGET(HttpServletRequest request,ModelMap map){
 		List list=(List) statementTemplateService.getStatementTemplate(request).getBody();
 		map.put("statementTemplate",list.get(0));
@@ -115,6 +125,7 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/deleteStatementTemplate",method=RequestMethod.POST)
 	@ResponseBody
+	@CheckPermission
 	public ResultModel deleteStatementTemplatePOST(HttpServletRequest request){
 		
 		return statementTemplateService.deleteStatementTemplate(request);
@@ -139,9 +150,23 @@ public class StatementTemplateController {
 	 */
 	@RequestMapping(value="/statementTemplate")
 	@ResponseBody
+	@CheckPermission
 	public ModelAndView statementTemplate(HttpServletRequest request,ModelMap map){
 		List list=(List) statementTemplateService.getStatementTemplate(request).getBody();
 		map.put("list", list);
 		return new ModelAndView("/managecenter/statementTemplate");
 	}	
+	
+	/**
+	 * 转换报表模板给风控系统
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/transformStatementTemplate")
+	@ResponseBody
+	public String TransformStatementTemplate(HttpServletRequest request){
+		String callback=request.getParameter("callback");
+		String template=callback+"("+JsonUtil.getJsonFromObject(statementTemplateService.transformStatementTemplate(request)).toJSONString()+")";
+		return template;
+	}
 }

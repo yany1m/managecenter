@@ -1,0 +1,969 @@
+{
+    "company_info_tree": {
+        "name": "company_info_tree",
+        "type": "branch",
+        "children": [
+            {
+                "company_name": {
+                    "name": "company_name",
+                    "type": "text",
+                    "hint": "请输入企业名称",
+                    "required": true
+                }
+            },
+            {
+                "register_num": {
+                    "name": "register_num",
+                    "type": "text",
+                    "hint": "请输入企业注册号",
+                    "required": true
+                }
+            },
+            {
+                "pay_debt_ability": {
+                    "name": "pay_debt_ability",
+                    "type": "branch",
+                    "children": [
+                        {
+                            "asset_liability_ratio": {
+                                "name": "asset_liability_ratio",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "total_indebtedness": {
+                                            "name": "total_indebtedness",
+                                            "type": "number",
+                                            "hint": "请输入负债总额",
+                                            "required": true
+                                        }
+                                    },
+                                    {
+                                        "general_assets": {
+                                            "name": "general_assets",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    }
+                                ],
+                                "regex": "${total_indebtedness}/${general_assets}",
+                                "proportion": 9,
+                                "base": 0.5,
+                                "space": 0.05,
+                                "interval": 1,
+                                "start": 9,
+                                "direction": "up",
+                                "calcType": "number"
+                            }
+                        },
+                        {
+                            "cash_ratio": {
+                                "name": "cash_ratio",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "pecuniary_resources": {
+                                            "name": "pecuniary_resources",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    },
+                                    {
+                                        "short_term_investments": {
+                                            "name": "short_term_investments",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    },
+                                    {
+                                        "balance_of_current_liabilities": {
+                                            "name": "balance_of_current_liabilities",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    }
+                                ],
+                                "regex": "(${pecuniary_resources}+${short_term_investments})/${balance_of_current_liabilities}",
+                                "proportion": 7,
+                                "base": 0.2,
+                                "space": 0.025,
+                                "interval": 1,
+                                "start": 7,
+                                "direction": "down",
+                                "calcType": "number"
+                            }
+                        },
+                        {
+                            "registered_capital": {
+                                "name": "registered_capital",
+                                "type": "number",
+                                "required": true,
+                                "proportion": 3,
+                                "base": 10000000,
+                                "space": 3000000,
+                                "interval": 1,
+                                "start": 3,
+                                "direction": "down",
+                                "calcType": "number"
+                            }
+                        },
+                        {
+                            "registered_capital_rate": {
+                                "name": "registered_capital_rate",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "actual_registered_capital": {
+                                            "name": "actual_registered_capital",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    }
+                                ],
+                                "regex": "${actual_registered_capital}/${company_info_tree.pay_debt_ability.registered_capital}",
+                                "calcType": "number",
+                                "base": 1,
+                                "interval": 1,
+                                "proportion": 5,
+                                "start": 5,
+                                "direction": "down",
+                                "space": 0.05
+                            }
+                        },
+                        {
+                            "cash_flow_expectations": {
+                                "name": "cash_flow_expectations",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "operating_net_cash_flow": {
+                                            "name": "operating_net_cash_flow",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    }
+                                ],
+                                "regex": "${operating_net_cash_flow}",
+                                "calcType": "number",
+                                "base": 0.01,
+                                "proportion": 7,
+                                "direction": "down",
+                                "interval": 7,
+                                "start": 7
+                            }
+                        },
+                        {
+                            "repayment_of_borrowings": {
+                                "name": "repayment_of_borrowings",
+                                "type": "branch",
+                                "hint": "还款预期",
+                                "children": [
+                                    {
+                                        "reasonable_repayment_plan": {
+                                            "name": "reasonable_repayment_plan",
+                                            "type": "radio",
+                                            "hint": "还款计划是否合理",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "radiosGrade": [
+                                                4,
+                                                0
+                                            ],
+                                            "calcType": "radio"
+                                        }
+                                    }
+                                ],
+                                "regex": "${reasonable_repayment_plan}",
+                                "calcType": "branch"
+                            }
+                        },
+                        {
+                            "revenue_growth_rate": {
+                                "name": "revenue_growth_rate",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "theyear_overall_income": {
+                                            "name": "theyear_overall_income",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    },
+                                    {
+                                        "last_year_overall_income": {
+                                            "name": "last_year_overall_income",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    }
+                                ],
+                                "proportion": 7,
+                                "regex": "${theyear_overall_income}/${last_year_overall_income}",
+                                "base": 0.2,
+                                "start": 7,
+                                "direction": "down",
+                                "space": 0.1,
+                                "interval": 1.5,
+                                "calcType": "number"
+                            }
+                        },
+                        {
+                            "benefit_cost_ratio": {
+                                "name": "benefit_cost_ratio",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "theyear_income": {
+                                            "name": "theyear_income",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    },
+                                    {
+                                        "theyear_pay": {
+                                            "name": "theyear_pay",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    }
+                                ],
+                                "proportion": 5,
+                                "regex": "${theyear_income}/${theyear_pay}",
+                                "base": 1,
+                                "interval": 0.8,
+                                "start": 5,
+                                "space": 0.1,
+                                "direction": "down",
+                                "calcType": "number"
+                            }
+                        }
+                    ],
+                    "regex": "${asset_liability_ratio}+${cash_ratio}+${registered_capital}+${registered_capital_rate}+${cash_flow_expectations}+${repayment_of_borrowings}+${revenue_growth_rate}+${benefit_cost_ratio}",
+                    "calcType": "branch"
+                }
+            },
+            {
+                "management": {
+                    "name": "management",
+                    "type": "branch",
+                    "children": [
+                        {
+                            "governance_mechanism": {
+                                "name": "governance_mechanism",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "Internal_control_mechanism": {
+                                            "name": "Internal_control_mechanism",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1.5,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "rules_regulations_perfect_degree": {
+                                            "name": "rules_regulations_perfect_degree",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1.5,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "clear_ownership_structure": {
+                                            "name": "clear_ownership_structure",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1.5,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "organization_structure": {
+                                            "name": "organization_structure",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1.5,
+                                                0
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "regex": "${Internal_control_mechanism}+${rules_regulations_perfect_degree}+${clear_ownership_structure}+${organization_structure}",
+                                "calcType": "branch"
+                            }
+                        },
+                        {
+                            "competitiveness": {
+                                "name": "competitiveness",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "trade_policy": {
+                                            "name": "trade_policy",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "competitive_context": {
+                                            "name": "competitive_context",
+                                            "type": "radio",
+                                            "radios": [
+                                                "有ISO质量认证",
+                                                "无ISO质量认证"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "advanced_technology_and_equipment": {
+                                            "name": "advanced_technology_and_equipment",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "enterprise_prospect_analysis_strategy_development": {
+                                            "name": "enterprise_prospect_analysis_strategy_development",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "calcType": "branch",
+                                "regex": "${trade_policy}+${competitive_context}+${advanced_technology_and_equipment}+${enterprise_prospect_analysis_strategy_development}"
+                            }
+                        },
+                        {
+                            "leadership_quality": {
+                                "name": "leadership_quality",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "leadership_management_technical": {
+                                            "name": "leadership_management_technical",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "developing_strain_capacity": {
+                                            "name": "developing_strain_capacity",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "teamwork": {
+                                            "name": "teamwork",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "legal_sense": {
+                                            "name": "legal_sense",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "regex": "${leadership_management_technical}+${developing_strain_capacity}+${teamwork}+${legal_sense}",
+                                "calcType": "branch"
+                            }
+                        },
+                        {
+                            "personnel_quality": {
+                                "name": "personnel_quality",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "cultural_competence": {
+                                            "name": "cultural_competence",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                2,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "vocational_skill": {
+                                            "name": "vocational_skill",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                2,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "is_there_regular_training": {
+                                            "name": "is_there_regular_training",
+                                            "type": "radio",
+                                            "radios": [
+                                                "有",
+                                                "没有"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                2,
+                                                0
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "regex": "${cultural_competence}+${vocational_skill}+${is_there_regular_training}",
+                                "calcType": "branch"
+                            }
+                        },
+                        {
+                            "operating_income_and_operating_cost_expectations": {
+                                "name": "operating_income_and_operating_cost_expectations",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "stability_operating_income": {
+                                            "name": "stability_operating_income",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "stability_downstream_customers_target_customer_expectations": {
+                                            "name": "stability_downstream_customers_target_customer_expectations",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "stability_upstream_customers": {
+                                            "name": "stability_upstream_customers",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "cost_structure_reasonable": {
+                                            "name": "cost_structure_reasonable",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "calcType": "branch",
+                                "regex": "${stability_operating_income}+${stability_downstream_customers_target_customer_expectations}+${stability_upstream_customers}+${cost_structure_reasonable}"
+                            }
+                        },
+                        {
+                            "level_of_management": {
+                                "name": "level_of_management",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "construction_implementation__rules_regulations": {
+                                            "name": "construction_implementation__rules_regulations",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "business_culture": {
+                                            "name": "business_culture",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "financial_management": {
+                                            "name": "financial_management",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "quality_technology_information_management": {
+                                            "name": "quality_technology_information_management",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                1,
+                                                0
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "calcType": "branch",
+                                "regex": "${construction_implementation__rules_regulations}+${business_culture}+${financial_management}+${quality_technology_information_management}"
+                            }
+                        }
+                    ],
+                    "regex": "${governance_mechanism}+${competitiveness}+${leadership_quality}+${personnel_quality}+${operating_income_and_operating_cost_expectations}+${level_of_management}",
+                    "calcType": "branch"
+                }
+            },
+            {
+                "develop_vista": {
+                    "name": "develop_vista",
+                    "type": "branch",
+                    "children": [
+                        {
+                            "policy_support": {
+                                "name": "policy_support",
+                                "type": "radio",
+                                "radios": [
+                                    "重点支持",
+                                    "一般支持",
+                                    "其他"
+                                ],
+                                "required": true,
+                                "calcType": "radio",
+                                "radiosGrade": [
+                                    3,
+                                    1,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "major_shareholder_background": {
+                                "name": "major_shareholder_background",
+                                "type": "radio",
+                                "breakline": true,
+                                "radios": [
+                                    "股东是世界500强企业",
+                                    "股东非世界500强企业，但属大型绩优企业，其资产规模、盈利水平或综合竞争力排名居全国前10名",
+                                    "股东为大型绩优企业",
+                                    "其他"
+                                ],
+                                "required": true,
+                                "calcType": "radio",
+                                "radiosGrade": [
+                                    4,
+                                    3,
+                                    2,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "planning_objective": {
+                                "name": "planning_objective",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "clear_development_strategy": {
+                                            "name": "clear_development_strategy",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                2,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "scientific_feasibility_study": {
+                                            "name": "scientific_feasibility_study",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                2,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "budget_control_budget_accounts_management": {
+                                            "name": "budget_control_budget_accounts_management",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                2,
+                                                0
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "calcType": "branch",
+                                "regex": "${clear_development_strategy}+${scientific_feasibility_study}+${budget_control_budget_accounts_management}"
+                            }
+                        },
+                        {
+                            "corporate_growth": {
+                                "name": "corporate_growth",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "cycle_phase_industry": {
+                                            "name": "cycle_phase_industry",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                2,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "self_growth": {
+                                            "name": "self_growth",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                2,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "technology_leadership": {
+                                            "name": "technology_leadership",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                2,
+                                                0
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "calcType": "branch",
+                                "regex": "${cycle_phase_industry}+${self_growth}+${technology_leadership}"
+                            }
+                        },
+                        {
+                            "product_saturation_levels": {
+                                "name": "product_saturation_levels",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "current_product_saturation": {
+                                            "name": "current_product_saturation",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                3,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "future_product_saturation": {
+                                            "name": "future_product_saturation",
+                                            "type": "radio",
+                                            "radios": [
+                                                "较好",
+                                                "一般"
+                                            ],
+                                            "required": true,
+                                            "calcType": "radio",
+                                            "radiosGrade": [
+                                                3,
+                                                0
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "regex": "${current_product_saturation}+${future_product_saturation}",
+                                "calcType": "branch"
+                            }
+                        }
+                    ],
+                    "calcType": "branch",
+                    "regex": "${policy_support}+${major_shareholder_background}+${planning_objective}+${corporate_growth}+${product_saturation_levels}"
+                }
+            },
+            {
+                "cut_grade": {
+                    "name": "cut_grade",
+                    "type": "branch",
+                    "children": [
+                        {
+                            "ratio_of_damage_amount": {
+                                "name": "ratio_of_damage_amount",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "various_loss_involes_amount": {
+                                            "name": "various_loss_involes_amount",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    },
+                                    {
+                                        "net_assets": {
+                                            "name": "net_assets",
+                                            "type": "number",
+                                            "required": true
+                                        }
+                                    }
+                                ],
+                                "proportion": -10,
+                                "base": 0.2,
+                                "regex": "${various_loss_involes_amount}/${net_assets}",
+                                "space": 0.02,
+                                "direction": "down",
+                                "interval": -1,
+                                "start": -10,
+                                "calcType": "number"
+                            }
+                        },
+                        {
+                            "financial_information_quality": {
+                                "name": "financial_information_quality",
+                                "type": "branch",
+                                "children": [
+                                    {
+                                        "whether_financial_statements_audited": {
+                                            "name": "whether_financial_statements_audited",
+                                            "type": "radio",
+                                            "breakline": true,
+                                            "radios": [
+                                                "经审计，但审计报告出具了否定意见或拒绝表示意见",
+                                                "经审计，但审计报告出具了保留意见",
+                                                "未经审计",
+                                                "无论是否审计，能够认定财务报表虚假或严重虚假",
+                                                "其它"
+                                            ],
+                                            "required": true,
+                                            "radiosGrade": [
+                                                -10,
+                                                -5,
+                                                -5,
+                                                -10,
+                                                0
+                                            ],
+                                            "calcType": "radio"
+                                        }
+                                    }
+                                ],
+                                "regex": "${whether_financial_statements_audited}",
+                                "calcType": "branch"
+                            }
+                        }
+                    ],
+                    "calcType": "branch",
+                    "regex": "${ratio_of_damage_amount}+${financial_information_quality}"
+                }
+            }
+        ],
+        "calcType": "branch",
+        "regex": "${pay_debt_ability}+${management}+${develop_vista}+${cut_grade}"
+    }
+}
